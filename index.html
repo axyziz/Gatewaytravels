@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateway Travels & Holidays</title>
 
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+        }
+
+        header{
+            background:#111827;
+            padding:20px 60px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        header h2{
+            color:#FFD700;
+        }
+
+        nav a{
+            color:white;
+            text-decoration:none;
+            margin-left:25px;
+        }
+
+        .hero{
+            height:90vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            text-align:center;
+            background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+            url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80");
+            background-size:cover;
+            background-position:center;
+        }
+
+        .hero h1{
+            font-size:55px;
+            color:#FFD700;
+        }
+
+        .hero p{
+            margin-top:20px;
+            font-size:22px;
+        }
+
+        .btn{
+            margin-top:35px;
+            padding:15px 35px;
+            background:#FFD700;
+            color:black;
+            border-radius:50px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .services{
+            padding:70px 40px;
+            text-align:center;
+        }
+
+        .services h2{
+            color:#FFD700;
+            margin-bottom:40px;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:20px;
+        }
+
+        .card{
+            background:#1f2937;
+            padding:30px;
+            border-radius:15px;
+        }
+
+        footer{
+            background:#111827;
+            text-align:center;
+            padding:25px;
+            margin-top:60px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+<h2>Gateway Travels</h2>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Services</a>
+<a href="#">Offers</a>
+<a href="#">Contact</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Explore the World with Confidence</h1>
+
+<p>Flights • Hotels • Holiday Packages • Visa Assistance • Bus Bookings</p>
+
+<a class="btn" href="https://wa.me/917382964554">Book on WhatsApp</a>
+
+</section>
+
+<section class="services">
+
+<h2>Our Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>✈ Flight Bookings</h3>
+</div>
+
+<div class="card">
+<h3>🏨 Hotel Reservations</h3>
+</div>
+
+<div class="card">
+<h3>🌍 Holiday Packages</h3>
+</div>
+
+<div class="card">
+<h3>🛂 Visa Assistance</h3>
+</div>
+
+<div class="card">
+<h3>🚌 Bus Bookings</h3>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 Gateway Travels & Holidays
+
+</footer>
+
+</body>
+</html>
