@@ -1,6 +1,9 @@
-/* ===========================
-GATEWAY TRAVELS
-=========================== */
+/* ===================================================
+   GATEWAY TRAVELS & HOLIDAYS
+   PREMIUM WEBSITE
+=================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 *{
 margin:0;
@@ -14,8 +17,8 @@ scroll-behavior:smooth;
 
 body{
 font-family:'Poppins',sans-serif;
-background:#f5f7fb;
-color:#222;
+background:#f8fafc;
+color:#1e293b;
 line-height:1.7;
 overflow-x:hidden;
 }
@@ -26,21 +29,31 @@ max-width:1200px;
 margin:auto;
 }
 
-/* ===========================
+/* =======================
 HEADER
-=========================== */
+======================= */
 
-.header{
+header{
+
 position:fixed;
+
 top:0;
+
 left:0;
+
 width:100%;
-background:#071c39;
+
 z-index:999;
-box-shadow:0 5px 20px rgba(0,0,0,.15);
+
+background:rgba(7,28,57,.95);
+
+backdrop-filter:blur(12px);
+
+box-shadow:0 5px 20px rgba(0,0,0,.12);
+
 }
 
-.header .container{
+header .container{
 
 display:flex;
 
@@ -54,19 +67,19 @@ padding:18px 0;
 
 .logo{
 
-font-size:30px;
+font-size:32px;
 
 font-weight:700;
 
-color:white;
-
 text-decoration:none;
+
+color:white;
 
 }
 
 .logo span{
 
-color:#D4AF37;
+color:#d4af37;
 
 }
 
@@ -94,17 +107,17 @@ transition:.3s;
 
 nav a:hover{
 
-color:#D4AF37;
+color:#d4af37;
 
 }
 
-.top-btn{
+.whatsapp-btn{
 
 background:#25D366;
 
-padding:12px 22px;
+padding:12px 24px;
 
-border-radius:50px;
+border-radius:40px;
 
 color:white;
 
@@ -116,15 +129,15 @@ transition:.3s;
 
 }
 
-.top-btn:hover{
+.whatsapp-btn:hover{
 
 transform:translateY(-3px);
 
 }
 
-/* ===========================
+/* =======================
 HERO
-=========================== */
+======================= */
 
 .hero{
 
@@ -154,21 +167,21 @@ width:100%;
 
 .hero-content{
 
-max-width:700px;
+max-width:720px;
 
 color:white;
 
 }
 
-.hero-tag{
+.hero-content span{
 
 display:inline-block;
 
-background:#D4AF37;
+padding:10px 22px;
+
+background:#d4af37;
 
 color:#111;
-
-padding:10px 22px;
 
 border-radius:40px;
 
@@ -186,6 +199,8 @@ line-height:1.1;
 
 margin-bottom:20px;
 
+font-weight:800;
+
 }
 
 .hero p{
@@ -194,7 +209,9 @@ font-size:22px;
 
 margin-bottom:35px;
 
-color:#f5f5f5;
+color:#f3f3f3;
+
+max-width:650px;
 
 }
 
@@ -208,17 +225,17 @@ flex-wrap:wrap;
 
 }
 
-.gold-btn{
+.primary-btn{
 
-background:#D4AF37;
+background:#d4af37;
 
-padding:16px 36px;
+padding:16px 34px;
 
 border-radius:40px;
 
-color:#111;
-
 text-decoration:none;
+
+color:#111;
 
 font-weight:600;
 
@@ -226,29 +243,31 @@ transition:.3s;
 
 }
 
-.gold-btn:hover{
+.primary-btn:hover{
 
 transform:translateY(-4px);
 
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+
 }
 
-.outline-btn{
+.secondary-btn{
 
 border:2px solid white;
 
-padding:16px 36px;
+padding:16px 34px;
 
 border-radius:40px;
 
-color:white;
-
 text-decoration:none;
+
+color:white;
 
 transition:.3s;
 
 }
 
-.outline-btn:hover{
+.secondary-btn:hover{
 
 background:white;
 
@@ -256,17 +275,17 @@ color:#111;
 
 }
 
-/* ===========================
-SECTION
-=========================== */
+/* =======================
+GENERAL
+======================= */
 
 section{
 
-padding:100px 0;
+padding:110px 0;
 
 }
 
-.section-title{
+.title{
 
 text-align:center;
 
@@ -274,9 +293,9 @@ margin-bottom:60px;
 
 }
 
-.section-title h2{
+.title h2{
 
-font-size:42px;
+font-size:46px;
 
 margin-bottom:15px;
 
@@ -284,14 +303,14 @@ color:#071c39;
 
 }
 
-.section-title p{
+.title p{
 
-max-width:700px;
-
-margin:auto;
+font-size:18px;
 
 color:#666;
 
-font-size:18px;
+max-width:650px;
+
+margin:auto;
 
 }
