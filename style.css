@@ -1,1 +1,21 @@
-
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:Poppins,sans-serif;color:#1f2937;background:#fff}
+.container{width:min(1120px,92%);margin:auto}
+.header{position:fixed;top:0;width:100%;background:#071a33;color:#fff;z-index:999}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-size:30px;font-weight:700}.logo span{color:#d4af37}
+nav a{color:#fff;text-decoration:none;margin-left:24px}
+.hero{height:100vh;background:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80') center/cover}
+.overlay{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:rgba(0,0,0,.55);color:#fff}
+.overlay h1{font-size:64px;line-height:1.1}.overlay p{margin:20px 0;font-size:20px}
+.actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn{padding:14px 26px;border-radius:40px;text-decoration:none;font-weight:600}
+.gold{background:#d4af37;color:#111}.outline{border:2px solid #fff;color:#fff}
+.pad{padding:90px 0}h2{text-align:center;font-size:40px;color:#071a33;margin-bottom:35px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.card{padding:28px;border-radius:18px;background:#fff;box-shadow:0 10px 25px rgba(0,0,0,.08);transition:.3s}
+.card:hover{transform:translateY(-8px)}
+.offer{background:#071a33;color:#fff;padding:90px 0}.offer h2{color:#d4af37}
+footer{background:#111827;color:#fff;text-align:center;padding:22px}
+.wa{position:fixed;right:22px;bottom:22px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:28px}
+@media(max-width:768px){.nav{flex-direction:column}.overlay h1{font-size:42px}nav{margin-top:12px}nav a{margin:0 10px}}
