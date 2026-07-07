@@ -1,9 +1,290 @@
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f7f7f7;color:#222}
-.wrap{width:min(1100px,92%);margin:auto}
-header{background:#081c3d;color:#fff;position:sticky;top:0}.wrap{padding:18px 0}
-header .wrap{display:flex;justify-content:space-between;align-items:center}
-h2 span{color:#d4af37}nav a{color:#fff;text-decoration:none;margin-left:20px}
-.hero{height:75vh;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80') center/cover;display:flex;align-items:center;justify-content:center}
-.hero-content{text-align:center;color:#fff}.hero h1{font-size:56px}.btn{display:inline-block;margin-top:20px;background:#d4af37;color:#111;padding:14px 24px;border-radius:30px;text-decoration:none}
-#services{padding:70px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.card{text-decoration:none;color:#222;background:#fff;padding:28px;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,.08)}
-.offers{background:#081c3d;color:#fff;padding:60px 0}.contact{padding:60px 0;text-align:center}footer{text-align:center;background:#111827;color:#fff;padding:20px}
+/* ===========================
+   GATEWAY TRAVELS WEBSITE
+   =========================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:#f7f9fc;
+
+color:#1d2939;
+
+line-height:1.7;
+
+overflow-x:hidden;
+
+}
+
+
+/* ===========================
+CONTAINER
+=========================== */
+
+.container{
+
+width:90%;
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+
+/* ===========================
+HEADER
+=========================== */
+
+header{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+background:#071c39;
+
+z-index:999;
+
+box-shadow:0 3px 15px rgba(0,0,0,.15);
+
+}
+
+header .container{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 0;
+
+}
+
+
+/* ===========================
+LOGO
+=========================== */
+
+.logo{
+
+font-size:32px;
+
+font-weight:700;
+
+color:white;
+
+}
+
+.logo span{
+
+color:#D4AF37;
+
+}
+
+
+/* ===========================
+MENU
+=========================== */
+
+nav ul{
+
+display:flex;
+
+list-style:none;
+
+gap:35px;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+color:white;
+
+font-weight:500;
+
+transition:.3s;
+
+}
+
+nav a:hover{
+
+color:#D4AF37;
+
+}
+
+
+/* ===========================
+HERO
+=========================== */
+
+.hero{
+
+height:100vh;
+
+background:
+
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+
+url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80");
+
+background-size:cover;
+
+background-position:center;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+padding:40px;
+
+}
+
+.hero-overlay{
+
+width:100%;
+
+}
+
+.hero-content{
+
+max-width:900px;
+
+margin:auto;
+
+color:white;
+
+}
+
+.hero h1{
+
+font-size:68px;
+
+font-weight:700;
+
+line-height:1.1;
+
+margin-bottom:25px;
+
+}
+
+.hero p{
+
+font-size:22px;
+
+margin-bottom:35px;
+
+}
+
+
+/* ===========================
+BUTTONS
+=========================== */
+
+.hero-buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+}
+
+.primary-btn{
+
+background:#D4AF37;
+
+color:#111;
+
+padding:16px 34px;
+
+border-radius:50px;
+
+text-decoration:none;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.primary-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+
+.secondary-btn{
+
+border:2px solid white;
+
+color:white;
+
+padding:16px 34px;
+
+border-radius:50px;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+.secondary-btn:hover{
+
+background:white;
+
+color:#111;
+
+}
+
+
+/* ===========================
+SECTION TITLE
+=========================== */
+
+section{
+
+padding:90px 0;
+
+}
+
+section h2{
+
+font-size:42px;
+
+text-align:center;
+
+margin-bottom:55px;
+
+color:#071c39;
+
+font-weight:700;
+
+}
