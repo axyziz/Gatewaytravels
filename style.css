@@ -1,161 +1,195 @@
-/* ===========================
-SERVICES
-=========================== */
+/* ===============================
+   GATEWAY TRAVELS & HOLIDAYS
+================================= */
 
-.services{
-
-padding:100px 0;
-
-background:#f5f7fb;
-
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-.section-text{
-
-text-align:center;
-
-max-width:700px;
-
-margin:0 auto 50px;
-
-color:#666;
-
-font-size:18px;
-
+html{
+scroll-behavior:smooth;
 }
 
-.services-grid{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:30px;
-
-}
-
-.service-card{
-
-background:white;
-
-border-radius:22px;
-
-padding:35px;
-
-text-decoration:none;
-
-color:#222;
-
-box-shadow:0 12px 35px rgba(0,0,0,.08);
-
-transition:.35s;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:space-between;
-
-min-height:320px;
-
-}
-
-.service-card:hover{
-
-transform:translateY(-10px);
-
-box-shadow:0 20px 45px rgba(0,0,0,.15);
-
-}
-
-.service-icon{
-
-width:75px;
-
-height:75px;
-
-border-radius:18px;
-
-background:#D4AF37;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:36px;
-
-margin-bottom:25px;
-
-}
-
-.service-card h3{
-
-font-size:25px;
-
-margin-bottom:15px;
-
-color:#071c39;
-
-}
-
-.service-card p{
-
-color:#666;
-
+body{
+font-family:'Poppins',sans-serif;
+background:#f7f9fc;
+color:#1e293b;
 line-height:1.7;
-
-flex:1;
-
+overflow-x:hidden;
 }
 
-.service-card span{
+/* ===============================
+CONTAINER
+================================= */
 
-margin-top:25px;
+.container{
+width:90%;
+max-width:1200px;
+margin:auto;
+}
 
-display:inline-block;
+/* ===============================
+HEADER
+================================= */
 
+.header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
 background:#071c39;
+z-index:999;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
 
+.header .container{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 0;
+}
+
+.logo{
+font-size:32px;
+font-weight:700;
+text-decoration:none;
 color:white;
+}
 
-padding:14px 22px;
+.logo span{
+color:#D4AF37;
+}
 
-border-radius:40px;
+nav ul{
+display:flex;
+gap:35px;
+list-style:none;
+}
 
-font-weight:600;
-
-text-align:center;
-
+nav a{
+text-decoration:none;
+color:white;
+font-weight:500;
 transition:.3s;
-
 }
 
-.service-card:hover span{
+nav a:hover{
+color:#D4AF37;
+}
 
+.whatsapp-top{
+background:#25D366;
+padding:12px 24px;
+border-radius:40px;
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+/* ===============================
+HERO
+================================= */
+
+.hero{
+height:100vh;
+background:
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=80");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+}
+
+.overlay{
+width:100%;
+}
+
+.hero-content{
+max-width:750px;
+color:white;
+}
+
+.small-title{
+display:inline-block;
+padding:10px 20px;
 background:#D4AF37;
-
+border-radius:40px;
 color:#111;
-
+font-weight:600;
+margin-bottom:25px;
 }
 
-@media(max-width:992px){
-
-.services-grid{
-
-grid-template-columns:repeat(2,1fr);
-
+.hero h1{
+font-size:72px;
+line-height:1.1;
+margin-bottom:20px;
 }
 
+.hero-text{
+font-size:22px;
+margin-bottom:40px;
+color:#f2f2f2;
 }
 
-@media(max-width:768px){
-
-.services-grid{
-
-grid-template-columns:1fr;
-
+.hero-buttons{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
 }
 
+.gold-btn{
+background:#D4AF37;
+padding:16px 34px;
+border-radius:40px;
+text-decoration:none;
+font-weight:600;
+color:#111;
+transition:.3s;
+}
+
+.gold-btn:hover{
+transform:translateY(-3px);
+}
+
+.outline-btn{
+border:2px solid white;
+padding:16px 34px;
+border-radius:40px;
+text-decoration:none;
+color:white;
+transition:.3s;
+}
+
+.outline-btn:hover{
+background:white;
+color:#111;
+}
+
+/* ===============================
+SECTION TITLE
+================================= */
+
+section{
+padding:100px 0;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title h2{
+font-size:42px;
+color:#071c39;
+margin-bottom:15px;
+}
+
+.section-title p{
+max-width:700px;
+margin:auto;
+color:#666;
+font-size:18px;
 }
