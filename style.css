@@ -348,99 +348,119 @@ color:#555;
 SERVICES
 =================================== */
 
-.services{
+<!-- =========================
+OUR SERVICES
+========================== -->
 
-background:#f7f9fc;
+<section class="services" id="services">
 
-}
+<div class="container">
 
-.service-grid{
+<h2>Our Services</h2>
 
-display:grid;
+<div class="service-grid">
 
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+<div class="service-card">
 
-gap:30px;
+<div class="service-icon">✈️</div>
 
-}
+<h3>Flight Bookings</h3>
 
-.service-card{
+<p>Domestic & International Flights</p>
 
-background:white;
+<a class="service-btn"
+href="https://wa.me/917382964554?text=Hello%20Gateway%20Travels,%0A%0AI%20would%20like%20to%20book%20a%20flight.%0A%0AFrom:%0ATo:%0ADeparture%20Date:%0AReturn%20Date:%0APassengers:"
+target="_blank">
+Get Flight Quote
+</a>
 
-padding:40px;
+</div>
 
-border-radius:20px;
+<div class="service-card">
 
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+<div class="service-icon">🏨</div>
 
-transition:.35s;
+<h3>Hotel Reservations</h3>
 
-text-align:center;
+<p>Hotels Worldwide</p>
 
-}
+<a class="service-btn"
+href="https://wa.me/917382964554?text=Hello%20Gateway%20Travels,%0A%0AI%20would%20like%20to%20book%20a%20hotel."
+target="_blank">
+Reserve Hotel
+</a>
 
-.service-card:hover{
+</div>
 
-transform:translateY(-12px);
+<div class="service-card">
 
-box-shadow:0 15px 40px rgba(0,0,0,.12);
+<div class="service-icon">🌍</div>
 
-}
+<h3>Holiday Packages</h3>
 
-.icon{
+<p>Domestic & International Tours</p>
 
-font-size:55px;
+<a class="service-btn"
+href="https://wa.me/917382964554?text=Hello%20Gateway%20Travels,%0A%0AI%20am%20interested%20in%20a%20holiday%20package."
+target="_blank">
+Explore Packages
+</a>
 
-margin-bottom:20px;
+</div>
 
-}
+<div class="service-card">
 
-.service-card h3{
+<div class="service-icon">🛂</div>
 
-margin-bottom:12px;
+<h3>Visa Assistance</h3>
 
-font-size:26px;
+<p>Tourist & Business Visa</p>
 
-color:#071c39;
+<a class="service-btn"
+href="https://wa.me/917382964554?text=Hello%20Gateway%20Travels,%0A%0AI%20need%20visa%20assistance."
+target="_blank">
+Apply Now
+</a>
 
-}
+</div>
 
-.service-card p{
+<div class="service-card">
 
-margin-bottom:30px;
+<div class="service-icon">🚌</div>
 
-color:#666;
+<h3>Bus Bookings</h3>
 
-}
+<p>Book Bus Tickets Across India</p>
 
-.service-btn{
+<a class="service-btn"
+href="https://wa.me/917382964554?text=Hello%20Gateway%20Travels,%0A%0AI%20would%20like%20to%20book%20a%20bus."
+target="_blank">
+Book Bus
+</a>
 
-display:inline-block;
+</div>
 
-padding:14px 30px;
+<div class="service-card">
 
-background:#D4AF37;
+<div class="service-icon">📄</div>
 
-color:#111;
+<h3>Travel Quote</h3>
 
-border-radius:50px;
+<p>Get a Personalized Travel Quote</p>
 
-text-decoration:none;
+<a class="service-btn"
+href="https://wa.me/917382964554?text=Hello%20Gateway%20Travels,%0A%0AI%20would%20like%20a%20travel%20quotation."
+target="_blank">
+Get Quote
+</a>
 
-font-weight:600;
+</div>
 
-transition:.3s;
+</div>
 
-}
+</div>
 
-.service-btn:hover{
-
-background:#071c39;
-
-color:white;
-
-}
+</section>
 
 
 /* ===================================
