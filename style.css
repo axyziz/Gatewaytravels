@@ -314,3 +314,221 @@ max-width:650px;
 margin:auto;
 
 }
+/* ===================================================
+   SERVICES
+=================================================== */
+
+.services{
+background:#f5f7fb;
+}
+
+.service-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:35px;
+margin-top:50px;
+}
+
+.service-card{
+background:#fff;
+border-radius:22px;
+padding:40px 30px;
+text-decoration:none;
+color:#222;
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+transition:.35s;
+box-shadow:0 15px 40px rgba(0,0,0,.08);
+position:relative;
+overflow:hidden;
+}
+
+.service-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:6px;
+background:#d4af37;
+transform:scaleX(0);
+transition:.35s;
+}
+
+.service-card:hover::before{
+transform:scaleX(1);
+}
+
+.service-card:hover{
+transform:translateY(-12px);
+box-shadow:0 20px 45px rgba(0,0,0,.15);
+}
+
+.service-icon{
+width:90px;
+height:90px;
+border-radius:50%;
+background:linear-gradient(135deg,#d4af37,#f7d774);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+margin-bottom:25px;
+}
+
+.service-card h3{
+font-size:24px;
+margin-bottom:15px;
+color:#071c39;
+}
+
+.service-card p{
+color:#666;
+margin-bottom:30px;
+min-height:70px;
+}
+
+.card-btn{
+background:#071c39;
+color:white;
+padding:14px 30px;
+border-radius:40px;
+font-weight:600;
+transition:.3s;
+}
+
+.service-card:hover .card-btn{
+background:#d4af37;
+color:#111;
+}
+
+/* ===================================================
+OFFERS
+=================================================== */
+
+.offers{
+background:#071c39;
+}
+
+.offers .title h2,
+.offers .title p{
+color:white;
+}
+
+.offer-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:35px;
+}
+
+.offer-card{
+background:white;
+padding:35px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,.12);
+transition:.35s;
+position:relative;
+}
+
+.offer-card:hover{
+transform:translateY(-10px);
+}
+
+.offer-badge{
+display:inline-block;
+padding:8px 18px;
+background:#e53935;
+color:white;
+border-radius:30px;
+font-size:13px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.offer-badge.green{
+background:#2e7d32;
+}
+
+.offer-badge.blue{
+background:#1565c0;
+}
+
+.offer-card h3{
+font-size:28px;
+color:#071c39;
+margin-bottom:12px;
+}
+
+.offer-card h4{
+color:#d4af37;
+margin-bottom:15px;
+}
+
+.offer-card p{
+color:#666;
+margin-bottom:30px;
+}
+
+.offer-card a{
+display:inline-block;
+padding:14px 28px;
+background:#071c39;
+color:white;
+border-radius:40px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.offer-card a:hover{
+background:#d4af37;
+color:#111;
+}
+
+/* ===================================================
+RESPONSIVE
+=================================================== */
+
+@media(max-width:992px){
+
+.service-grid,
+.offer-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:768px){
+
+header .container{
+flex-direction:column;
+gap:15px;
+}
+
+nav ul{
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.hero-buttons{
+flex-direction:column;
+}
+
+.service-grid,
+.offer-grid{
+grid-template-columns:1fr;
+}
+
+}
