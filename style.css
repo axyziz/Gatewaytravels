@@ -469,57 +469,87 @@ OFFERS
 
 .offers{
 
-background:#071c39;
+<!-- =========================
+LATEST OFFERS
+========================== -->
 
-color:white;
+<section class="offers" id="offers">
 
-}
+<div class="container">
 
-.offers h2{
+<h2>Latest Travel Offers</h2>
 
-color:white;
+<p class="offer-subtitle">
+Grab the latest travel deals before they expire.
+</p>
 
-}
+<div class="offer-grid">
 
-.offer-grid{
+<div class="offer-card">
 
-display:grid;
+<div class="offer-badge">LIMITED TIME</div>
 
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+<h3>✈ Flight Deals</h3>
 
-gap:30px;
+<p>
+Book domestic & international flights at competitive prices.
+</p>
 
-}
+<a class="offer-btn"
+href="https://wa.me/917382964554?text=Hello Gateway Travels,%0A%0AI would like to know more about your latest Flight Offers."
+target="_blank">
 
-.offer-card{
+View Offer
 
-background:white;
+</a>
 
-color:#111;
+</div>
 
-padding:35px;
+<div class="offer-card">
 
-border-radius:18px;
+<div class="offer-badge">POPULAR</div>
 
-text-align:center;
+<h3>🌍 Holiday Packages</h3>
 
-transition:.3s;
+<p>
+Dubai • Bali • Singapore • Thailand & many more.
+</p>
 
-}
+<a class="offer-btn"
+href="https://wa.me/917382964554?text=Hello Gateway Travels,%0A%0AI am interested in your Holiday Packages."
+target="_blank">
 
-.offer-card:hover{
+Explore
 
-transform:translateY(-10px);
+</a>
 
-}
+</div>
 
-.offer-card h3{
+<div class="offer-card">
 
-margin-bottom:15px;
+<div class="offer-badge">SAVE MORE</div>
 
-color:#071c39;
+<h3>🚌 Bus Bookings</h3>
 
-}
+<p>
+Book bus tickets with exclusive travel deals.
+</p>
+
+<a class="offer-btn"
+href="https://wa.me/917382964554?text=Hello Gateway Travels,%0A%0AI would like to know your latest Bus Booking Offers."
+target="_blank">
+
+Book Now
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 
 /* ===================================
