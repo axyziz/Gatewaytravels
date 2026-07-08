@@ -658,9 +658,12 @@ background:#071c39;
 color:white;
 }
 
-.contact .title h2,
-.contact .title p{
+.contact .title h2{
 color:white;
+}
+
+.contact .title p{
+color:#d1d5db;
 }
 
 .contact-grid{
