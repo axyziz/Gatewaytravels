@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoices</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f9;
+margin:0;
+padding:30px;
+}
+
+h2{
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+th{
+background:#2563eb;
+color:white;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+background:#f7f7f7;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Gateway Travels Invoices</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Invoice</th>
+<th>Customer</th>
+<th>Service</th>
+<th>Total</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="invoiceTable">
+
+</tbody>
+
+</table>
+
+<script>
+
+loadInvoices();
+
+async function loadInvoices(){
+
+const {data,error}=await supabaseClient
+
+.from("invoices")
+
+.select("*")
+
+.order("created_at",{ascending:false});
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+let html="";
+
+data.forEach(invoice=>{
+
+html+=`
+
+<tr>
+
+<td>${invoice.invoice_number}</td>
+
+<td>${invoice.customer_name}</td>
+
+<td>${invoice.service}</td>
+
+<td>${invoice.total}</td>
+
+<td>${invoice.payment_status}</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("invoiceTable").innerHTML=html;
+
+}
+
+</script>
+
+</body>
+</html>
