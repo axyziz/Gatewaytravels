@@ -60,7 +60,7 @@ button:hover{
 
 </head>
 
-<body>
+<body onload="generateInvoiceNumber()">
 
 <div class="container">
 
@@ -107,7 +107,30 @@ Save Invoice
 </div>
 
 <script>
+async function generateInvoiceNumber() {
 
+    const { data, error } = await supabaseClient
+        .from("invoices")
+        .select("invoice_number")
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    let nextNumber = 1;
+
+    if (data.length > 0) {
+        const lastInvoice = data[0].invoice_number;
+        const number = parseInt(lastInvoice.replace("GT-", ""));
+        nextNumber = number + 1;
+    }
+
+    document.getElementById("invoice_number").value =
+        "GT-" + String(nextNumber).padStart(4, "0");
+}
 async function saveInvoice(){
 
 const {error}=await supabaseClient
@@ -153,5 +176,5 @@ document.getElementById("status").innerHTML="✅ Invoice Saved Successfully";
 
 </script>
 
-</body>
+<body onload="generateInvoiceNumber()">
 </html>
