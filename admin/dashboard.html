@@ -42,13 +42,33 @@ header{
 
 <div class="card">
 
-<h1>Welcome 🎉</h1>
+<h1>Gateway Travels Admin</h1>
 
-<p>You have successfully logged in.</p>
+<br>
 
-<p>Next we will build the Invoice System.</p>
-      
+<button onclick="location.href='create-invoice.html'">
+📝 Create Invoice
+</button>
+
+<br><br>
+
+<button onclick="location.href='invoices.html'">
+📋 View Invoices
+</button>
+
+<br><br>
+
+<button onclick="logout()">
+🚪 Logout
+</button>
+
 </div>
+    <script>
+async function logout() {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
 <script src="../js/auth.js"></script>
