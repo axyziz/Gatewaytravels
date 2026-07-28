@@ -98,6 +98,9 @@ button:hover{
 <button onclick="saveInvoice()">
 Save Invoice
 </button>
+  <button onclick="downloadPDF()" style="margin-top:10px;background:#16a34a;">
+Download PDF
+</button>
 
 <p id="status"></p>
 
@@ -184,5 +187,8 @@ document.getElementById("status").innerHTML="✅ Invoice Saved Successfully";
 
 </script>
 
-<body onload="generateInvoiceNumber()">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
 </html>
+
