@@ -81,6 +81,34 @@ button:hover{
     background:#1d4ed8;
 }
 
+.section{
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+    background:#fafafa;
+}
+
+.section h3{
+    margin:0 0 15px;
+    color:#0B3D91;
+    font-size:18px;
+    border-bottom:1px solid #e5e7eb;
+    padding-bottom:10px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+@media (max-width:768px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
 #status{
     margin-top:15px;
     font-weight:bold;
@@ -114,44 +142,61 @@ button:hover{
 
 <h2>Create Invoice</h2>
 
-<input id="invoice_number" placeholder="Invoice Number" readonly>
+<div class="section">
+    <h3>📄 Invoice Information</h3>
 
-<input id="customer_name" placeholder="Customer Name">
+    <input id="invoice_number" placeholder="Invoice Number" readonly>
 
-<input id="customer_mobile" placeholder="Customer Mobile">
+    <select id="payment_status">
+        <option>Pending</option>
+        <option>Paid</option>
+    </select>
+</div>
 
-<input id="customer_email" placeholder="Customer Email">
+<div class="section">
+    <h3>👤 Customer Details</h3>
 
-<select id="service">
-<option>Flight</option>
-<option>Bus</option>
-<option>Hotel</option>
-<option>Visa</option>
-<option>Holiday Package</option>
-<option>Vehicle Rental</option>
-</select>
+    <input id="customer_name" placeholder="Customer Name">
 
-<textarea id="description" placeholder="Description"></textarea>
+    <input id="customer_mobile" placeholder="Customer Mobile">
 
-<input id="amount" type="number" placeholder="Amount" oninput="calculateTotal()">
-<input id="discount" type="number" placeholder="Discount" oninput="calculateTotal()">
-<input id="total" type="number" placeholder="Total" readonly>
-<select id="payment_status">
-<option>Pending</option>
-<option>Paid</option>
-</select>
+    <input id="customer_email" placeholder="Customer Email">
+</div>
 
-<input id="payment_method" placeholder="Payment Method">
+<div class="section">
+    <h3>✈️ Booking Details</h3>
 
-<button onclick="saveInvoice()">
-Save Invoice
-</button>
-  <button onclick="downloadPDF()" style="margin-top:10px;background:#16a34a;">
-Download PDF
+    <select id="service">
+        <option>Flight</option>
+        <option>Bus</option>
+        <option>Hotel</option>
+        <option>Visa</option>
+        <option>Holiday Package</option>
+        <option>Vehicle Rental</option>
+    </select>
+
+    <textarea id="description" placeholder="Description"></textarea>
+</div>
+
+<div class="section">
+    <h3>💳 Payment Summary</h3>
+
+    <input id="amount" type="number" placeholder="Amount" oninput="calculateTotal()">
+
+    <input id="discount" type="number" placeholder="Discount" oninput="calculateTotal()">
+
+    <input id="total" type="number" placeholder="Grand Total" readonly>
+
+    <input id="payment_method" placeholder="Payment Method">
+</div>
+
+<button onclick="saveInvoice()">Save Invoice</button>
+
+<button onclick="downloadPDF()" style="background:#16a34a;">
+    Download PDF
 </button>
 
 <p id="status"></p>
-
 </div>
 
 <script>
