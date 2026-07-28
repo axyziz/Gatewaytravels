@@ -141,7 +141,26 @@ async function generateInvoiceNumber() {
     document.getElementById("total").value = amount - discount;
 
 }
+function downloadPDF() {
 
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text("Gateway Travels & Holidays", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text("Invoice Number: " + document.getElementById("invoice_number").value, 20, 40);
+    doc.text("Customer: " + document.getElementById("customer_name").value, 20, 50);
+    doc.text("Mobile: " + document.getElementById("customer_mobile").value, 20, 60);
+    doc.text("Service: " + document.getElementById("service").value, 20, 70);
+    doc.text("Amount: ₹" + document.getElementById("amount").value, 20, 80);
+    doc.text("Discount: ₹" + document.getElementById("discount").value, 20, 90);
+    doc.text("Total: ₹" + document.getElementById("total").value, 20, 100);
+
+    doc.save(document.getElementById("invoice_number").value + ".pdf");
+}
 async function saveInvoice() {
 
 const {error}=await supabaseClient
