@@ -128,7 +128,7 @@ async function generateInvoiceNumber() {
     document.getElementById("invoice_number").value =
     
         "GT-" + String(nextNumber).padStart(4, "0");
-    function calculateTotal() {
+   function calculateTotal() {
 
     const amount = Number(document.getElementById("amount").value) || 0;
 
@@ -137,8 +137,8 @@ async function generateInvoiceNumber() {
     document.getElementById("total").value = amount - discount;
 
 }
-}
-async function saveInvoice(){
+
+async function saveInvoice() {
 
 const {error}=await supabaseClient
 .from("invoices")
