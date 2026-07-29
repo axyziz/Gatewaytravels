@@ -8,17 +8,21 @@ async function checkLogin() {
     console.log(error);
 
     if (error) {
-        alert("Auth Error");
+
         window.location.href = "login.html";
-        return;
+        return false;
+
     }
 
     if (!data.session) {
-        alert("No session found");
+
         window.location.href = "login.html";
-        return;
+        return false;
+
     }
 
-    alert("User is logged in");
+    console.log("User is logged in");
+
+    return true;
 
 }
