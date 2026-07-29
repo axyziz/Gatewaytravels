@@ -63,13 +63,5 @@ async function loadCustomers(){
     });
 
 }
-
-
-window.onload = async function(){
-
-    await checkLogin();
-
-    loadCustomers();
-
-}
+<body onload="checkLogin()">
 </script>
