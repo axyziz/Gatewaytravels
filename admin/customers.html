@@ -1,67 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customers | Gateway Travels Admin</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/auth.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#f4f6f9;
+padding:30px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.header h1{
+color:#1d3557;
+}
+
+.btn{
+background:#0d6efd;
+color:#fff;
+border:none;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+}
+
+.btn:hover{
+background:#0b5ed7;
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.1);
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+label{
+display:block;
+margin-bottom:6px;
+font-weight:bold;
+}
+
+input,
+textarea,
+select{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:14px;
+}
+
+textarea{
+resize:vertical;
+}
+
+.full{
+grid-column:1/3;
+}
+
+.success{
+background:#d1e7dd;
+padding:12px;
+border-radius:6px;
+margin-bottom:20px;
+display:none;
+}
+
+.error{
+background:#f8d7da;
+padding:12px;
+border-radius:6px;
+margin-bottom:20px;
+display:none;
+}
+
+.search-box{
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+table th{
+background:#1d3557;
+color:white;
+padding:12px;
+}
+
+table td{
+padding:10px;
+border-bottom:1px solid #ddd;
+font-size:14px;
+}
+
+.action-btn{
+padding:6px 12px;
+border:none;
+border-radius:4px;
+cursor:pointer;
+color:#fff;
+margin-right:5px;
+}
+
+.edit{
+background:#198754;
+}
+
+.delete{
+background:#dc3545;
+}
+
+@media(max-width:768px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.full{
+grid-column:auto;
+}
+
+.header{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body onload="initPage()">
+
+<div class="container">
+
+<div class="header">
+
+<h1>Customer Management</h1>
+
+<button class="btn" onclick="location.href='dashboard.html'">
+← Dashboard
+</button>
+
+</div>
+
+<div id="success" class="success"></div>
+
+<div id="error" class="error"></div>
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">Add / Edit Customer</h2>
+
+<div class="grid">
+
+<input type="hidden" id="customerId">
+
+<div>
+
+<label>Customer Name</label>
+
+<input
+type="text"
+id="customerName"
+placeholder="Enter customer name">
+
+</div>
+
+<div>
+
+<label>Mobile Number</label>
+
+<input
+type="text"
+id="customerPhone"
+placeholder="Enter mobile number">
+
+</div>
+
+<div>
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="customerEmail"
+placeholder="Enter email">
+
+</div>
+
+<div>
+
+<label>City</label>
+
+<input
+type="text"
+id="customerCity"
+placeholder="Enter city">
+
+</div>
+
+<div class="full">
+
+<label>Address</label>
+
+<textarea
+id="customerAddress"
+rows="3"
+placeholder="Customer Address"></textarea>
+
+</div>
+
+<div class="full">
+
+<button
+class="btn"
+onclick="saveCustomer()">
+
+Save Customer
+
+</button>
+
+<button
+class="btn"
+style="background:#6c757d;margin-left:10px;"
+onclick="resetForm()">
+
+Clear
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">Customer List</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="search"
+placeholder="Search customer..."
+onkeyup="searchCustomer()">
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Phone</th>
+
+<th>Email</th>
+
+<th>City</th>
+
+<th width="170">Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="customerTable">
+
+<tr>
+
+<td colspan="5" align="center">
+
+Loading Customers...
+
+</td>
+
+</tr>
+    </tbody>
+
+</table>
+
+</div>
+
+</div>
+
 <script>
-async function saveCustomer(){
 
-    const { error } = await supabaseClient
-    .from("customers")
-    .insert([{
-        title: document.getElementById("title").value,
-        first_name: document.getElementById("first_name").value,
-        last_name: document.getElementById("last_name").value,
-        mobile: document.getElementById("mobile").value,
-        email: document.getElementById("email").value
-    }]);
+let customers = [];
 
-    if(error){
+async function initPage(){
 
-        document.getElementById("status").innerHTML = "❌ " + error.message;
+    try{
 
-    }else{
+        await checkLogin();
 
-        document.getElementById("status").innerHTML = "✅ Customer Saved Successfully";
+        await loadCustomers();
 
-        document.getElementById("title").value = "";
-        document.getElementById("first_name").value = "";
-        document.getElementById("last_name").value = "";
-        document.getElementById("mobile").value = "";
-        document.getElementById("email").value = "";
+    }catch(err){
 
-        loadCustomers();
+        console.error(err);
 
     }
 
 }
 
-
 async function loadCustomers(){
 
-    const { data, error } = await supabaseClient
-        .from("customers")
-        .select("*")
-        .order("first_name",{ascending:true});
+    const tbody = document.getElementById("customerTable");
+
+    tbody.innerHTML="<tr><td colspan='5' align='center'>Loading...</td></tr>";
+
+    const {data,error}=await supabaseClient
+    .from("customers")
+    .select("*")
+    .order("created_at",{ascending:false});
 
     if(error){
+
+        tbody.innerHTML="<tr><td colspan='5' align='center'>Unable to load customers.</td></tr>";
+
         console.error(error);
+
         return;
+
     }
 
-    const tbody = document.querySelector("#customersTable tbody");
+    customers=data||[];
 
-    tbody.innerHTML = "";
+    renderTable(customers);
 
-    data.forEach(customer=>{
+}
 
-        tbody.innerHTML += `
-        <tr>
-            <td>${customer.title}</td>
-            <td>${customer.first_name} ${customer.last_name}</td>
-            <td>${customer.mobile}</td>
-            <td>${customer.email}</td>
-            <td>Edit | Delete</td>
-        </tr>
-        `;
+function renderTable(list){
+
+    const tbody=document.getElementById("customerTable");
+
+    if(list.length===0){
+
+        tbody.innerHTML="<tr><td colspan='5' align='center'>No Customers Found</td></tr>";
+
+        return;
+
+    }
+
+    tbody.innerHTML="";
+
+    list.forEach(customer=>{
+
+        tbody.innerHTML+=`
+
+<tr>
+
+<td>${customer.name??""}</td>
+
+<td>${customer.phone??""}</td>
+
+<td>${customer.email??""}</td>
+
+<td>${customer.city??""}</td>
+
+<td>
+
+<button
+class="action-btn edit"
+onclick="editCustomer('${customer.id}')">
+
+Edit
+
+</button>
+
+<button
+class="action-btn delete"
+onclick="deleteCustomer('${customer.id}')">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
 
     });
 
 }
-<body onload="checkLogin()">
+
+function searchCustomer(){
+
+    const keyword=document
+    .getElementById("search")
+    .value
+    .toLowerCase();
+
+    const filtered=customers.filter(c=>
+
+        (c.name||"").toLowerCase().includes(keyword) ||
+
+        (c.phone||"").toLowerCase().includes(keyword) ||
+
+        (c.email||"").toLowerCase().includes(keyword) ||
+
+        (c.city||"").toLowerCase().includes(keyword)
+
+    );
+
+    renderTable(filtered);
+
+}
+
+async function saveCustomer(){
+
+    const id=document.getElementById("customerId").value;
+
+    const customer={
+
+        name:document.getElementById("customerName").value.trim(),
+
+        phone:document.getElementById("customerPhone").value.trim(),
+
+        email:document.getElementById("customerEmail").value.trim(),
+
+        city:document.getElementById("customerCity").value.trim(),
+
+        address:document.getElementById("customerAddress").value.trim()
+
+    };
+
+    if(customer.name===""){
+
+        showError("Customer name is required.");
+
+        return;
+
+    }
+
+    let response;
+
+    if(id===""){
+
+        response=await supabaseClient
+
+        .from("customers")
+
+        .insert(customer);
+
+    }else{
+
+        response=await supabaseClient
+
+        .from("customers")
+
+        .update(customer)
+
+        .eq("id",id);
+
+    }
+
+    if(response.error){
+
+        showError(response.error.message);
+
+        return;
+
+    }
+
+    showSuccess("Customer saved successfully.");
+
+    resetForm();
+
+    await loadCustomers();
+
+}
+    async function editCustomer(id){
+
+    const customer = customers.find(c => c.id == id);
+
+    if(!customer) return;
+
+    document.getElementById("customerId").value = customer.id;
+    document.getElementById("customerName").value = customer.name || "";
+    document.getElementById("customerPhone").value = customer.phone || "";
+    document.getElementById("customerEmail").value = customer.email || "";
+    document.getElementById("customerCity").value = customer.city || "";
+    document.getElementById("customerAddress").value = customer.address || "";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+async function deleteCustomer(id){
+
+    if(!confirm("Are you sure you want to delete this customer?")){
+        return;
+    }
+
+    const { error } = await supabaseClient
+    .from("customers")
+    .delete()
+    .eq("id", id);
+
+    if(error){
+
+        showError(error.message);
+        return;
+
+    }
+
+    showSuccess("Customer deleted successfully.");
+
+    await loadCustomers();
+
+}
+
+function resetForm(){
+
+    document.getElementById("customerId").value = "";
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerEmail").value = "";
+    document.getElementById("customerCity").value = "";
+    document.getElementById("customerAddress").value = "";
+
+}
+
+function showSuccess(message){
+
+    const success = document.getElementById("success");
+    const error = document.getElementById("error");
+
+    error.style.display = "none";
+
+    success.innerHTML = message;
+    success.style.display = "block";
+
+    setTimeout(()=>{
+        success.style.display="none";
+    },3000);
+
+}
+
+function showError(message){
+
+    const success = document.getElementById("success");
+    const error = document.getElementById("error");
+
+    success.style.display = "none";
+
+    error.innerHTML = message;
+    error.style.display = "block";
+
+    setTimeout(()=>{
+        error.style.display="none";
+    },4000);
+
+}
+
 </script>
+
+</body>
+</html>
+
