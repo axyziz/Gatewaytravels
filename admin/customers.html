@@ -177,9 +177,11 @@
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-    // await checkLogin();
+    const loggedIn = await checkLogin();
 
-    initCustomers();
+    if (!loggedIn) return;
+
+    await initCustomers();
 
 });
 </script>
