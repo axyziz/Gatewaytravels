@@ -25,9 +25,105 @@
 
 <div class="container">
 
-    <h1 class="page-title">
-        Customer Management
-    </h1>
+    <h1 class="page-title">Customer Management</h1>
+
+    <div class="card">
+
+        <h2>Add / Edit Customer</h2>
+
+        <br>
+
+        <input type="hidden" id="customerId">
+
+        <div class="row">
+
+            <div class="col">
+                <label>Title</label>
+                <select id="title">
+                    <option value="">Select</option>
+                    <option>Mr</option>
+                    <option>Mrs</option>
+                    <option>Ms</option>
+                    <option>Miss</option>
+                    <option>Master</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <label>First Name</label>
+                <input type="text" id="first_name">
+            </div>
+
+            <div class="col">
+                <label>Last Name</label>
+                <input type="text" id="last_name">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col">
+                <label>Mobile</label>
+                <input type="text" id="mobile">
+            </div>
+
+            <div class="col">
+                <label>Email</label>
+                <input type="email" id="email">
+            </div>
+
+            <div class="col">
+                <label>Nationality</label>
+                <input type="text" id="nationality">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col">
+                <label>Passport No</label>
+                <input type="text" id="passport_no">
+            </div>
+
+            <div class="col">
+                <label>Passport Expiry</label>
+                <input type="date" id="passport_expiry">
+            </div>
+
+            <div class="col">
+                <label>Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col">
+                <label>Company</label>
+                <input type="text" id="company">
+            </div>
+
+            <div class="col">
+                <label>GST Number</label>
+                <input type="text" id="gst_number">
+            </div>
+
+        </div>
+
+        <label>Address</label>
+
+        <textarea id="address" rows="4"></textarea>
+
+        <br>
+
+        <button id="saveCustomerBtn">
+            Save Customer
+        </button>
+
+    </div>
 
 </div>
 
