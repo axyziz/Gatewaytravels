@@ -1,3 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Management</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.section{
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:20px;
+    background:#fafafa;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    box-sizing:border-box;
+}
+
+button{
+    margin-top:20px;
+    width:100%;
+    padding:14px;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
 <div class="container">
 
     <h2>Customer Management</h2>
@@ -37,3 +109,33 @@
     </div>
 
 </div>
+
+<script>
+async function saveCustomer(){
+
+    const { error } = await supabaseClient
+    .from("customers")
+    .insert([{
+        title: document.getElementById("title").value,
+        first_name: document.getElementById("first_name").value,
+        last_name: document.getElementById("last_name").value,
+        mobile: document.getElementById("mobile").value,
+        email: document.getElementById("email").value
+    }]);
+
+    if(error){
+        document.getElementById("status").innerHTML = "❌ " + error.message;
+    }else{
+        document.getElementById("status").innerHTML = "✅ Customer Saved Successfully";
+
+        document.getElementById("title").value = "";
+        document.getElementById("first_name").value = "";
+        document.getElementById("last_name").value = "";
+        document.getElementById("mobile").value = "";
+        document.getElementById("email").value = "";
+    }
+}
+</script>
+
+</body>
+</html>
