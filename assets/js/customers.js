@@ -8,6 +8,19 @@ async function initCustomers() {
     console.log("Customers page loaded");
 
     await loadCustomers();
+    document.getElementById("customerId").value = "";
+document.getElementById("title").value = "";
+document.getElementById("first_name").value = "";
+document.getElementById("last_name").value = "";
+document.getElementById("mobile").value = "";
+document.getElementById("email").value = "";
+document.getElementById("nationality").value = "";
+document.getElementById("passport_no").value = "";
+document.getElementById("passport_expiry").value = "";
+document.getElementById("dob").value = "";
+document.getElementById("company").value = "";
+document.getElementById("gst_number").value = "";
+document.getElementById("address").value = "";
 
 }
 
