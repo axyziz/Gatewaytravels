@@ -108,5 +108,17 @@ async function saveCustomer() {
         address: document.getElementById("address").value
     };
 
-    console.log(customer);
+const { error } = await supabaseClient
+    .from("customers")
+    .insert([customer]);
+
+if (error) {
+    console.error(error);
+    alert(error.message);
+    return;
+}
+
+alert("Customer saved successfully!");
+
+await loadCustomers();
 }
