@@ -89,8 +89,24 @@ async function loadCustomers() {
 }
 document
     .getElementById("saveCustomerBtn")
-    .addEventListener("click", function () {
+    .addEventListener("click", saveCustomer);
 
-        alert("Save button is working!");
+async function saveCustomer() {
 
-    });
+    const customer = {
+        title: document.getElementById("title").value,
+        first_name: document.getElementById("first_name").value,
+        last_name: document.getElementById("last_name").value,
+        mobile: document.getElementById("mobile").value,
+        email: document.getElementById("email").value,
+        nationality: document.getElementById("nationality").value,
+        passport_no: document.getElementById("passport_no").value,
+        passport_expiry: document.getElementById("passport_expiry").value || null,
+        dob: document.getElementById("dob").value || null,
+        company: document.getElementById("company").value,
+        gst_number: document.getElementById("gst_number").value,
+        address: document.getElementById("address").value
+    };
+
+    console.log(customer);
+}
