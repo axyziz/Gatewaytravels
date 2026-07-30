@@ -1,3 +1,4 @@
+console.log("customers.js loaded");
 // ================================
 // Gateway Travels CRM - Customers
 // ================================
