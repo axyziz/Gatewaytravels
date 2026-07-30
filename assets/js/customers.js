@@ -112,20 +112,81 @@ document
 
 async function saveCustomer() {
 
-    const customer = {
-        title: document.getElementById("title").value,
-        first_name: document.getElementById("first_name").value,
-        last_name: document.getElementById("last_name").value,
-        mobile: document.getElementById("mobile").value,
-        email: document.getElementById("email").value,
-        nationality: document.getElementById("nationality").value,
-        passport_no: document.getElementById("passport_no").value,
-        passport_expiry: document.getElementById("passport_expiry").value || null,
-        dob: document.getElementById("dob").value || null,
-        company: document.getElementById("company").value,
-        gst_number: document.getElementById("gst_number").value,
-        address: document.getElementById("address").value
+  const customer = {
+    title: document.getElementById("title").value,
+    first_name: document.getElementById("first_name").value,
+    last_name: document.getElementById("last_name").value,
+    mobile: document.getElementById("mobile").value,
+    email: document.getElementById("email").value,
+    nationality: document.getElementById("nationality").value,
+    passport_no: document.getElementById("passport_no").value,
+    passport_expiry: document.getElementById("passport_expiry").value || null,
+    dob: document.getElementById("dob").value || null,
+    company: document.getElementById("company").value,
+    gst_number: document.getElementById("gst_number").value,
+    address: document.getElementById("address").value
     };
+
+    const { error } = await supabaseClient
+        .from("customers")
+        .insert([customer]);
+
+    if (error) {
+        console.error(error);
+        alert(error.message);
+        return;
+    }
+
+    alert("Customer saved successfully!");
+
+    await loadCustomers();
+
+    // Clear form
+    document.getElementById("customerId").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("first_name").value = "";
+    document.getElementById("last_name").value = "";
+    document.getElementById("mobile").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("nationality").value = "";
+    document.getElementById("passport_no").value = "";
+    document.getElementById("passport_expiry").value = "";
+    document.getElementById("dob").value = "";
+    document.getElementById("company").value = "";
+    document.getElementById("gst_number").value = "";
+    document.getElementById("address").value = "";
+
+} // <-- saveCustomer ENDS HERE
+
+
+async function editCustomer(id) {
+
+    const { data, error } = await supabaseClient
+        .from("customers")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    document.getElementById("customerId").value = data.id;
+    document.getElementById("title").value = data.title || "";
+    document.getElementById("first_name").value = data.first_name || "";
+    document.getElementById("last_name").value = data.last_name || "";
+    document.getElementById("mobile").value = data.mobile || "";
+    document.getElementById("email").value = data.email || "";
+    document.getElementById("nationality").value = data.nationality || "";
+    document.getElementById("passport_no").value = data.passport_no || "";
+    document.getElementById("passport_expiry").value = data.passport_expiry || "";
+    document.getElementById("dob").value = data.dob || "";
+    document.getElementById("company").value = data.company || "";
+    document.getElementById("gst_number").value = data.gst_number || "";
+    document.getElementById("address").value = data.address || "";
+
+}
 
 const { error } = await supabaseClient
     .from("customers")
