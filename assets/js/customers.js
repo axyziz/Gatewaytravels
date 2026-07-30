@@ -86,3 +86,10 @@ async function loadCustomers() {
     });
 
 }
+document
+    .getElementById("saveCustomerBtn")
+    .addEventListener("click", function () {
+
+        alert("Save button is working!");
+
+    });
