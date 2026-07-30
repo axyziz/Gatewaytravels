@@ -91,8 +91,14 @@ async function loadCustomers() {
                 <td>${customer.nationality ?? ""}</td>
 
                 <td>
-                    Edit | Delete
-                </td>
+    <button onclick="editCustomer(${customer.id})">
+        Edit
+    </button>
+
+    <button onclick="deleteCustomer(${customer.id})">
+        Delete
+    </button>
+</td>
 
             </tr>
         `;
