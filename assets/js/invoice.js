@@ -1,7 +1,7 @@
 console.log("invoice.js loaded");
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    await generateInvoiceNumber();
+    generateInvoiceNumber();
 
 });
