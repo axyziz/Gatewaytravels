@@ -111,9 +111,24 @@ async function saveCustomer() {
         address: document.getElementById("address").value
     };
 
-    const { error } = await supabaseClient
-        .from("customers")
-        .insert([customer]);
+    let error;
+
+    const customerId = document.getElementById("customerId").value;
+
+    if (customerId) {
+
+        ({ error } = await supabaseClient
+            .from("customers")
+            .update(customer)
+            .eq("id", customerId));
+
+    } else {
+
+        ({ error } = await supabaseClient
+            .from("customers")
+            .insert([customer]));
+
+    }
 
     if (error) {
 
@@ -123,7 +138,11 @@ async function saveCustomer() {
 
     }
 
-    alert("Customer saved successfully!");
+    alert(
+        customerId
+            ? "Customer updated successfully!"
+            : "Customer saved successfully!"
+    );
 
     clearForm();
 
