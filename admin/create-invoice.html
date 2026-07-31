@@ -221,18 +221,7 @@ button:hover{
 </div>
 
 <script>
-async function generateInvoiceNumber() {
 
-    const { data, error } = await supabaseClient
-        .from("invoices")
-        .select("invoice_number")
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-    if (error) {
-        console.error(error);
-        return;
-    }
 
     let nextNumber = 1;
 
