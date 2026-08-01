@@ -98,3 +98,36 @@ function fillCustomer() {
         option.dataset.email || "";
 
 }
+async function loadCustomers() {
+
+    const customerSelect = document.getElementById("customer_id");
+
+    const { data, error } = await supabaseClient
+        .from("customers")
+        .select("*")
+        .order("first_name", { ascending: true });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    data.forEach(customer => {
+
+        const option = document.createElement("option");
+
+        option.value = customer.id;
+        option.textContent =
+            `${customer.first_name} ${customer.last_name}`;
+
+        option.dataset.name =
+            `${customer.first_name} ${customer.last_name}`;
+
+        option.dataset.mobile = customer.mobile;
+        option.dataset.email = customer.email;
+
+        customerSelect.appendChild(option);
+
+    });
+
+}
