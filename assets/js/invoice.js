@@ -1,10 +1,16 @@
 console.log("invoice.js loaded");
 
-document.addEventListener("DOMContentLoaded", () => {
-    generateInvoiceNumber();
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await generateInvoiceNumber();
+    await loadCustomers();
+
 });
 
+// =========================
 // Generate Invoice Number
+// =========================
+
 async function generateInvoiceNumber() {
 
     const { data, error } = await supabaseClient
@@ -18,100 +24,77 @@ async function generateInvoiceNumber() {
         return;
     }
 
-    let nextNumber = 1;
+    let next = 1;
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
+    if (data.length > 0) {
 
-    if (data && data.length > 0) {
-
-        const lastInvoice = data[0].invoice_number;
-        const parts = lastInvoice.split("-");
-
-        if (parts.length === 3) {
-            nextNumber = parseInt(parts[2]) + 1;
-        }
+        const last = data[0].invoice_number;
+        const num = parseInt(last.replace("GT-", ""));
+        next = num + 1;
 
     }
 
     document.getElementById("invoice_number").value =
-        `GT-${year}${month}-${String(nextNumber).padStart(4, "0")}`;
+        "GT-" + String(next).padStart(4, "0");
 
 }
 
-// Calculate Total
-function calculateTotal() {
+// =========================
+// Load Customers
+// =========================
 
-    const amount = Number(document.getElementById("amount").value) || 0;
-    const discount = Number(document.getElementById("discount").value) || 0;
+async function loadCustomers() {
 
-    document.getElementById("total").value = amount - discount;
+    const select = document.getElementById("customer_id");
 
-}
-
-// Download Invoice PDF
-function downloadPDF() {
-
-    const { jsPDF } = window.jspdf;
-
-    const doc = new jsPDF();
-
-    doc.setFontSize(20);
-    doc.text("Gateway Travels & Holidays", 20, 20);
-
-    doc.setFontSize(12);
-    doc.text("Invoice Number: " + document.getElementById("invoice_number").value, 20, 40);
-    doc.text("Customer: " + document.getElementById("customer_name").value, 20, 50);
-    doc.text("Mobile: " + document.getElementById("customer_mobile").value, 20, 60);
-    doc.text("Service: " + document.getElementById("service").value, 20, 70);
-    doc.text("Amount: ₹" + document.getElementById("amount").value, 20, 80);
-    doc.text("Discount: ₹" + document.getElementById("discount").value, 20, 90);
-    doc.text("Total: ₹" + document.getElementById("total").value, 20, 100);
-
-    doc.save(document.getElementById("invoice_number").value + ".pdf");
-
-}
-
-// Save Invoice
-async function saveInvoice() {
-
-    const { error } = await supabaseClient
-        .from("invoices")
-        .insert([{
-
-            invoice_number: document.getElementById("invoice_number").value,
-
-            customer_name: document.getElementById("customer_name").value,
-
-            customer_mobile: document.getElementById("customer_mobile").value,
-
-            customer_email: document.getElementById("customer_email").value,
-
-            service: document.getElementById("service").value,
-
-            description: document.getElementById("description").value,
-
-            amount: document.getElementById("amount").value,
-
-            discount: document.getElementById("discount").value,
-
-            total: document.getElementById("total").value,
-
-            payment_status: document.getElementById("payment_status").value,
-
-            payment_method: document.getElementById("payment_method").value
-
-        }]);
+    const { data, error } = await supabaseClient
+        .from("customers")
+        .select("*")
+        .order("first_name");
 
     if (error) {
-
-        document.getElementById("status").innerHTML = error.message;
-
-    } else {
-
-        document.getElementById("status").innerHTML = "✅ Invoice Saved Successfully";
-
+        console.error(error);
+        return;
     }
+
+    data.forEach(customer => {
+
+        const option = document.createElement("option");
+
+        option.value = customer.id;
+
+        option.text =
+            `${customer.first_name} ${customer.last_name}`;
+
+        option.dataset.mobile = customer.mobile;
+        option.dataset.email = customer.email;
+        option.dataset.name =
+            `${customer.first_name} ${customer.last_name}`;
+
+        select.appendChild(option);
+
+    });
+
+    select.addEventListener("change", fillCustomer);
+
+}
+
+// =========================
+// Fill Customer Details
+// =========================
+
+function fillCustomer() {
+
+    const option =
+        document.getElementById("customer_id").selectedOptions[0];
+
+    document.getElementById("customer_name").value =
+        option.dataset.name || "";
+
+    document.getElementById("customer_mobile").value =
+        option.dataset.mobile || "";
+
+    document.getElementById("customer_email").value =
+        option.dataset.email || "";
 
 }
