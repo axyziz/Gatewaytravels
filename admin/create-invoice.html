@@ -153,6 +153,8 @@ async function saveInvoice() {
         .insert([{
 
             invoice_number: document.getElementById("invoice_number").value,
+            
+            customer_id: document.getElementById("customer_id").value,
 
             customer_name: document.getElementById("customer_name").value,
 
