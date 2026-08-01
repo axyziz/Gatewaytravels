@@ -2,9 +2,21 @@ console.log("invoice.js loaded");
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-    await generateInvoiceNumber();
-
     await loadCustomers();
+
+    const params = new URLSearchParams(window.location.search);
+
+    const invoiceId = params.get("id");
+
+    if (invoiceId) {
+
+        await loadInvoice(invoiceId);
+
+    } else {
+
+        await generateInvoiceNumber();
+
+    }
 
 });
 
