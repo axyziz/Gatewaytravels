@@ -64,6 +64,7 @@ background:#f7f7f7;
 <th>Service</th>
 <th>Total</th>
 <th>Status</th>
+<th>Action</th>
 
 </tr>
 
@@ -114,6 +115,18 @@ html+=`
 <td>${invoice.total}</td>
 
 <td>${invoice.payment_status}</td>
+
+<td>
+
+<button onclick="editInvoice('${invoice.id}')">
+    Edit
+</button>
+
+<button onclick="deleteInvoice('${invoice.id}')">
+    Delete
+</button>
+
+</td>
 
 </tr>
 
