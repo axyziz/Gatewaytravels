@@ -86,8 +86,11 @@ button:hover{
 <textarea id="description" placeholder="Description"></textarea>
 
 <input id="amount" type="number" placeholder="Amount" oninput="calculateTotal()">
+
 <input id="discount" type="number" placeholder="Discount" oninput="calculateTotal()">
+
 <input id="total" type="number" placeholder="Total" readonly>
+
 <select id="payment_status">
 <option>Pending</option>
 <option>Paid</option>
@@ -126,10 +129,10 @@ async function generateInvoiceNumber() {
     }
 
     document.getElementById("invoice_number").value =
-    
         "GT-" + String(nextNumber).padStart(4, "0");
-    }
-   function calculateTotal() {
+}
+
+function calculateTotal() {
 
     const amount = Number(document.getElementById("amount").value) || 0;
 
@@ -141,48 +144,50 @@ async function generateInvoiceNumber() {
 
 async function saveInvoice() {
 
-const {error}=await supabaseClient
-.from("invoices")
-.insert([{
+    const { error } = await supabaseClient
+        .from("invoices")
+        .insert([{
 
-invoice_number:document.getElementById("invoice_number").value,
+            invoice_number: document.getElementById("invoice_number").value,
 
-customer_name:document.getElementById("customer_name").value,
+            customer_name: document.getElementById("customer_name").value,
 
-customer_mobile:document.getElementById("customer_mobile").value,
+            customer_mobile: document.getElementById("customer_mobile").value,
 
-customer_email:document.getElementById("customer_email").value,
+            customer_email: document.getElementById("customer_email").value,
 
-service:document.getElementById("service").value,
+            service: document.getElementById("service").value,
 
-description:document.getElementById("description").value,
+            description: document.getElementById("description").value,
 
-amount:document.getElementById("amount").value,
+            amount: document.getElementById("amount").value,
 
-discount:document.getElementById("discount").value,
+            discount: document.getElementById("discount").value,
 
-total:document.getElementById("total").value,
+            total: document.getElementById("total").value,
 
-payment_status:document.getElementById("payment_status").value,
+            payment_status: document.getElementById("payment_status").value,
 
-payment_method:document.getElementById("payment_method").value
+            payment_method: document.getElementById("payment_method").value
 
-}]);
+        }]);
 
+    if (error) {
 
-if(error){
+        document.getElementById("status").innerHTML = error.message;
 
-document.getElementById("status").innerHTML=error.message;
+    } else {
 
-}else{
+        document.getElementById("status").innerHTML = "✅ Invoice Saved Successfully";
 
-document.getElementById("status").innerHTML="✅ Invoice Saved Successfully";
+    }
 
 }
-
-}
-
 </script>
 
-<body onload="generateInvoiceNumber()">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="../assets/js/invoice.js"></script>
+
+</body>
 </html>
