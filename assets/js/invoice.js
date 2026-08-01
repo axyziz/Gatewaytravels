@@ -3,6 +3,7 @@ console.log("invoice.js loaded");
 document.addEventListener("DOMContentLoaded", async () => {
 
     await generateInvoiceNumber();
+
     await loadCustomers();
 
 });
@@ -26,7 +27,7 @@ async function generateInvoiceNumber() {
 
     let next = 1;
 
-    if (data.length > 0) {
+    if (data && data.length > 0) {
 
         const last = data[0].invoice_number;
         const num = parseInt(last.replace("GT-", ""));
@@ -47,10 +48,12 @@ async function loadCustomers() {
 
     const select = document.getElementById("customer_id");
 
+    if (!select) return;
+
     const { data, error } = await supabaseClient
         .from("customers")
         .select("*")
-        .order("first_name");
+        .order("first_name", { ascending: true });
 
     if (error) {
         console.error(error);
@@ -63,13 +66,14 @@ async function loadCustomers() {
 
         option.value = customer.id;
 
-        option.text =
-            `${customer.first_name} ${customer.last_name}`;
+        option.textContent =
+            `${customer.first_name ?? ""} ${customer.last_name ?? ""}`;
 
-        option.dataset.mobile = customer.mobile;
-        option.dataset.email = customer.email;
         option.dataset.name =
-            `${customer.first_name} ${customer.last_name}`;
+            `${customer.first_name ?? ""} ${customer.last_name ?? ""}`;
+
+        option.dataset.mobile = customer.mobile ?? "";
+        option.dataset.email = customer.email ?? "";
 
         select.appendChild(option);
 
@@ -96,38 +100,5 @@ function fillCustomer() {
 
     document.getElementById("customer_email").value =
         option.dataset.email || "";
-
-}
-async function loadCustomers() {
-
-    const customerSelect = document.getElementById("customer_id");
-
-    const { data, error } = await supabaseClient
-        .from("customers")
-        .select("*")
-        .order("first_name", { ascending: true });
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    data.forEach(customer => {
-
-        const option = document.createElement("option");
-
-        option.value = customer.id;
-        option.textContent =
-            `${customer.first_name} ${customer.last_name}`;
-
-        option.dataset.name =
-            `${customer.first_name} ${customer.last_name}`;
-
-        option.dataset.mobile = customer.mobile;
-        option.dataset.email = customer.email;
-
-        customerSelect.appendChild(option);
-
-    });
 
 }
