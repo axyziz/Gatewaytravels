@@ -1,10 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Invoice</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+    margin:0;
+}
+
+.container{
+    max-width:700px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h2{
+    margin-bottom:20px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body onload="generateInvoiceNumber()">
+
+<div class="container">
+
+<h2>Create Invoice</h2>
+
+<input id="invoice_number" placeholder="Invoice Number" readonly>
+
+<input id="customer_name" placeholder="Customer Name">
+
+<input id="customer_mobile" placeholder="Customer Mobile">
+
+<input id="customer_email" placeholder="Customer Email">
+
+<select id="service">
+<option>Flight</option>
+<option>Bus</option>
+<option>Hotel</option>
+<option>Visa</option>
+<option>Holiday Package</option>
+<option>Vehicle Rental</option>
+</select>
+
+<textarea id="description" placeholder="Description"></textarea>
+
+<input id="amount" type="number" placeholder="Amount" oninput="calculateTotal()">
+<input id="discount" type="number" placeholder="Discount" oninput="calculateTotal()">
+<input id="total" type="number" placeholder="Total" readonly>
+<select id="payment_status">
+<option>Pending</option>
+<option>Paid</option>
+</select>
+
+<input id="payment_method" placeholder="Payment Method">
+
+<button onclick="saveInvoice()">
+Save Invoice
+</button>
+
 <p id="status"></p>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function generateInvoiceNumber() {
 
-<script src="../assets/js/invoice.js"></script>
+    const { data, error } = await supabaseClient
+        .from("invoices")
+        .select("invoice_number")
+        .order("created_at", { ascending: false })
+        .limit(1);
 
-</body>
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    let nextNumber = 1;
+
+    if (data.length > 0) {
+        const lastInvoice = data[0].invoice_number;
+        const number = parseInt(lastInvoice.replace("GT-", ""));
+        nextNumber = number + 1;
+    }
+
+    document.getElementById("invoice_number").value =
+    
+        "GT-" + String(nextNumber).padStart(4, "0");
+    }
+   function calculateTotal() {
+
+    const amount = Number(document.getElementById("amount").value) || 0;
+
+    const discount = Number(document.getElementById("discount").value) || 0;
+
+    document.getElementById("total").value = amount - discount;
+
+}
+
+async function saveInvoice() {
+
+const {error}=await supabaseClient
+.from("invoices")
+.insert([{
+
+invoice_number:document.getElementById("invoice_number").value,
+
+customer_name:document.getElementById("customer_name").value,
+
+customer_mobile:document.getElementById("customer_mobile").value,
+
+customer_email:document.getElementById("customer_email").value,
+
+service:document.getElementById("service").value,
+
+description:document.getElementById("description").value,
+
+amount:document.getElementById("amount").value,
+
+discount:document.getElementById("discount").value,
+
+total:document.getElementById("total").value,
+
+payment_status:document.getElementById("payment_status").value,
+
+payment_method:document.getElementById("payment_method").value
+
+}]);
+
+
+if(error){
+
+document.getElementById("status").innerHTML=error.message;
+
+}else{
+
+document.getElementById("status").innerHTML="✅ Invoice Saved Successfully";
+
+}
+
+}
+
+</script>
+
+<body onload="generateInvoiceNumber()">
 </html>
