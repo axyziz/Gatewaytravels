@@ -111,6 +111,39 @@ function fillCustomer() {
         option.dataset.mobile || "";
 
     document.getElementById("customer_email").value =
+
+        // =========================
+// Load Invoice for Editing
+// =========================
+
+async function loadInvoice(id) {
+
+    const { data, error } = await supabaseClient
+        .from("invoices")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    document.getElementById("invoice_number").value = data.invoice_number || "";
+    document.getElementById("customer_id").value = data.customer_id || "";
+
+    // Trigger customer auto-fill
+    fillCustomer();
+
+    document.getElementById("service").value = data.service || "";
+    document.getElementById("description").value = data.description || "";
+    document.getElementById("amount").value = data.amount || "";
+    document.getElementById("discount").value = data.discount || "";
+    document.getElementById("total").value = data.total || "";
+    document.getElementById("payment_status").value = data.payment_status || "";
+    document.getElementById("payment_method").value = data.payment_method || "";
+
+}
         option.dataset.email || "";
 
 }
