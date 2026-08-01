@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Invoices</title>
+<title>Invoices | Gateway Travels CRM</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
@@ -13,36 +14,69 @@
 <style>
 
 body{
-font-family:Arial,sans-serif;
-background:#f4f6f9;
-margin:0;
-padding:30px;
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
 }
 
 h2{
-margin-bottom:20px;
+    margin-bottom:20px;
+    color:#0B3D91;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+#searchInvoice{
+    width:300px;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#2563eb;
+    color:#fff;
+}
+
+button:hover{
+    background:#1d4ed8;
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-background:white;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
 th{
-background:#2563eb;
-color:white;
-padding:12px;
+    background:#2563eb;
+    color:white;
+    padding:12px;
 }
 
 td{
-padding:12px;
-border-bottom:1px solid #ddd;
+    padding:12px;
+    border-bottom:1px solid #ddd;
 }
 
 tr:hover{
-background:#f7f7f7;
+    background:#f7f7f7;
 }
 
 </style>
@@ -51,7 +85,24 @@ background:#f7f7f7;
 
 <body>
 
+<div class="container">
+
 <h2>Gateway Travels Invoices</h2>
+
+<div class="topbar">
+
+<input
+    type="text"
+    id="searchInvoice"
+    placeholder="Search Invoice">
+
+<button onclick="window.location='create-invoice.html'">
+
++ New Invoice
+
+</button>
+
+</div>
 
 <table>
 
@@ -72,73 +123,24 @@ background:#f7f7f7;
 
 <tbody id="invoiceTable">
 
-</tbody>
-
-</table>
-
-<script>
-
-loadInvoices();
-
-async function loadInvoices(){
-
-const {data,error}=await supabaseClient
-
-.from("invoices")
-
-.select("*")
-
-.order("created_at",{ascending:false});
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-let html="";
-
-data.forEach(invoice=>{
-
-html+=`
-
 <tr>
 
-<td>${invoice.invoice_number}</td>
+<td colspan="6" align="center">
 
-<td>${invoice.customer_name}</td>
-
-<td>${invoice.service}</td>
-
-<td>${invoice.total}</td>
-
-<td>${invoice.payment_status}</td>
-
-<td>
-
-<button onclick="editInvoice('${invoice.id}')">
-    Edit
-</button>
-
-<button onclick="deleteInvoice('${invoice.id}')">
-    Delete
-</button>
+Loading...
 
 </td>
 
 </tr>
 
-`;
+</tbody>
 
-});
+</table>
 
-document.getElementById("invoiceTable").innerHTML=html;
+</div>
 
-}
-
-</script>
+<script src="../assets/js/invoices.js"></script>
 
 </body>
+
 </html>
