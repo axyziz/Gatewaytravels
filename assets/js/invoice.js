@@ -5,17 +5,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadCustomers();
 
     const params = new URLSearchParams(window.location.search);
-
     const invoiceId = params.get("id");
 
     if (invoiceId) {
-
         await loadInvoice(invoiceId);
-
     } else {
-
         await generateInvoiceNumber();
-
     }
 
 });
@@ -62,6 +57,8 @@ async function loadCustomers() {
 
     if (!select) return;
 
+    select.innerHTML = `<option value="">Select Customer</option>`;
+
     const { data, error } = await supabaseClient
         .from("customers")
         .select("*")
@@ -101,8 +98,11 @@ async function loadCustomers() {
 
 function fillCustomer() {
 
-    const option =
-        document.getElementById("customer_id").selectedOptions[0];
+    const select = document.getElementById("customer_id");
+
+    if (select.selectedIndex < 0) return;
+
+    const option = select.selectedOptions[0];
 
     document.getElementById("customer_name").value =
         option.dataset.name || "";
@@ -111,8 +111,11 @@ function fillCustomer() {
         option.dataset.mobile || "";
 
     document.getElementById("customer_email").value =
+        option.dataset.email || "";
 
-        // =========================
+}
+
+// =========================
 // Load Invoice for Editing
 // =========================
 
@@ -129,21 +132,33 @@ async function loadInvoice(id) {
         return;
     }
 
-    document.getElementById("invoice_number").value = data.invoice_number || "";
-    document.getElementById("customer_id").value = data.customer_id || "";
+    document.getElementById("invoice_number").value =
+        data.invoice_number || "";
 
-    // Trigger customer auto-fill
+    document.getElementById("customer_id").value =
+        data.customer_id || "";
+
     fillCustomer();
 
-    document.getElementById("service").value = data.service || "";
-    document.getElementById("description").value = data.description || "";
-    document.getElementById("amount").value = data.amount || "";
-    document.getElementById("discount").value = data.discount || "";
-    document.getElementById("total").value = data.total || "";
-    document.getElementById("payment_status").value = data.payment_status || "";
-    document.getElementById("payment_method").value = data.payment_method || "";
+    document.getElementById("service").value =
+        data.service || "";
 
-}
-        option.dataset.email || "";
+    document.getElementById("description").value =
+        data.description || "";
+
+    document.getElementById("amount").value =
+        data.amount || "";
+
+    document.getElementById("discount").value =
+        data.discount || "";
+
+    document.getElementById("total").value =
+        data.total || "";
+
+    document.getElementById("payment_status").value =
+        data.payment_status || "";
+
+    document.getElementById("payment_method").value =
+        data.payment_method || "";
 
 }
