@@ -18,19 +18,40 @@ async function downloadInvoicePDF() {
     const paymentStatus = document.getElementById("payment_status").value;
     const paymentMethod = document.getElementById("payment_method").value;
 
-    // Header
+  // ==========================
+// PROFESSIONAL HEADER
+// ==========================
 
-    doc.setFillColor(11,61,145);
-    doc.rect(0,0,210,35,"F");
+doc.setFillColor(10,61,145);
+doc.rect(0,0,210,42,"F");
 
-    doc.setTextColor(255,255,255);
-    doc.setFontSize(22);
-    doc.text("Gateway Travels & Holidays",15,15);
+// Company Name
+doc.setTextColor(255,255,255);
+doc.setFont("helvetica","bold");
+doc.setFontSize(22);
+doc.text("Gateway Travels & Holidays",15,15);
 
-    doc.setFontSize(11);
-    doc.text("Your Journey, Our Passion",15,22);
-    doc.text("Phone : +91 73829 64554",15,28);
-    doc.text("gatewaytravelsandholidays@gmail.com",105,28);
+// Tagline
+doc.setFont("helvetica","normal");
+doc.setFontSize(11);
+doc.text("Your Journey, Our Passion",15,22);
+
+// Contact
+doc.setFontSize(9);
+
+doc.text("📞 +91 73829 64554",15,31);
+
+doc.text("✉ gatewaytravelsandholidays@gmail.com",15,37);
+
+// Invoice Title
+doc.setFont("helvetica","bold");
+doc.setFontSize(26);
+doc.text("INVOICE",155,22);
+
+// Number
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
+doc.text("Invoice No : " + invoiceNo,145,30);
 
     // Title
 
