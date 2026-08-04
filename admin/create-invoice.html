@@ -175,9 +175,12 @@ function calculateTotal() {
     };
 
     const params = new URLSearchParams(window.location.search);
-    const invoiceId = params.get("id");
+const invoiceId = params.get("id");
 
-    let error;
+console.log("Invoice ID:", invoiceId);
+console.log("Invoice Object:", invoice);
+
+let error;
 
     if (invoiceId) {
 
