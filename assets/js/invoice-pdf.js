@@ -100,36 +100,98 @@ doc.text("Email : " + email,20,95);
 
         theme:"grid",
 
-        headStyles:{
-            fillColor:[11,61,145],
-            textColor:255
-        }
+       headStyles:{
+    fillColor:[10,61,145],
+    textColor:[255,255,255],
+    fontStyle:"bold",
+    halign:"center"
+},
+
+styles:{
+    fontSize:10,
+    cellPadding:4,
+    valign:"middle"
+},
+
+columnStyles:{
+    2:{halign:"right"}
+}
 
     });
+const y = doc.lastAutoTable.finalY + 12;
+   // ==========================
+// TOTALS BOX
+// ==========================
 
-    const y = doc.lastAutoTable.finalY + 12;
+doc.setDrawColor(180);
+doc.roundedRect(120, y-8, 75, 35, 3, 3, "S");
 
-    doc.setFontSize(11);
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
 
-    doc.text("Discount",130,y);
-    doc.text("₹ "+discount.toFixed(2),185,y,{align:"right"});
+doc.text("Subtotal",125,y);
 
-    doc.text("Grand Total",130,y+10);
-    doc.text("₹ "+total.toFixed(2),185,y+10,{align:"right"});
+doc.text(
+    "₹ " + amount.toFixed(2),
+    190,
+    y,
+    {align:"right"}
+);
 
-    doc.line(125,y+15,190,y+15);
+doc.text("Discount",125,y+8);
 
-    doc.text("Payment Status : "+paymentStatus,20,y+28);
-    doc.text("Payment Method : "+paymentMethod,20,y+38);
+doc.text(
+    "₹ " + discount.toFixed(2),
+    190,
+    y+8,
+    {align:"right"}
+);
 
+doc.setDrawColor(210);
+doc.line(125,y+12,190,y+12);
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(12);
+
+doc.text("Grand Total",125,y+22);
+
+doc.text(
+    "₹ " + total.toFixed(2),
+    190,
+    y+22,
+    {align:"right"}
+);
+
+// ==========================
+// PAYMENT DETAILS
+// ==========================
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
+
+doc.text(
+    "Payment Status : " + paymentStatus,
+    20,
+    y+45
+);
+
+doc.text(
+    "Payment Method : " + (paymentMethod || "-"),
+    20,
+    y+53
+);
     doc.setFontSize(10);
 
-    doc.text(
-        "Thank you for choosing Gateway Travels & Holidays",
-        20,
-        280
-    );
+const footerY = Math.max(y + 70, 270);
 
-    doc.save(invoiceNo + ".pdf");
+doc.setFontSize(10);
+
+doc.text(
+    "Thank you for choosing Gateway Travels & Holidays",
+    20,
+    footerY
+);
+
+doc.save(invoiceNo + ".pdf");
 
 }
