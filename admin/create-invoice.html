@@ -120,39 +120,113 @@ Create & Manage Customer Invoices
     <option value="">Select Customer</option>
 </select>
 
+<div class="section">
+
+<h3>👤 Customer Information</h3>
+
+<label>Customer Name</label>
+
 <input id="customer_name" placeholder="Customer Name" readonly>
+
+<label>Mobile Number</label>
 
 <input id="customer_mobile" placeholder="Customer Mobile" readonly>
 
+<label>Email Address</label>
+
 <input id="customer_email" placeholder="Customer Email" readonly>
 
+</div>
+
+<div class="section">
+
+<h3>✈️ Booking Information</h3>
+
+<label>Service</label>
+
 <select id="service">
-<option>Flight</option>
-<option>Bus</option>
-<option>Hotel</option>
-<option>Visa</option>
-<option>Holiday Package</option>
-<option>Vehicle Rental</option>
+    <option>Flight</option>
+    <option>Bus</option>
+    <option>Hotel</option>
+    <option>Visa</option>
+    <option>Holiday Package</option>
+    <option>Vehicle Rental</option>
 </select>
 
-<textarea id="description" placeholder="Description"></textarea>
+<label>Description</label>
 
-<input id="amount" type="number" placeholder="Amount" oninput="calculateTotal()">
+<textarea
+id="description"
+placeholder="Enter booking details, route, hotel name, visa type, package details, etc."></textarea>
 
-<input id="discount" type="number" placeholder="Discount" oninput="calculateTotal()">
+</div>
 
-<input id="total" type="number" placeholder="Total" readonly>
+<div class="section">
+
+<h3>💰 Payment Summary</h3>
+
+<label>Amount (₹)</label>
+
+<input
+id="amount"
+type="number"
+placeholder="Enter Amount"
+oninput="calculateTotal()">
+
+<label>Discount (₹)</label>
+
+<input
+id="discount"
+type="number"
+placeholder="Enter Discount"
+oninput="calculateTotal()">
+
+<label>Grand Total (₹)</label>
+
+<input
+id="total"
+type="number"
+placeholder="Total Amount"
+readonly>
+
+<label>Payment Status</label>
 
 <select id="payment_status">
-<option>Pending</option>
-<option>Paid</option>
+    <option>Pending</option>
+    <option>Paid</option>
 </select>
 
-<input id="payment_method" placeholder="Payment Method">
+<label>Payment Method</label>
 
-<button onclick="saveInvoice()">
-Save Invoice
+<input
+id="payment_method"
+placeholder="Cash / UPI / Card / Bank Transfer">
+
+</div>
+
+<div class="button-group">
+
+<button
+class="primary"
+onclick="saveInvoice()">
+💾 Save Invoice
 </button>
+
+<button
+type="button"
+class="secondary"
+onclick="window.print()">
+🖨 Print Invoice
+</button>
+
+<button
+type="button"
+class="success"
+onclick="downloadInvoicePDF()">
+📄 Download PDF
+</button>
+
+</div>
 
 <p id="status"></p>
 
@@ -281,6 +355,117 @@ async function saveInvoice() {
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+
+async function downloadInvoicePDF() {
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(22);
+    doc.text("Gateway Travels & Holidays", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text("Your Journey, Our Passion", 20, 28);
+
+    doc.line(20, 32, 190, 32);
+
+    doc.setFontSize(16);
+    doc.text("INVOICE", 20, 45);
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Invoice No : " + document.getElementById("invoice_number").value,
+        20,
+        60
+    );
+
+    doc.text(
+        "Customer : " + document.getElementById("customer_name").value,
+        20,
+        70
+    );
+
+    doc.text(
+        "Mobile : " + document.getElementById("customer_mobile").value,
+        20,
+        80
+    );
+
+    doc.text(
+        "Email : " + document.getElementById("customer_email").value,
+        20,
+        90
+    );
+
+    doc.line(20, 98, 190, 98);
+
+    doc.text(
+        "Service : " + document.getElementById("service").value,
+        20,
+        110
+    );
+
+    doc.text(
+        "Description : " + document.getElementById("description").value,
+        20,
+        120
+    );
+
+    doc.line(20, 130, 190, 130);
+
+    doc.text(
+        "Amount : ₹" + document.getElementById("amount").value,
+        20,
+        145
+    );
+
+    doc.text(
+        "Discount : ₹" + document.getElementById("discount").value,
+        20,
+        155
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Grand Total : ₹" + document.getElementById("total").value,
+        20,
+        170
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Payment Status : " + document.getElementById("payment_status").value,
+        20,
+        185
+    );
+
+    doc.text(
+        "Payment Method : " + document.getElementById("payment_method").value,
+        20,
+        195
+    );
+
+    doc.line(20, 220, 190, 220);
+
+    doc.text(
+        "Thank you for choosing Gateway Travels & Holidays",
+        20,
+        235
+    );
+
+    doc.save(
+        document.getElementById("invoice_number").value + ".pdf"
+    );
+
+}
+
+</script>
 
 <script src="../assets/js/invoice.js"></script>
 
