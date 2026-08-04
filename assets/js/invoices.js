@@ -108,10 +108,7 @@ function editInvoice(id) {
 
 async function deleteInvoice(id) {
 
-    console.log("Deleting Invoice:", id);
-
-    if (!confirm("Delete this invoice?"))
-        return;
+    console.log("Deleting:", id);
 
     const { data, error } = await supabaseClient
         .from("invoices")
@@ -119,18 +116,14 @@ async function deleteInvoice(id) {
         .eq("id", id)
         .select();
 
-    console.log("Delete Result:", data);
-    console.log("Delete Error:", error);
+    console.log("Data:", data);
+    console.log("Error:", error);
 
     if (error) {
-
         alert(error.message);
         return;
-
     }
 
-    alert("Invoice deleted successfully.");
-
+    alert("Deleted");
     loadInvoices();
-
 }
