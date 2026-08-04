@@ -116,9 +116,6 @@ Create & Manage Customer Invoices
 
 </div>
 
-<select id="customer_id">
-    <option value="">Select Customer</option>
-</select>
 
 <div class="section">
 
@@ -354,129 +351,7 @@ async function saveInvoice() {
 }
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <script>
-
-async function downloadInvoicePDF() {
-
-    const { jsPDF } = window.jspdf;
-
-    const doc = new jsPDF();
-
-doc.setFontSize(22);
-doc.setTextColor(11,61,145);
-doc.text("Gateway Travels & Holidays",20,20);
-
-doc.setFontSize(11);
-doc.setTextColor(90);
-
-doc.text("Your Journey, Our Passion",20,28);
-doc.text("Phone : +91 73829 64554",20,35);
-doc.text("Email : gatewaytravelsandholidays@gmail.com",20,41);
-
-doc.setDrawColor(11,61,145);
-doc.setLineWidth(0.8);
-doc.line(20,46,190,46);
-
-    doc.line(20, 32, 190, 32);
-
-    doc.setFontSize(16);
-    doc.text("INVOICE", 20, 45);
-
-    doc.setFontSize(11);
-
-    doc.text(
-        "Invoice No : " + document.getElementById("invoice_number").value,
-        20,
-        60
-    );
-
-    doc.text(
-        "Customer : " + document.getElementById("customer_name").value,
-        20,
-        70
-    );
-
-    doc.text(
-        "Mobile : " + document.getElementById("customer_mobile").value,
-        20,
-        80
-    );
-
-    doc.text(
-        "Email : " + document.getElementById("customer_email").value,
-        20,
-        90
-    );
-
-    doc.line(20, 98, 190, 98);
-
-    doc.text(
-        "Service : " + document.getElementById("service").value,
-        20,
-        110
-    );
-
-    doc.text(
-        "Description : " + document.getElementById("description").value,
-        20,
-        120
-    );
-
-    doc.line(20, 130, 190, 130);
-
-    doc.text(
-        "Amount : ₹" + document.getElementById("amount").value,
-        20,
-        145
-    );
-
-    doc.text(
-        "Discount : ₹" + document.getElementById("discount").value,
-        20,
-        155
-    );
-
-    doc.setFontSize(14);
-
-    doc.text(
-        "Grand Total : ₹" + document.getElementById("total").value,
-        20,
-        170
-    );
-
-    doc.setFontSize(11);
-
-    doc.text(
-        "Payment Status : " + document.getElementById("payment_status").value,
-        20,
-        185
-    );
-
-    doc.text(
-        "Payment Method : " + document.getElementById("payment_method").value,
-        20,
-        195
-    );
-
-    doc.line(20, 220, 190, 220);
-
-    doc.text(
-        "Thank you for choosing Gateway Travels & Holidays",
-        20,
-        235
-    );
-
-    doc.save(
-        document.getElementById("invoice_number").value + ".pdf"
-    );
-
-}
-
-</script>
-
-<script src="../assets/js/invoice.js"></script>
-
+    <script src="../assets/js/invoice.js"></script>
+    
 </body>
 </html>
