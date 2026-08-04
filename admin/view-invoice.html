@@ -6,139 +6,644 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>View Invoice</title>
+<title>Gateway Travels - Invoice</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#edf2f7;
+
+padding:40px;
+
+}
+
+.actions{
+
+width:210mm;
+
+margin:auto;
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:10px;
+
+margin-bottom:20px;
+
+}
+
+.actions button{
+
+padding:12px 22px;
+
+background:#0B3D91;
+
+color:#fff;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+.actions button:hover{
+
+background:#082d6d;
+
+}
+
+.invoice{
+
+width:210mm;
+
+min-height:297mm;
+
+background:#fff;
+
+margin:auto;
+
+padding:45px;
+
+box-shadow:0 0 18px rgba(0,0,0,.12);
+
+border-radius:8px;
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+
+margin-bottom:25px;
+
+}
+
+.company h1{
+
+color:#0B3D91;
+
+font-size:34px;
+
+margin-bottom:5px;
+
+}
+
+.company p{
+
+font-size:14px;
+
+color:#555;
+
+line-height:1.6;
+
+}
+
+.invoice-title{
+
+text-align:right;
+
+}
+
+.invoice-title h2{
+
+font-size:32px;
+
+color:#111827;
+
+margin-bottom:10px;
+
+}
+
+.status{
+
+display:inline-block;
+
+padding:6px 16px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:bold;
+
+background:#DCFCE7;
+
+color:#166534;
+
+}
+
+hr{
+
+border:none;
+
+border-top:2px solid #e5e7eb;
+
+margin:25px 0;
+
+}
+
+.info{
+
+display:flex;
+
+justify-content:space-between;
+
+}
+
+.info-box{
+
+width:48%;
+
+}
+
+.info-box h3{
+
+margin-bottom:10px;
+
+color:#0B3D91;
+
+}
+
+.info-box p{
+
+margin-bottom:8px;
+
+font-size:15px;
+
+color:#444;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:20px;
+
+}
+
+thead{
+
+background:#0B3D91;
+
+color:#fff;
+
+}
+
+th{
+
+padding:14px;
+
+text-align:left;
+
+}
+
+td{
+
+padding:14px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.summary{
+
+width:320px;
+
+margin-left:auto;
+
+margin-top:30px;
+
+}
+
+.summary table{
+
+width:100%;
+
+}
+
+.summary td{
+
+border:none;
+
+padding:8px;
+
+}
+
+.total{
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#0B3D91;
+
+border-top:2px solid #ddd;
+
+padding-top:10px;
+
+}
+
+.footer{
+
+margin-top:60px;
+
+text-align:center;
+
+color:#666;
+
+font-size:14px;
+
+line-height:1.8;
+
+}
+
+.footer h3{
+
+color:#0B3D91;
+
+margin-bottom:10px;
+
+}
+
+@media print{
+
+body{
+
+background:white;
+
+padding:0;
+
+}
+
+.actions{
+
+display:none;
+
+}
+
+.invoice{
+
+box-shadow:none;
+
+border-radius:0;
+
+width:100%;
+
+padding:25px;
+
+}
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="invoice-container">
+<div class="actions">
 
-    <div class="invoice">
+<button onclick="window.print()">
+🖨 Print
+</button>
 
-        <div class="header">
+<button onclick="downloadPDF()">
+📄 Download PDF
+</button>
 
-            <h1>Gateway Travels & Holidays</h1>
+<button onclick="history.back()">
+⬅ Back
+</button>
 
-            <p>Your Journey, Our Passion</p>
+</div>
 
-            <h2>TAX INVOICE</h2>
+<div class="invoice">
 
-        </div>
+<div class="header">
 
-        <hr>
+<div class="company">
 
-        <div class="invoice-info">
+<h1>Gateway Travels & Holidays</h1>
 
-            <p>
-                <strong>Invoice No:</strong>
-                <span id="invoice_number"></span>
-            </p>
+<p>Your Journey, Our Passion</p>
 
-            <p>
-                <strong>Date:</strong>
-                <span id="invoice_date"></span>
-            </p>
+<p>📞 +91 73829 64554</p>
 
-            <p>
-                <strong>Status:</strong>
-                <span id="payment_status"></span>
-            </p>
+<p>✉ gatewaytravelsandholidays@gmail.com</p>
 
-        </div>
+</div>
 
-        <hr>
+<div class="invoice-title">
 
-        <div class="customer">
+<h2>INVOICE</h2>
 
-            <h3>Bill To</h3>
+<span class="status" id="payment_status">
+Pending
+</span>
 
-            <p id="customer_name"></p>
+</div>
 
-            <p id="customer_mobile"></p>
+</div>
 
-            <p id="customer_email"></p>
+<hr>
 
-        </div>
+<div class="info">
 
-        <hr>
+<div class="info-box">
 
-        <div class="service">
+<h3>Bill To</h3>
 
-            <h3>Service Details</h3>
+<p id="customer_name"></p>
 
-            <p>
-                <strong>Service:</strong>
-                <span id="service"></span>
-            </p>
+<p id="customer_mobile"></p>
 
-            <p id="description"></p>
+<p id="customer_email"></p>
 
-        </div>
+</div>
 
-        <hr>
+<div class="info-box" style="text-align:right;">
 
-        <table width="100%">
+<p>
+<strong>Invoice No:</strong>
+<span id="invoice_number"></span>
+</p>
 
-            <tr>
+<p>
+<strong>Date:</strong>
+<span id="invoice_date"></span>
+</p>
 
-                <td>Subtotal</td>
+<p>
+<strong>Payment:</strong>
+<span id="payment_method"></span>
+</p>
 
-                <td align="right">
-                    ₹<span id="amount"></span>
-                </td>
+</div>
 
-            </tr>
+</div>
 
-            <tr>
+<hr>
 
-                <td>Discount</td>
+<table>
 
-                <td align="right">
-                    ₹<span id="discount"></span>
-                </td>
+<thead>
 
-            </tr>
+<tr>
 
-            <tr>
+<th width="25%">Service</th>
 
-                <td>
-                    <strong>Grand Total</strong>
-                </td>
+<th>Description</th>
 
-                <td align="right">
-                    <strong>₹<span id="total"></span></strong>
-                </td>
+<th width="18%">Amount</th>
 
-            </tr>
+</tr>
 
-        </table>
+</thead>
 
-        <hr>
+<tbody>
 
-        <p>
-            <strong>Payment Method:</strong>
-            <span id="payment_method"></span>
-        </p>
+<tr>
 
-        <br><br>
+<td id="service"></td>
 
-        <center>
+<td id="description"></td>
 
-            <p>Thank you for choosing</p>
+<td>
+₹<span id="amount"></span>
+</td>
 
-            <h3>Gateway Travels & Holidays</h3>
+</tr>
 
-            <p>📞 +91 73829 64554</p>
+</tbody>
 
-            <p>✉ gatewaytravelsandholidays@gmail.com</p>
+</table>
 
-        </center>
+<div class="summary">
 
-    </div>
+<table>
+
+<tr>
+
+<td>Subtotal</td>
+
+<td align="right">
+₹<span id="amount2"></span>
+</td>
+
+</tr>
+
+<tr>
+
+<td>Discount</td>
+
+<td align="right">
+₹<span id="discount"></span>
+</td>
+
+</tr>
+
+<tr>
+
+<td class="total">
+Grand Total
+</td>
+
+<td align="right" class="total">
+₹<span id="total"></span>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="footer">
+
+<h3>Thank You For Choosing Gateway Travels & Holidays</h3>
+
+<p>Your Journey, Our Passion</p>
+
+<p>This is a computer-generated invoice and does not require a signature.</p>
+
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", loadInvoice);
+
+async function loadInvoice(){
+
+    const params = new URLSearchParams(window.location.search);
+
+    const id = params.get("id");
+
+    if(!id){
+
+        alert("Invoice ID Missing");
+
+        return;
+
+    }
+
+    const {data,error}=await supabaseClient
+    .from("invoices")
+    .select("*")
+    .eq("id",id)
+    .single();
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    document.getElementById("invoice_number").textContent =
+        data.invoice_number || "";
+
+    document.getElementById("invoice_date").textContent =
+        new Date(data.created_at).toLocaleDateString("en-IN");
+
+    document.getElementById("payment_status").textContent =
+        data.payment_status || "";
+
+    document.getElementById("customer_name").textContent =
+        data.customer_name || "";
+
+    document.getElementById("customer_mobile").textContent =
+        data.customer_mobile || "";
+
+    document.getElementById("customer_email").textContent =
+        data.customer_email || "";
+
+    document.getElementById("service").textContent =
+        data.service || "";
+
+    document.getElementById("description").textContent =
+        data.description || "";
+
+    document.getElementById("amount").textContent =
+        Number(data.amount || 0).toFixed(2);
+
+    document.getElementById("amount2").textContent =
+        Number(data.amount || 0).toFixed(2);
+
+    document.getElementById("discount").textContent =
+        Number(data.discount || 0).toFixed(2);
+
+    document.getElementById("total").textContent =
+        Number(data.total || 0).toFixed(2);
+
+    document.getElementById("payment_method").textContent =
+        data.payment_method || "";
+
+    const badge=document.getElementById("payment_status");
+
+    if((data.payment_status || "").toLowerCase()=="paid"){
+
+        badge.style.background="#DCFCE7";
+        badge.style.color="#166534";
+
+    }else{
+
+        badge.style.background="#FEF3C7";
+        badge.style.color="#92400E";
+
+    }
+
+}
+
+async function downloadPDF(){
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF("p","mm","a4");
+
+    doc.setFontSize(22);
+    doc.setTextColor(11,61,145);
+    doc.text("Gateway Travels & Holidays",20,20);
+
+    doc.setFontSize(11);
+    doc.setTextColor(80);
+
+    doc.text("Your Journey, Our Passion",20,27);
+
+    doc.setFontSize(16);
+    doc.setTextColor(0);
+
+    doc.text("INVOICE",160,20);
+
+    doc.setFontSize(11);
+
+    doc.text("Invoice No : "+document.getElementById("invoice_number").textContent,20,40);
+    doc.text("Date : "+document.getElementById("invoice_date").textContent,20,47);
+
+    doc.text("Customer : "+document.getElementById("customer_name").textContent,20,60);
+    doc.text("Mobile : "+document.getElementById("customer_mobile").textContent,20,67);
+    doc.text("Email : "+document.getElementById("customer_email").textContent,20,74);
+
+    doc.line(20,80,190,80);
+
+    doc.text("Service",20,90);
+    doc.text(document.getElementById("service").textContent,60,90);
+
+    doc.text("Description",20,100);
+    doc.text(document.getElementById("description").textContent,60,100);
+
+    doc.line(20,108,190,108);
+
+    doc.text("Amount",120,120);
+    doc.text("₹ "+document.getElementById("amount").textContent,170,120,{align:"right"});
+
+    doc.text("Discount",120,128);
+    doc.text("₹ "+document.getElementById("discount").textContent,170,128,{align:"right"});
+
+    doc.setFontSize(13);
+
+    doc.text("Grand Total",120,140);
+
+    doc.text("₹ "+document.getElementById("total").textContent,170,140,{align:"right"});
+
+    doc.setFontSize(11);
+
+    doc.text("Payment : "+document.getElementById("payment_method").textContent,20,160);
+
+    doc.text("Status : "+document.getElementById("payment_status").textContent,20,170);
+
+    doc.text("Thank you for choosing Gateway Travels & Holidays",20,255);
+
+    doc.save(document.getElementById("invoice_number").textContent+".pdf");
+
+}
+
+</script>
 
 </div>
 
