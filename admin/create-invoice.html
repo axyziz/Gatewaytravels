@@ -9,43 +9,71 @@
 <script src="../js/supabase.js"></script>
 
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f7fa;
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:#eef3f8;
+    color:#1f2937;
 }
 
 .container{
-    max-width:700px;
+    width:95%;
+    max-width:900px;
     margin:40px auto;
     background:#fff;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    border-radius:16px;
+    padding:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 }
 
 h2{
-    margin-bottom:20px;
+    text-align:center;
+    color:#0B3D91;
+    font-size:32px;
+    margin-bottom:8px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
     width:100%;
-    padding:12px;
+    padding:12px 14px;
     margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:6px;
-    box-sizing:border-box;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+    transition:.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
+
+textarea{
+    resize:vertical;
+    min-height:90px;
 }
 
 button{
     width:100%;
     padding:14px;
     background:#2563eb;
-    color:white;
+    color:#fff;
     border:none;
-    border-radius:6px;
+    border-radius:8px;
     cursor:pointer;
     font-size:16px;
+    font-weight:600;
+    transition:.3s;
 }
 
 button:hover{
@@ -53,8 +81,10 @@ button:hover{
 }
 
 #status{
-    margin-top:15px;
+    margin-top:20px;
+    text-align:center;
     font-weight:bold;
+    color:#16a34a;
 }
 </style>
 
