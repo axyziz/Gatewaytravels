@@ -171,7 +171,7 @@ const y = doc.lastAutoTable.finalY + 12;
 // ==========================
 
 doc.setDrawColor(180);
-doc.roundedRect(120, y-8, 75, 35, 3, 3, "S");
+doc.roundedRect(105, y-8, 90, 35, 3, 3, "S");
 
 doc.setFont("helvetica","normal");
 doc.setFontSize(10);
@@ -180,7 +180,7 @@ doc.text("Subtotal",125,y);
 
 doc.text(
     "₹ " + amount.toFixed(2),
-    190,
+    188,
     y,
     {align:"right"}
 );
@@ -189,7 +189,7 @@ doc.text("Discount",125,y+8);
 
 doc.text(
     "₹ " + discount.toFixed(2),
-    190,
+    188,
     y+8,
     {align:"right"}
 );
@@ -204,7 +204,7 @@ doc.text("Grand Total",125,y+22);
 
 doc.text(
     "₹ " + total.toFixed(2),
-    190,
+    188,
     y+22,
     {align:"right"}
 );
