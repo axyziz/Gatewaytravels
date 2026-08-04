@@ -31,10 +31,6 @@ doc.setFont("helvetica","bold");
 doc.setFontSize(22);
 doc.text("Gateway Travels & Holidays",15,15);
 
-// Tagline
-doc.setFont("helvetica","normal");
-doc.setFontSize(11);
-doc.text("Your Journey, Our Passion",15,22);
 
 // Contact
 doc.setFontSize(9);
@@ -65,12 +61,43 @@ doc.text("Date :",145,29);
 doc.text(new Date().toLocaleDateString("en-IN"),172,29);
 
 doc.text("Status :",145,35);
-doc.text(paymentStatus,172,35);
 
-// Number
+if(paymentStatus==="Paid"){
+
+    doc.setFillColor(22,163,74);
+
+    doc.roundedRect(168,30,22,8,2,2,"F");
+
+    doc.setTextColor(255,255,255);
+
+    doc.setFont("helvetica","bold");
+
+    doc.setFontSize(8);
+
+    doc.text("PAID",173,35);
+
+}else{
+
+    doc.setFillColor(245,158,11);
+
+    doc.roundedRect(165,30,28,8,2,2,"F");
+
+    doc.setTextColor(255,255,255);
+
+    doc.setFont("helvetica","bold");
+
+    doc.setFontSize(7);
+
+    doc.text("PENDING",167,35);
+
+}
+
+doc.setTextColor(10,61,145);
+
 doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-doc.text("Invoice No : " + invoiceNo,145,30);
+
+doc.setFontSize(9);
+
 
     // Title
 
@@ -186,28 +213,63 @@ doc.text(
 // PAYMENT DETAILS
 // ==========================
 
+doc.setDrawColor(220);
+
+doc.line(15,y+38,195,y+38);
+
+doc.setFont("helvetica","bold");
+
+doc.setFontSize(11);
+
+doc.text("PAYMENT DETAILS",15,y+48);
+
+doc.setFont("helvetica","normal");
+
+doc.setFontSize(10);
+
+doc.text(
+    "Method : " + (paymentMethod || "-"),
+    15,
+    y+58
+);
+
+doc.text(
+    "Status : " + paymentStatus,
+    110,
+    y+58
+);
+
+    // ==========================
+// SIGNATURE
+// ==========================
+
+doc.setDrawColor(170);
+
+const signY = footerY - 35;
+
+doc.line(140, signY, 190, signY);
+
 doc.setFont("helvetica","normal");
 doc.setFontSize(10);
 
-doc.text(
-    "Payment Status : " + paymentStatus,
-    20,
-    y+45
+doc.text("Authorized Signature",145,signY+7);
+
+doc.setFontSize(9);
+
+doc.text("Gateway Travels & Holidays",138,signY+14);
+
 );
 
-doc.text(
-    "Payment Method : " + (paymentMethod || "-"),
-    20,
-    y+53
-);
-    doc.setFontSize(10);
+// ==========================
+// FOOTER
+// ==========================
 
-const footerY = Math.max(y + 70, 270);
+const footerY = Math.max(y + 105, 270);
 
-doc.setFontSize(10);
+const signY = footerY - 35;
 
 doc.setDrawColor(220);
-doc.line(15, footerY-8, 195, footerY-8);
+doc.line(15, footerY - 8, 195, footerY - 8);
 
 doc.setFont("helvetica","bold");
 doc.setFontSize(11);
@@ -224,9 +286,10 @@ doc.setFontSize(9);
 doc.text(
     "This is a computer-generated invoice. No signature is required.",
     15,
-    footerY+8
+    footerY + 8
 );
 
+// Save PDF
 doc.save(invoiceNo + ".pdf");
 
 }
