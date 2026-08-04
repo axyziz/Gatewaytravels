@@ -39,9 +39,8 @@ doc.text("Your Journey, Our Passion",15,22);
 // Contact
 doc.setFontSize(9);
 
-doc.text("📞 +91 73829 64554",15,31);
-
-doc.text("✉ gatewaytravelsandholidays@gmail.com",15,37);
+doc.text("Phone : +91 73829 64554",15,31);
+doc.text("Email : gatewaytravelsandholidays@gmail.com",15,37);
 
 // Invoice Title
 doc.setFont("helvetica","bold");
@@ -55,37 +54,39 @@ doc.text("Invoice No : " + invoiceNo,145,30);
 
     // Title
 
-    doc.setTextColor(0);
 
-    doc.setFontSize(24);
-    doc.text("INVOICE",15,48);
+  // ==========================
+// CUSTOMER CARD
+// ==========================
 
-    doc.setFontSize(11);
+doc.setDrawColor(200);
+doc.setFillColor(250,250,250);
+doc.roundedRect(15,55,180,45,3,3,"FD");
 
-    doc.text("Invoice No :",15,58);
-    doc.text(invoiceNo,45,58);
+doc.setTextColor(10,61,145);
+doc.setFont("helvetica","bold");
+doc.setFontSize(13);
+doc.text("BILL TO",20,65);
 
-    doc.text("Date :",140,58);
-    doc.text(new Date().toLocaleDateString("en-IN"),155,58);
+doc.setDrawColor(220);
+doc.line(20,68,190,68);
 
-    // Customer
+doc.setTextColor(0);
+doc.setFont("helvetica","bold");
+doc.setFontSize(12);
+doc.text(customer,20,78);
 
-    doc.setFillColor(245,245,245);
-    doc.rect(15,68,180,40,"F");
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
 
-    doc.setFontSize(13);
-    doc.text("Bill To",20,78);
+doc.text("Mobile : " + mobile,20,87);
 
-    doc.setFontSize(11);
-    doc.text(customer,20,88);
-    doc.text(mobile,20,95);
-    doc.text(email,20,102);
-
+doc.text("Email : " + email,20,95);
     // Service Table
 
     doc.autoTable({
 
-        startY:118,
+        startY:110,
 
         head:[
             ["Service","Description","Amount"]
