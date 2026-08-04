@@ -42,10 +42,30 @@ doc.setFontSize(9);
 doc.text("Phone : +91 73829 64554",15,31);
 doc.text("Email : gatewaytravelsandholidays@gmail.com",15,37);
 
-// Invoice Title
+// ==========================
+// INVOICE SUMMARY BOX
+// ==========================
+
+doc.setFillColor(255,255,255);
+doc.roundedRect(135,8,60,28,2,2,"FD");
+
+doc.setTextColor(10,61,145);
+
 doc.setFont("helvetica","bold");
-doc.setFontSize(26);
-doc.text("INVOICE",155,22);
+doc.setFontSize(16);
+doc.text("INVOICE",145,16);
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(9);
+
+doc.text("Invoice :",145,23);
+doc.text(invoiceNo,172,23);
+
+doc.text("Date :",145,29);
+doc.text(new Date().toLocaleDateString("en-IN"),172,29);
+
+doc.text("Status :",145,35);
+doc.text(paymentStatus,172,35);
 
 // Number
 doc.setFont("helvetica","normal");
@@ -186,10 +206,25 @@ const footerY = Math.max(y + 70, 270);
 
 doc.setFontSize(10);
 
+doc.setDrawColor(220);
+doc.line(15, footerY-8, 195, footerY-8);
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+
 doc.text(
     "Thank you for choosing Gateway Travels & Holidays",
-    20,
+    15,
     footerY
+);
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(9);
+
+doc.text(
+    "This is a computer-generated invoice. No signature is required.",
+    15,
+    footerY+8
 );
 
 doc.save(invoiceNo + ".pdf");
