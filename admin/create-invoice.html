@@ -364,11 +364,20 @@ async function downloadInvoicePDF() {
 
     const doc = new jsPDF();
 
-    doc.setFontSize(22);
-    doc.text("Gateway Travels & Holidays", 20, 20);
+doc.setFontSize(22);
+doc.setTextColor(11,61,145);
+doc.text("Gateway Travels & Holidays",20,20);
 
-    doc.setFontSize(12);
-    doc.text("Your Journey, Our Passion", 20, 28);
+doc.setFontSize(11);
+doc.setTextColor(90);
+
+doc.text("Your Journey, Our Passion",20,28);
+doc.text("Phone : +91 73829 64554",20,35);
+doc.text("Email : gatewaytravelsandholidays@gmail.com",20,41);
+
+doc.setDrawColor(11,61,145);
+doc.setLineWidth(0.8);
+doc.line(20,46,190,46);
 
     doc.line(20, 32, 190, 32);
 
