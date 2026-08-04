@@ -243,9 +243,10 @@ doc.text(
 // SIGNATURE
 // ==========================
 
-doc.setDrawColor(170);
-
+const footerY = Math.max(y + 105, 270);
 const signY = footerY - 35;
+
+doc.setDrawColor(170);
 
 doc.line(140, signY, 190, signY);
 
@@ -257,16 +258,9 @@ doc.text("Authorized Signature",145,signY+7);
 doc.setFontSize(9);
 
 doc.text("Gateway Travels & Holidays",138,signY+14);
-
-);
-
 // ==========================
 // FOOTER
 // ==========================
-
-const footerY = Math.max(y + 105, 270);
-
-const signY = footerY - 35;
 
 doc.setDrawColor(220);
 doc.line(15, footerY - 8, 195, footerY - 8);
