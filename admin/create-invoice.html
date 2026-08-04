@@ -146,7 +146,9 @@ function calculateTotal() {
 
 }
 
- async function saveInvoice() {
+async function saveInvoice() {
+
+    alert("saveInvoice() started");
 
     const invoice = {
 
@@ -175,14 +177,16 @@ function calculateTotal() {
     };
 
     const params = new URLSearchParams(window.location.search);
-const invoiceId = params.get("id");
+    const invoiceId = params.get("id");
 
-console.log("Invoice ID:", invoiceId);
-console.log("Invoice Object:", invoice);
+    console.log("Invoice ID:", invoiceId);
+    console.log("Invoice:", invoice);
 
-let error;
+    let error;
 
     if (invoiceId) {
+
+        alert("Updating Invoice...");
 
         ({ error } = await supabaseClient
             .from("invoices")
@@ -190,6 +194,8 @@ let error;
             .eq("id", invoiceId));
 
     } else {
+
+        alert("Creating New Invoice...");
 
         invoice.invoice_number =
             document.getElementById("invoice_number").value;
@@ -202,16 +208,25 @@ let error;
 
     if (error) {
 
+        console.error(error);
+
+        alert(error.message);
+
         document.getElementById("status").innerHTML = error.message;
+
         return;
 
     }
+
+    alert("Invoice Saved Successfully");
 
     document.getElementById("status").innerHTML =
         "✅ Invoice Saved Successfully";
 
     setTimeout(() => {
+
         window.location.href = "invoices.html";
+
     }, 1000);
 
 }
