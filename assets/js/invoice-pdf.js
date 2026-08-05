@@ -172,97 +172,109 @@ const y = doc.lastAutoTable.finalY + 12;
 doc.setFont("helvetica", "normal");
 doc.setFontSize(10);
 doc.setTextColor(0, 0, 0);
-   // ==========================
-// TOTALS BOX
+ // ==========================
+// TOTALS TABLE
 // ==========================
 
-doc.setDrawColor(180);
-doc.roundedRect(105, y-8, 90, 35, 3, 3, "S");
+doc.autoTable({
 
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
+    startY: y - 5,
 
-doc.text("Subtotal",125,y);
+    theme: "grid",
 
-const subtotalText =
-    "₹ " +
-    amount.toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
+    tableWidth: 90,
 
-doc.text(
-    subtotalText,
-    188,
-    y,
-    { align: "right" }
-);
+    margin: { left: 105 },
 
-doc.text("Discount",125,y+8);
+    styles: {
+        fontSize: 10,
+        cellPadding: 3,
+        lineColor: [200,200,200],
+        lineWidth: 0.2
+    },
 
-doc.text(
-    "₹ " + discount.toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }),
-    188,
-    y+8,
-    { align: "right" }
-);
+    columnStyles: {
+        0: {
+            cellWidth: 45,
+            fontStyle: "normal"
+        },
+        1: {
+            cellWidth: 45,
+            halign: "right"
+        }
+    },
 
-doc.setDrawColor(210);
-doc.line(125,y+12,190,y+12);
+    body: [
 
-doc.setFont("helvetica","bold");
-doc.setFontSize(12);
+        [
+            "Subtotal",
+            "₹ " + amount.toLocaleString("en-IN", {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            })
+        ],
 
-doc.text("Grand Total",125,y+22);
+        [
+            "Discount",
+            "₹ " + discount.toLocaleString("en-IN", {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            })
+        ],
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(12);
+        [
+            "Grand Total",
+            "₹ " + total.toLocaleString("en-IN", {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            })
+        ]
 
-doc.text(
-    "₹ " + total.toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }),
-    188,
-    y+22,
-    { align: "right" }
-);
+    ],
+
+    didParseCell: function(data){
+
+        if(data.row.index===2){
+
+            data.cell.styles.fontStyle="bold";
+            data.cell.styles.fillColor=[240,248,255];
+
+        }
+
+    }
+
+});
+
+const paymentY = doc.lastAutoTable.finalY + 12;
 
 // ==========================
 // PAYMENT INFORMATION
 // ==========================
 
 doc.setDrawColor(180);
-doc.roundedRect(15, y+38, 180, 55, 3, 3, "S");
+doc.roundedRect(15, paymentY, 180, 55, 3, 3, "S");
 
 // Blue Header
 doc.setFillColor(10,61,145);
-doc.rect(15, y+38, 180, 10, "F");
+doc.rect(15, paymentY, 180, 10, "F");
 
 doc.setTextColor(255,255,255);
 doc.setFont("helvetica","bold");
 doc.setFontSize(11);
-doc.text("PAYMENT INFORMATION",20,y+45);
+doc.text("PAYMENT INFORMATION",20,paymentY+7);
 
 // Payment Details
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
+doc.text("Bank Name",20,paymentY+20);
+doc.text(": State Bank of India",65,paymentY+20);
 
-doc.text("Bank Name",20,y+58);
-doc.text(": State Bank of India",65,y+58);
+doc.text("Account Name",20,paymentY+28);
+doc.text(": Shaik Azeez",65,paymentY+28);
 
-doc.text("Account Name",20,y+66);
-doc.text(": Shaik Azeez",65,y+66);
+doc.text("IFSC Code",20,paymentY+36);
+doc.text(": SBIN0020609",65,paymentY+36);
 
-doc.text("IFSC Code",20,y+74);
-doc.text(": SBIN0020609",65,y+74);
-
-doc.text("UPI ID",20,y+82);
-doc.text(": azizshayk@ybl",65,y+82);
+doc.text("UPI ID",20,paymentY+44);
+doc.text(": azizshayk@ybl",65,paymentY+44);
 
 
 // ==========================
