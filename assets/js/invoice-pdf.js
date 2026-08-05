@@ -210,34 +210,52 @@ doc.text(
 );
 
 // ==========================
-// PAYMENT DETAILS
+// PAYMENT INFORMATION
 // ==========================
 
-doc.setDrawColor(220);
+doc.setDrawColor(180);
+doc.roundedRect(15, y+38, 180, 55, 3, 3, "S");
 
-doc.line(15,y+38,195,y+38);
+// Blue Header
+doc.setFillColor(10,61,145);
+doc.rect(15, y+38, 180, 10, "F");
 
+doc.setTextColor(255,255,255);
 doc.setFont("helvetica","bold");
-
 doc.setFontSize(11);
+doc.text("PAYMENT INFORMATION",20,y+45);
 
-doc.text("PAYMENT DETAILS",15,y+48);
-
+// Payment Details
+doc.setTextColor(0);
 doc.setFont("helvetica","normal");
-
 doc.setFontSize(10);
 
-doc.text(
-    "Method : " + (paymentMethod || "-"),
-    15,
-    y+58
-);
+doc.text("Bank Name",20,y+58);
+doc.text(": State Bank of India",65,y+58);
 
-doc.text(
-    "Status : " + paymentStatus,
-    110,
-    y+58
-);
+doc.text("Account Name",20,y+66);
+doc.text(": Shaik Azeez",65,y+66);
+
+doc.text("IFSC Code",20,y+74);
+doc.text(": SBIN0020609",65,y+74);
+
+doc.text("UPI ID",20,y+82);
+doc.text(": azizshayk@ybl",65,y+82);
+
+    // QR CODE PLACEHOLDER
+
+doc.setDrawColor(180);
+doc.rect(150, y+52, 35, 35);
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(9);
+
+doc.text("QR CODE",157,y+71);
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(8);
+
+doc.text("Scan to Pay",154,y+91);
 
     // ==========================
 // SIGNATURE
