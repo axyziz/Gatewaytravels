@@ -333,7 +333,6 @@ if (currentY + requiredHeight > 270) {
     doc.setFont("helvetica","bold");
     doc.setFontSize(11);
 
-    doc.text("TERMS & CONDITIONS",20,17);
 
     doc.setTextColor(0);
     doc.setFont("helvetica","normal");
