@@ -53,6 +53,8 @@ doc.text("INVOICE",145,16);
 
 doc.setFont("helvetica","normal");
 doc.setFontSize(9);
+    doc.setCharSpace(0);
+doc.setLineHeightFactor(1);
 
 doc.text("Invoice :",145,23);
 doc.text(invoiceNo,172,23);
@@ -183,14 +185,14 @@ doc.setFontSize(10);
 doc.text("Subtotal",125,y);
 
 doc.text(
-    "₹ " + amount.toLocaleString("en-IN", {
+const subtotalText =
+    "₹ " +
+    amount.toLocaleString("en-IN", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-    }),
-    188,
-    y,
-    { align: "right" }
-);
+    });
+
+doc.text(subtotalText,188,y,{align:"right"});
 
 doc.text("Discount",125,y+8);
 
