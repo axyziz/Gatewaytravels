@@ -89,6 +89,9 @@ async function loadCustomers() {
     });
 
     select.addEventListener("change", fillCustomer);
+    document
+    .getElementById("service")
+    .addEventListener("change", loadDefaultTerms);
 
 }
 
@@ -162,5 +165,84 @@ async function loadInvoice(id) {
         data.payment_method || "";
     document.getElementById("terms").value =
     data.terms || "";
+
+}
+// =========================
+// Default Terms
+// =========================
+
+function loadDefaultTerms() {
+
+    const service =
+        document.getElementById("service").value;
+
+    const terms =
+        document.getElementById("terms");
+
+    switch(service){
+
+        case "Flight":
+
+            terms.value =
+`• Flight tickets are subject to airline fare rules.
+• Tickets once issued may be non-refundable.
+• Name changes are not permitted unless allowed by the airline.
+• Passengers must carry valid government-issued ID.
+• Gateway Travels is not responsible for airline schedule changes or cancellations.`;
+
+            break;
+
+        case "Bus":
+
+            terms.value =
+`• Bus timings are subject to operator schedules.
+• Passengers should report 30 minutes before departure.
+• Cancellation charges apply as per operator policy.
+• Seats are subject to availability.
+• Gateway Travels acts only as a booking facilitator.`;
+
+            break;
+
+        case "Hotel":
+
+            terms.value =
+`• Hotel check-in/check-out timings are as per hotel policy.
+• Early check-in and late check-out are subject to availability.
+• Any additional charges must be settled directly with the hotel.
+• Cancellation policy applies as per hotel rules.`;
+
+            break;
+
+        case "Visa":
+
+            terms.value =
+`• Visa approval is solely at the discretion of the respective embassy.
+• Visa fees are non-refundable after submission.
+• Additional documents may be requested by the embassy.
+• Gateway Travels is not responsible for visa rejection.`;
+
+            break;
+
+        case "Holiday Package":
+
+            terms.value =
+`• Package prices are subject to availability.
+• Any unused services are non-refundable.
+• Itinerary may change due to weather or operational reasons.
+• Cancellation charges apply as per supplier policy.`;
+
+            break;
+
+        case "Vehicle Rental":
+
+            terms.value =
+`• Driver licence is mandatory.
+• Fuel, tolls and parking charges are extra unless specified.
+• Vehicle must be returned on time.
+• Any damages are the customer's responsibility.`;
+
+            break;
+
+    }
 
 }
