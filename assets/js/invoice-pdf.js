@@ -242,7 +242,43 @@ doc.text(": SBIN0020609",65,y+74);
 doc.text("UPI ID",20,y+82);
 doc.text(": azizshayk@ybl",65,y+82);
 
+    // ==========================
+// QR BOX
+// ==========================
 
+doc.setDrawColor(180);
+doc.rect(150, y + 50, 35, 35);
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(8);
+
+doc.text("SCAN",159,y+67);
+doc.text("TO",163,y+73);
+doc.text("PAY",161,y+79);
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(7);
+
+doc.text("QR CODE",157,y+89);
+
+const qrImg = new Image();
+
+qrImg.onload = function () {
+
+    doc.addImage(
+        qrImg,
+        "JPEG",
+        150,
+        y + 50,
+        35,
+        35
+    );
+
+    doc.save(invoiceNo + ".pdf");
+
+};
+
+qrImg.src = "../assets/images/qr.jpg";
 
 // ==========================
 // FOOTER
@@ -272,6 +308,6 @@ doc.text(
 );
 
 // Save PDF
-doc.save(invoiceNo + ".pdf");
+
 
 }
