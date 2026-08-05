@@ -53,7 +53,7 @@ doc.text("INVOICE",145,16);
 
 doc.setFont("helvetica","normal");
 doc.setFontSize(9);
-    doc.setCharSpace(0);
+    doc.setCharSpace();
 doc.setLineHeightFactor(1);
 
 doc.text("Invoice :",145,23);
