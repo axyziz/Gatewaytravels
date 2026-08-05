@@ -27,7 +27,9 @@ async function downloadInvoicePDF() {
 
     const paymentMethod =
         document.getElementById("payment_method").value;
-
+const terms =
+    document.getElementById("terms").value;
+    
     // ===========================
     // HEADER
     // ===========================
@@ -281,8 +283,40 @@ doc.text(": azizshayk@ybl",65,paymentY+50);
 // FOOTER
 // ===========================
 
-const footerY = paymentY + 75;
+const termsY = paymentY + 65;
+    // ===========================
+// TERMS & CONDITIONS
+// ===========================
 
+doc.setDrawColor(200);
+doc.roundedRect(15, termsY, 180, 55, 3, 3);
+
+doc.setFillColor(10,61,145);
+doc.rect(15, termsY, 180, 10, "F");
+
+doc.setTextColor(255,255,255);
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+
+doc.text("TERMS & CONDITIONS",20,termsY+7);
+
+doc.setTextColor(0);
+doc.setFont("helvetica","normal");
+doc.setFontSize(9);
+
+// Automatically wrap long text
+const wrappedTerms = doc.splitTextToSize(
+    terms || "No terms and conditions provided.",
+    170
+);
+
+doc.text(
+    wrappedTerms,
+    20,
+    termsY + 18
+);
+
+const footerY = termsY + 25 + (wrappedTerms.length * 5);
 doc.setDrawColor(220);
 doc.line(15, footerY, 195, footerY);
 
