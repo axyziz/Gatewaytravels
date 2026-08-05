@@ -257,6 +257,25 @@ doc.setFontSize(8);
 
 doc.text("Scan to Pay",154,y+91);
 
+      // ==========================
+// SIGNATURE
+// ==========================
+
+const footerY = Math.max(y + 105, 270);
+const signY = footerY - 35;
+
+doc.setDrawColor(170);
+
+doc.line(140, signY, 190, signY);
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
+
+doc.text("Authorized Signature",145,signY+7);
+
+doc.setFontSize(9);
+
+doc.text("Gateway Travels & Holidays",138,signY+14);
 
 // ==========================
 // FOOTER
