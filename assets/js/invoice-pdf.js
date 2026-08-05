@@ -242,20 +242,35 @@ doc.text(": SBIN0020609",65,y+74);
 doc.text("UPI ID",20,y+82);
 doc.text(": azizshayk@ybl",65,y+82);
 
-    // QR CODE PLACEHOLDER
+// ==========================
+// REAL QR CODE
+// ==========================
 
-doc.setDrawColor(180);
-doc.rect(150, y+52, 35, 35);
+const qr = new Image();
 
-doc.setFont("helvetica","bold");
-doc.setFontSize(9);
+qr.src = "../assets/images/qr.jpg";
 
-doc.text("QR CODE",157,y+71);
+await new Promise(resolve => {
+    qr.onload = resolve;
+});
+
+doc.addImage(
+    qr,
+    "JPEG",
+    150,
+    y + 50,
+    35,
+    35
+);
 
 doc.setFont("helvetica","normal");
 doc.setFontSize(8);
 
-doc.text("Scan to Pay",154,y+91);
+doc.text(
+    "Scan to Pay",
+    154,
+    y + 89
+);
 
 // ==========================
 // FOOTER
