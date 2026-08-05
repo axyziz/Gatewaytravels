@@ -310,11 +310,48 @@ const wrappedTerms = doc.splitTextToSize(
     170
 );
 
+// Check if Terms will fit on current page
+let currentY = termsY + 18;
+
+const requiredHeight = wrappedTerms.length * 5;
+
+if (currentY + requiredHeight > 270) {
+
+    // Create new page
+    doc.addPage();
+
+    currentY = 20;
+
+    // Draw header on new page
+    doc.setDrawColor(200);
+    doc.roundedRect(15, 10, 180, 10 + requiredHeight, 3, 3);
+
+    doc.setFillColor(10,61,145);
+    doc.rect(15,10,180,10,"F");
+
+    doc.setTextColor(255,255,255);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(11);
+
+    doc.text("TERMS & CONDITIONS",20,17);
+
+    doc.setTextColor(0);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+
+    currentY = 28;
+
+}
+
+// Print Terms
 doc.text(
     wrappedTerms,
     20,
-    termsY + 18
+    currentY
 );
+
+// Footer Position
+const footerY = currentY + requiredHeight + 15;
 
 const footerY = termsY + 25 + (wrappedTerms.length * 5);
 doc.setDrawColor(220);
