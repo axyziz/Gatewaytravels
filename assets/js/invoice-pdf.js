@@ -184,7 +184,6 @@ doc.setFontSize(10);
 
 doc.text("Subtotal",125,y);
 
-doc.text(
 const subtotalText =
     "₹ " +
     amount.toLocaleString("en-IN", {
@@ -192,8 +191,12 @@ const subtotalText =
         maximumFractionDigits: 2
     });
 
-doc.text(subtotalText,188,y,{align:"right"});
-}
+doc.text(
+    subtotalText,
+    188,
+    y,
+    { align: "right" }
+);
 
 doc.text("Discount",125,y+8);
 
