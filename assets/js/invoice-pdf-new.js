@@ -50,12 +50,19 @@ const terms =
     doc.text("Your Journey, Our Passion",15,24);
 
     doc.text("+91 73829 64554",15,31);
+doc.text("Phone : +91 73829 64554",15,31);
 
-    doc.text(
-        "gatewaytravelsandholidays@gmail.com",
-        15,
-        37
-    );
+doc.text(
+    "Email : gatewaytravelsandholidays@gmail.com",
+    15,
+    36
+);
+
+doc.text(
+    "Website : https://axyziz.github.io/Gatewaytravels/",
+    15,
+    41
+);;
 // ===========================
 // INVOICE SUMMARY
 // ===========================
