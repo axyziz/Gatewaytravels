@@ -160,5 +160,7 @@ async function loadInvoice(id) {
 
     document.getElementById("payment_method").value =
         data.payment_method || "";
+    document.getElementById("terms").value =
+    data.terms || "";
 
 }
