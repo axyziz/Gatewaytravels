@@ -242,35 +242,7 @@ doc.text(": SBIN0020609",65,y+74);
 doc.text("UPI ID",20,y+82);
 doc.text(": azizshayk@ybl",65,y+82);
 
-// ==========================
-// REAL QR CODE
-// ==========================
 
-const qr = new Image();
-
-qr.src = "../assets/images/qr.jpg";
-
-await new Promise(resolve => {
-    qr.onload = resolve;
-});
-
-doc.addImage(
-    qr,
-    "JPEG",
-    150,
-    y + 50,
-    35,
-    35
-);
-
-doc.setFont("helvetica","normal");
-doc.setFontSize(8);
-
-doc.text(
-    "Scan to Pay",
-    154,
-    y + 89
-);
 
 // ==========================
 // FOOTER
