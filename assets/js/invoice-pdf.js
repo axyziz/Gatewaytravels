@@ -166,6 +166,10 @@ columnStyles:{
 
     });
 const y = doc.lastAutoTable.finalY + 12;
+    // Reset font after autoTable
+doc.setFont("helvetica", "normal");
+doc.setFontSize(10);
+doc.setTextColor(0, 0, 0);
    // ==========================
 // TOTALS BOX
 // ==========================
@@ -179,19 +183,25 @@ doc.setFontSize(10);
 doc.text("Subtotal",125,y);
 
 doc.text(
-    "₹ " + amount.toFixed(2),
+    "₹ " + amount.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }),
     188,
     y,
-    {align:"right"}
+    { align: "right" }
 );
 
 doc.text("Discount",125,y+8);
 
 doc.text(
-    "₹ " + discount.toFixed(2),
+    "₹ " + discount.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }),
     188,
     y+8,
-    {align:"right"}
+    { align: "right" }
 );
 
 doc.setDrawColor(210);
@@ -202,11 +212,17 @@ doc.setFontSize(12);
 
 doc.text("Grand Total",125,y+22);
 
+doc.setFont("helvetica", "bold");
+doc.setFontSize(12);
+
 doc.text(
-    "₹ " + total.toFixed(2),
+    "₹ " + total.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }),
     188,
     y+22,
-    {align:"right"}
+    { align: "right" }
 );
 
 // ==========================
