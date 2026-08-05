@@ -200,6 +200,17 @@ id="payment_method"
 placeholder="Cash / UPI / Card / Bank Transfer">
 
 </div>
+    <div class="section">
+
+<h3>📋 Terms & Conditions</h3>
+
+<label>Terms & Conditions</label>
+
+<textarea
+id="terms"
+placeholder="Enter booking-specific terms and conditions..."></textarea>
+
+</div>
 
 <div class="button-group">
 
@@ -291,7 +302,8 @@ async function saveInvoice() {
 
         payment_status: document.getElementById("payment_status").value,
 
-        payment_method: document.getElementById("payment_method").value
+        payment_method: document.getElementById("payment_method").value,
+        terms: document.getElementById("terms").value,
 
     };
 
