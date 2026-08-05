@@ -193,6 +193,7 @@ const subtotalText =
     });
 
 doc.text(subtotalText,188,y,{align:"right"});
+}
 
 doc.text("Discount",125,y+8);
 
