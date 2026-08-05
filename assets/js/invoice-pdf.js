@@ -261,24 +261,6 @@ doc.setFontSize(7);
 
 doc.text("QR CODE",157,y+89);
 
-const qrImg = new Image();
-
-qrImg.onload = function () {
-
-    doc.addImage(
-        qrImg,
-        "JPEG",
-        150,
-        y + 50,
-        35,
-        35
-    );
-
-    doc.save(invoiceNo + ".pdf");
-
-};
-
-qrImg.src = "../assets/images/qr.jpg";
 
 // ==========================
 // FOOTER
@@ -308,6 +290,6 @@ doc.text(
 );
 
 // Save PDF
-
+doc.save(invoiceNo + ".pdf");
 
 }
