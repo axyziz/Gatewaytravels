@@ -151,7 +151,7 @@ doc.autoTable({
     body:[[
         service || "-",
         description || "-",
-        "₹ " + amount.toLocaleString("en-IN",{
+       " Rs." + amount.toLocaleString("en-IN",{
             minimumFractionDigits:2,
             maximumFractionDigits:2
         })
@@ -203,7 +203,7 @@ doc.text("Discount",115,totalsY+16);
 
 // Values
 doc.text(
-    "₹ " + amount.toLocaleString("en-IN",{
+    "Rs." + amount.toLocaleString("en-IN",{
         minimumFractionDigits:2,
         maximumFractionDigits:2
     }),
@@ -213,7 +213,7 @@ doc.text(
 );
 
 doc.text(
-    "₹ " + discount.toLocaleString("en-IN",{
+    "Rs." + discount.toLocaleString("en-IN",{
         minimumFractionDigits:2,
         maximumFractionDigits:2
     }),
@@ -233,7 +233,7 @@ doc.setFontSize(12);
 doc.text("Grand Total",115,totalsY+27);
 
 doc.text(
-    "₹ " + total.toLocaleString("en-IN",{
+    "Rs." + total.toLocaleString("en-IN",{
         minimumFractionDigits:2,
         maximumFractionDigits:2
     }),
