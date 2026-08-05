@@ -353,7 +353,6 @@ doc.text(
 // Footer Position
 const footerY = currentY + requiredHeight + 15;
 
-const footerY = termsY + 25 + (wrappedTerms.length * 5);
 doc.setDrawColor(220);
 doc.line(15, footerY, 195, footerY);
 
