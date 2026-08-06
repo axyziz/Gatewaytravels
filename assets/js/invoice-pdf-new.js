@@ -56,7 +56,6 @@ doc.text(
     34
 );
 
-    doc.text("+91 73829 64554",15,31);
 doc.text("Phone : +91 73829 64554",15,39);
 
 doc.text(
