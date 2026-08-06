@@ -35,40 +35,47 @@ const terms =
     // ===========================
 
     doc.setFillColor(10,61,145);
-    doc.rect(0,0,210,42,"F");
+    doc.rect(0,0,210,55,"F");
 
     doc.setTextColor(255,255,255);
 
     doc.setFont("helvetica","bold");
     doc.setFontSize(22);
 
-    doc.text("Gateway Travels & Holidays",15,16);
+   doc.text("Gateway Travels & Holidays",15,18);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(10);
 
-    doc.text("Your Journey, Our Passion",15,24);
+    doc.text("Your Journey, Our Passion",15,27);
+    doc.setFontSize(8);
+
+doc.text(
+    "Flights • Hotels • Holiday Packages • Visa • Bus • Car Rental",
+    15,
+    31
+);
 
     doc.text("+91 73829 64554",15,31);
-doc.text("Phone : +91 73829 64554",15,31);
+doc.text("Phone : +91 73829 64554",15,36);
 
 doc.text(
     "Email : gatewaytravelsandholidays@gmail.com",
     15,
-    36
+    41
 );
 
 doc.text(
     "Website : https://axyziz.github.io/Gatewaytravels/",
     15,
-    41
-);;
+    46
+);
 // ===========================
 // INVOICE SUMMARY
 // ===========================
 
 doc.setFillColor(255,255,255);
-doc.roundedRect(135,8,60,28,2,2,"FD");
+doc.roundedRect(135,10,60,30,2,2,"FD");
 
 doc.setTextColor(10,61,145);
 
