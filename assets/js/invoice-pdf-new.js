@@ -124,9 +124,6 @@ doc.setTextColor(0);
 // CUSTOMER DETAILS
 // ===========================
 
-doc.setDrawColor(200);
-doc.setFillColor(248,249,250);
-
 doc.roundedRect(15,62,180,45,3,3,"FD");
 
 doc.setTextColor(10,61,145);
@@ -136,21 +133,23 @@ doc.setFontSize(13);
 doc.text("BILL TO",20,72);
 
 doc.setDrawColor(220);
-doc.line(20,69,190,69);
+
+// Divider line BELOW the heading
+doc.line(20,76,190,76);
 
 doc.setTextColor(0);
 
 doc.setFont("helvetica","bold");
 doc.setFontSize(12);
 
-doc.text(customer || "-",20,79);
+doc.text(customer || "-",20,86);
 
 doc.setFont("helvetica","normal");
 doc.setFontSize(10);
 
-doc.text("Mobile : " + (mobile || "-"),20,88);
+doc.text("Mobile : " + (mobile || "-"),20,95);
 
-doc.text("Email : " + (email || "-"),20,96);
+doc.text("Email : " + (email || "-"),20,103);
   // ===========================
 // SERVICE DETAILS
 // ===========================
