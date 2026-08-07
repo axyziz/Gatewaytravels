@@ -1,212 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gateway Travels Dashboard</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gateway Travels Admin Dashboard</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <style>
 
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
-    font-family:'Segoe UI',Arial,sans-serif;
+    font-family:'Poppins',sans-serif;
     background:#f4f7fc;
-    margin:0;
-}
-
-/* Header */
-
-header{
-    background:#0A3D91;
-    color:white;
-    padding:22px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
-}
-
-header h2{
-    margin:0;
-    font-size:30px;
-    font-weight:700;
-}
-
-.admin-profile{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:rgba(255,255,255,.15);
-    padding:10px 18px;
-    border-radius:12px;
-}
-
-.admin-profile i{
-    font-size:28px;
-}
-
-/* Main */
-
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:40px;
-}
-
-.card{
-    background:white;
-    padding:40px;
-    border-radius:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-    /* Dashboard Cards */
-
-.dashboard-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:25px;
-    margin-top:30px;
-}
-
-.dashboard-card{
-    background:#ffffff;
-    border-radius:18px;
-    padding:35px 25px;
-    text-align:center;
-    cursor:pointer;
-    transition:all .3s ease;
-    border:1px solid #e5e7eb;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-
-.dashboard-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(10,61,145,.18);
-    border-color:#0A3D91;
-}
-
-.dashboard-card i{
-    font-size:52px;
-    color:#0A3D91;
-    margin-bottom:18px;
-}
-
-.dashboard-card h3{
-    margin:10px 0;
-    font-size:22px;
     color:#1f2937;
 }
 
-.dashboard-card p{
-    color:#6b7280;
-    font-size:15px;
-    margin:0;
+/* ===========================
+   MAIN LAYOUT
+=========================== */
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
 }
 
-.logout-card i{
-    color:#dc2626;
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.sidebar{
+    width:260px;
+    background:#0A3D91;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:30px 20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:50px;
+}
+
+.logo-icon{
+    width:60px;
+    height:60px;
+    border-radius:16px;
+    background:#fff;
+    color:#0A3D91;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+.logo h2{
+    font-size:22px;
+    font-weight:700;
+}
+
+.logo span{
+    font-size:13px;
+    opacity:.8;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:14px 18px;
+    border-radius:12px;
+    transition:.3s;
+    font-weight:500;
+}
+
+.menu a:hover,
+.menu .active{
+    background:rgba(255,255,255,.15);
+}
+
+.logout-btn{
+    width:100%;
+    border:none;
+    padding:16px;
+    border-radius:12px;
+    background:#dc2626;
+    color:#fff;
+    font-size:15px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.logout-btn:hover{
+    background:#b91c1c;
+}
+/* ===========================
+   MAIN CONTENT
+=========================== */
+
+.main-content{
+    flex:1;
+    padding:40px;
+    background:#f4f7fc;
+}
+    /* ===========================
+   TOP HEADER
+=========================== */
+
+.top-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
+
+}
+
+.top-header h1{
+
+    font-size:34px;
+
+    color:#1f2937;
+
+}
+
+.top-header p{
+
+    margin-top:8px;
+
+    color:#6b7280;
+
+}
+
+.profile-card{
+
+    background:white;
+
+    padding:15px 20px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.profile-icon{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    background:#0A3D91;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:26px;
+
+}
+
+/* ===========================
+   GRID
+=========================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+}
+    /* ===========================
+   ACTION CARDS
+=========================== */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+    margin-top:20px;
+}
+
+.action-card{
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border:1px solid #eef2f7;
+}
+
+.action-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(10,61,145,.18);
+}
+
+.card-icon{
+    width:70px;
+    height:70px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    color:#fff;
+    margin-bottom:20px;
+}
+
+.card-icon.blue{background:#2563eb;}
+.card-icon.green{background:#22c55e;}
+.card-icon.orange{background:#f59e0b;}
+.card-icon.purple{background:#8b5cf6;}
+.card-icon.gray{background:#6b7280;}
+.card-icon.red{background:#dc2626;}
+
+.action-card h3{
+    margin:10px 0;
+    font-size:22px;
+    color:#111827;
+}
+
+.action-card p{
+    color:#6b7280;
+    line-height:1.6;
+}
+
+.disabled-card{
+    opacity:.75;
+    cursor:default;
 }
 
 .logout-card:hover{
-    border-color:#dc2626;
     box-shadow:0 20px 40px rgba(220,38,38,.18);
 }
 </style>
 
 </head>
-
 <body onload="checkLogin()">
 
-<header>
+<div class="dashboard">
 
-<h2>Gateway Travels Admin Dashboard</h2>
+    <!-- ===========================
+         SIDEBAR
+    ============================ -->
 
-<div class="admin-profile">
-    <i class="fa-solid fa-circle-user"></i>
+    <aside class="sidebar">
+
+        <div>
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <i class="fa-solid fa-plane-departure"></i>
+                </div>
+
+                <div>
+                    <h2>Gateway Travels</h2>
+                    <span>Admin Dashboard</span>
+                </div>
+
+            </div>
+
+            <nav class="menu">
+
+                <a href="#" class="active">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+
+                <a href="create-invoice.html">
+                    <i class="fa-solid fa-file-circle-plus"></i>
+                    Create Invoice
+                </a>
+
+                <a href="invoices.html">
+                    <i class="fa-solid fa-file-lines"></i>
+                    View Invoices
+                </a>
+
+                <a href="customers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Customers
+                </a>
+
+                <a href="https://axyziz.github.io/Gatewaytravels/" target="_blank">
+                    <i class="fa-solid fa-globe"></i>
+                    Website
+                </a>
+
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button class="logout-btn" onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+    <!-- ===========================
+         MAIN CONTENT
+    ============================ -->
+
+    <main class="main-content">
+        <!-- ===========================
+     TOP HEADER
+=========================== -->
+
+<div class="top-header">
 
     <div>
-        <strong>Admin</strong><br>
-        <small>Gateway Travels</small>
+
+        <h1>Welcome Back 👋</h1>
+
+        <p>
+            Manage your travel business from one place.
+        </p>
+
     </div>
+
+    <div class="profile-card">
+
+        <div class="profile-icon">
+
+            <i class="fa-solid fa-circle-user"></i>
+
+        </div>
+
+        <div>
+
+            <strong>Administrator</strong>
+
+            <br>
+
+            <small>Gateway Travels</small>
+
+        </div>
+
+    </div>
+
 </div>
 
-</header>
-
-<div class="container">
-
-<div class="card">
-
-<h1>Gateway Travels Admin</h1>
-
-<h1 style="margin-top:0;">Welcome Back 👋</h1>
-
-<p style="color:#666;margin-bottom:35px;">
-Manage your travel business from one place.
-</p>
+<!-- ===========================
+     ACTION CARDS
+=========================== -->
 
 <div class="dashboard-grid">
+    <!-- Card 1 -->
+<div class="action-card" onclick="location.href='create-invoice.html'">
 
-    <div class="dashboard-card"
-         onclick="location.href='create-invoice.html'">
-
+    <div class="card-icon blue">
         <i class="fa-solid fa-file-circle-plus"></i>
-
-        <h3>Create Invoice</h3>
-
-        <p>Generate professional invoices</p>
-
     </div>
 
-    <div class="dashboard-card"
-         onclick="location.href='invoices.html'">
+    <h3>Create Invoice</h3>
 
+    <p>Generate professional travel invoices.</p>
+
+</div>
+
+<!-- Card 2 -->
+<div class="action-card" onclick="location.href='invoices.html'">
+
+    <div class="card-icon green">
         <i class="fa-solid fa-file-lines"></i>
-
-        <h3>View Invoices</h3>
-
-        <p>Manage all saved invoices</p>
-
     </div>
 
-    <div class="dashboard-card"
-         onclick="location.href='customers.html'">
+    <h3>View Invoices</h3>
 
+    <p>Search, edit and download invoices.</p>
+
+</div>
+
+<!-- Card 3 -->
+<div class="action-card" onclick="location.href='customers.html'">
+
+    <div class="card-icon orange">
         <i class="fa-solid fa-users"></i>
-
-        <h3>Customers</h3>
-
-        <p>Manage customer records</p>
-
     </div>
 
-    <div class="dashboard-card logout-card"
-         onclick="logout()">
+    <h3>Customers</h3>
 
+    <p>Manage your customer database.</p>
+
+</div>
+
+<!-- Card 4 -->
+<div class="action-card" onclick="window.open('https://axyziz.github.io/Gatewaytravels/','_blank')">
+
+    <div class="card-icon purple">
+        <i class="fa-solid fa-globe"></i>
+    </div>
+
+    <h3>Website</h3>
+
+    <p>Open your live Gateway Travels website.</p>
+
+</div>
+
+<!-- Card 5 -->
+<div class="action-card disabled-card">
+
+    <div class="card-icon gray">
+        <i class="fa-solid fa-gear"></i>
+    </div>
+
+    <h3>Settings</h3>
+
+    <p>Coming Soon</p>
+
+</div>
+
+<!-- Card 6 -->
+<div class="action-card logout-card" onclick="logout()">
+
+    <div class="card-icon red">
         <i class="fa-solid fa-right-from-bracket"></i>
-
-        <h3>Logout</h3>
-
-        <p>Sign out securely</p>
-
     </div>
 
-</div>
+    <h3>Logout</h3>
+
+    <p>Securely sign out of your account.</p>
 
 </div>
 
-<script>
-async function logout() {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="../js/auth.js"></script>
-
-</body>
-</html>
+</div>
