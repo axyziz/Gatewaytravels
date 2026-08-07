@@ -5,39 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gateway Travels Dashboard</title>
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 <style>
+
 body{
-    font-family:Arial,sans-serif;
-    background:#f5f7fa;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:#f4f7fc;
     margin:0;
 }
 
+/* Header */
+
 header{
-    background:#0f172a;
+    background:#0A3D91;
     color:white;
-    padding:20px;
+    padding:22px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
 }
 
+header h2{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+}
+
+.admin-profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:rgba(255,255,255,.15);
+    padding:10px 18px;
+    border-radius:12px;
+}
+
+.admin-profile i{
+    font-size:28px;
+}
+
+/* Main */
+
 .container{
+    max-width:1200px;
+    margin:auto;
     padding:40px;
 }
 
 .card{
     background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
+
 </style>
-    
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body onload="checkLogin()">
 
 <header>
+
 <h2>Gateway Travels Admin Dashboard</h2>
+
+<div class="admin-profile">
+    <i class="fa-solid fa-circle-user"></i>
+
+    <div>
+        <strong>Admin</strong><br>
+        <small>Gateway Travels</small>
+    </div>
+</div>
+
 </header>
 
 <div class="container">
@@ -59,8 +102,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </button>
 
 <br><br>
-    <button onclick="window.location.href='customers.html'">
-    👤 Customers
+
+<button onclick="window.location.href='customers.html'">
+👤 Customers
 </button>
 
 <button onclick="logout()">
@@ -68,15 +112,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </button>
 
 </div>
-    <script>
+
+<script>
 async function logout() {
     await supabaseClient.auth.signOut();
     window.location.href = "login.html";
 }
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
 <script src="../js/auth.js"></script>
+
 </body>
 </html>
-
