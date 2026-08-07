@@ -62,6 +62,58 @@ header h2{
     box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
+    /* Dashboard Cards */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+    margin-top:30px;
+}
+
+.dashboard-card{
+    background:#ffffff;
+    border-radius:18px;
+    padding:35px 25px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .3s ease;
+    border:1px solid #e5e7eb;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(10,61,145,.18);
+    border-color:#0A3D91;
+}
+
+.dashboard-card i{
+    font-size:52px;
+    color:#0A3D91;
+    margin-bottom:18px;
+}
+
+.dashboard-card h3{
+    margin:10px 0;
+    font-size:22px;
+    color:#1f2937;
+}
+
+.dashboard-card p{
+    color:#6b7280;
+    font-size:15px;
+    margin:0;
+}
+
+.logout-card i{
+    color:#dc2626;
+}
+
+.logout-card:hover{
+    border-color:#dc2626;
+    box-shadow:0 20px 40px rgba(220,38,38,.18);
+}
 </style>
 
 </head>
@@ -89,27 +141,59 @@ header h2{
 
 <h1>Gateway Travels Admin</h1>
 
-<br>
+<h1 style="margin-top:0;">Welcome Back 👋</h1>
 
-<button onclick="location.href='create-invoice.html'">
-📝 Create Invoice
-</button>
+<p style="color:#666;margin-bottom:35px;">
+Manage your travel business from one place.
+</p>
 
-<br><br>
+<div class="dashboard-grid">
 
-<button onclick="location.href='invoices.html'">
-📋 View Invoices
-</button>
+    <div class="dashboard-card"
+         onclick="location.href='create-invoice.html'">
 
-<br><br>
+        <i class="fa-solid fa-file-circle-plus"></i>
 
-<button onclick="window.location.href='customers.html'">
-👤 Customers
-</button>
+        <h3>Create Invoice</h3>
 
-<button onclick="logout()">
-🚪 Logout
-</button>
+        <p>Generate professional invoices</p>
+
+    </div>
+
+    <div class="dashboard-card"
+         onclick="location.href='invoices.html'">
+
+        <i class="fa-solid fa-file-lines"></i>
+
+        <h3>View Invoices</h3>
+
+        <p>Manage all saved invoices</p>
+
+    </div>
+
+    <div class="dashboard-card"
+         onclick="location.href='customers.html'">
+
+        <i class="fa-solid fa-users"></i>
+
+        <h3>Customers</h3>
+
+        <p>Manage customer records</p>
+
+    </div>
+
+    <div class="dashboard-card logout-card"
+         onclick="logout()">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        <h3>Logout</h3>
+
+        <p>Sign out securely</p>
+
+    </div>
+
+</div>
 
 </div>
 
