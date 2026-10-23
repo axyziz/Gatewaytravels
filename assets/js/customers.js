@@ -92,6 +92,15 @@ async function loadCustomers() {
 
     });
 
+    filterCustomers();
+}
+
+function filterCustomers() {
+    const query = (document.getElementById("searchCustomer")?.value || "").trim().toLowerCase();
+    const rows = document.querySelectorAll("#customerTable tr");
+    rows.forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(query) ? "" : "none";
+    });
 }
 
 async function saveCustomer() {
@@ -165,6 +174,10 @@ function clearForm() {
     document.getElementById("company").value = "";
     document.getElementById("gst_number").value = "";
     document.getElementById("address").value = "";
+    const heading = document.getElementById("formHeading");
+    if (heading) heading.textContent = "Customer details";
+    const saveBtn = document.getElementById("saveCustomerBtn");
+    if (saveBtn) saveBtn.textContent = "Save customer";
 
 }
 
@@ -196,6 +209,11 @@ async function editCustomer(id) {
     document.getElementById("company").value = data.company || "";
     document.getElementById("gst_number").value = data.gst_number || "";
     document.getElementById("address").value = data.address || "";
+    const heading = document.getElementById("formHeading");
+    if (heading) heading.textContent = "Edit customer";
+    const saveBtn = document.getElementById("saveCustomerBtn");
+    if (saveBtn) saveBtn.textContent = "Update customer";
+    document.getElementById("first_name").focus();
 
 }
 
