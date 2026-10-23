@@ -38,7 +38,7 @@ function renderInvoices() {
       '<td><span class="status ' + (status === "paid" ? "paid" : "pending") + '">' + escapeHtml(inv.payment_status || "Pending") + '</span></td>' +
       '<td><div class="actions"><button onclick="editInvoice(\'' + id + '\')">Edit</button>' +
       '<button class="danger" onclick="deleteInvoice(\'' + id + '\')">Delete</button>' +
-      '<button class="download" onclick="downloadInvoice(\'' + id + '\')">↓ PDF</button></div></td></tr>';
+      '<button class="download" onclick="downloadInvoice(\'' + id + '\')">Download PDF</button></div></td></tr>';
   }).join("");
 }
 
