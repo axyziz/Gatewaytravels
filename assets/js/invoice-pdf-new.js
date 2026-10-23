@@ -258,56 +258,40 @@ doc.text(
 
 const paymentY = totalsY + 40;
   // ===========================
-// PAYMENT INFORMATION
-// ===========================
+ // PAYMENT INFORMATION
+ // ===========================
 
-// Payment section: bank account details intentionally omitted.
+// Outer Box
 doc.setDrawColor(200);
-doc.roundedRect(15, paymentY, 180, 45, 3, 3);
+doc.roundedRect(15, paymentY, 180, 58, 3, 3);
 
+// Blue Header
 doc.setFillColor(10,61,145);
 doc.rect(15, paymentY, 180, 10, "F");
 
 doc.setTextColor(255,255,255);
 doc.setFont("helvetica","bold");
 doc.setFontSize(11);
-doc.text("PAYMENT BY UPI",20,paymentY+7);
+doc.text("PAYMENT INFORMATION",20,paymentY+7);
 
+// Body
 doc.setTextColor(0);
 doc.setFont("helvetica","normal");
-doc.setFontSize(9);
+doc.setFontSize(10);
 
-const upiId = "azizshayk@ybl";
-const paymentMobile = "8328509690";
-const upiUri = "upi://pay?pa=" + encodeURIComponent(upiId) +
-    "&pn=" + encodeURIComponent("Gateway Travels & Holidays");
+doc.text("Bank Name",20,paymentY+20);
+doc.text(": State Bank of India",65,paymentY+20);
 
-try {
-    if (window.QRCode && typeof window.QRCode.toDataURL === "function") {
-        const qrDataUrl = await window.QRCode.toDataURL(upiUri, {
-            width: 240, margin: 1, errorCorrectionLevel: "M"
-        });
-        doc.addImage(qrDataUrl, "PNG", 20, paymentY + 12, 28, 28);
-    } else {
-        doc.text("Scan to pay with UPI",20,paymentY+23);
-    }
-} catch (e) {
-    console.error("Could not create UPI QR code:", e);
-    doc.text("Use the UPI ID below to pay",20,paymentY+23);
-}
+doc.text("Account Name",20,paymentY+30);
+doc.text(": Shaik Azeez",65,paymentY+30);
 
-doc.setFont("helvetica","bold");
-doc.text("UPI ID",58,paymentY+21);
-doc.setFont("helvetica","normal");
-doc.text(upiId,82,paymentY+21);
+doc.text("IFSC Code",20,paymentY+40);
+doc.text(": SBIN0020609",65,paymentY+40);
 
-doc.setFont("helvetica","bold");
-doc.text("Payment mobile",58,paymentY+31);
-doc.setFont("helvetica","normal");
-doc.text(paymentMobile,91,paymentY+31);
+doc.text("UPI ID",20,paymentY+50);
+doc.text(": azizshayk@ybl",65,paymentY+50);
 
-doc.setFontSize(8);
-doc.text("If scanning is unavailable, pay using the UPI ID.",58,paymentY+39);
+const termsY = paymentY + 65;
 
 // ===========================
 // TERMS & CONDITIONS
