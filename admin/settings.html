@@ -66,7 +66,7 @@ Gateway Travels acts only as a booking facilitator.</textarea></div>
 <div class="field"><label for="appearance">Appearance preference</label><select id="appearance" data-key="appearance"><option value="light">Light</option><option value="dark">Dark (preference only)</option></select></div>
 <div class="field full"><label for="logoUrl">Logo image URL (optional)</label><input id="logoUrl" data-key="logoUrl" type="url" placeholder="https://..."><p class="hint">This saves the URL as a preference; it does not replace the logo elsewhere yet.</p></div>
 </div></div>
-<div class="pane hidden" id="pane-notifications"><div class="panel-head"><h2>Notifications</h2><p>Choose the reminders you would like the system to support.</p></div>
+<div class="pane hidden" id="pane-notifications"><div class="panel-head"><h2>Notifications</h2><p>Choose notification preferences to store in Supabase.</p></div><div class="notice warn">These toggles are saved preferences only. Email and WhatsApp notifications will not be sent until a provider and secure server-side delivery are configured.</div>
 <div class="toggle-row"><div><strong>Pending invoice reminders</strong><span>Flag invoices that remain unpaid.</span></div><input id="pendingAlerts" type="checkbox" data-key="pendingAlerts"></div><div class="toggle-row"><div><strong>New invoice alerts</strong><span>Show when a new invoice is created.</span></div><input id="newInvoiceAlerts" type="checkbox" data-key="newInvoiceAlerts"></div><div class="toggle-row"><div><strong>Customer updates</strong><span>Show when customer details are added or changed.</span></div><input id="customerAlerts" type="checkbox" data-key="customerAlerts"></div><div class="toggle-row"><div><strong>Email reminders</strong><span>Preference only; email delivery is not configured here.</span></div><input id="emailReminders" type="checkbox" data-key="emailReminders"></div>
 </div>
 <div class="pane hidden" id="pane-preferences"><div class="panel-head"><h2>Business Preferences</h2><p>Regional and day-to-day preferences for the workspace.</p></div><div class="form-grid">
@@ -75,12 +75,12 @@ Gateway Travels acts only as a booking facilitator.</textarea></div>
 <div class="field"><label for="defaultDiscount">Default discount (₹)</label><input id="defaultDiscount" data-key="defaultDiscount" type="number" min="0" value="0"></div>
 <div class="field"><label for="language">Language</label><select id="language" data-key="language"><option value="en">English</option></select></div>
 </div></div>
-<div class="pane hidden" id="pane-security"><div class="panel-head"><h2>Account & Security</h2><p>Use the existing sign-in system for account access.</p></div>
-<div class="account-card"><strong><i class="fa-solid fa-shield-halved"></i> Existing admin authentication</strong><p>This site uses Supabase authentication. This page does not store or change your password.</p></div>
-<div class="account-card"><strong>Password management</strong><p>Password changes and recovery should be completed through the configured authentication flow.</p><a class="btn" href="login.html" style="margin-top:12px">Open admin login</a></div>
-<div class="account-card"><strong>Session security</strong><p>Always sign out on shared devices. Do not share admin credentials or service keys.</p><a class="btn danger" href="login.html">Go to sign-in</a></div>
+<div class="pane hidden" id="pane-security"><div class="panel-head"><h2>Account & Security</h2><p>Session details are read from Supabase Auth; passwords are never stored in settings.</p></div>
+<div class="account-card"><strong><i class="fa-solid fa-shield-halved"></i> Signed-in account</strong><p id="accountIdentity">Checking Supabase session…</p><button class="btn" type="button" id="refreshAccount">Refresh account status</button> <button class="btn danger" type="button" id="signOutBtn">Sign out</button></div>
+<div class="account-card"><strong>Password recovery</strong><p>Send a password recovery email to the signed-in account. This does not change your password immediately.</p><button class="btn" type="button" id="passwordResetBtn">Send password recovery email</button><p id="securityStatus" class="hint" aria-live="polite"></p></div>
+<div class="account-card"><strong>Session security</strong><p>Always sign out on shared devices. Never share admin credentials or secret API keys.</p></div>
 </div>
-<div class="pane hidden" id="pane-data"><div class="panel-head"><h2>Data & Backup</h2><p>Export a copy of records you are authorised to access. Export does not modify Supabase.</p></div><div class="notice warn">Exports may contain customer personal information. Store downloaded files securely and share only with authorised staff.</div><div class="account-card"><strong>Export invoices</strong><p>Download accessible invoice records as CSV.</p><button class="btn" type="button" onclick="exportTable('invoices')">Export invoices CSV</button></div><div class="account-card"><strong>Export customers</strong><p>Download accessible customer records as CSV.</p><button class="btn" type="button" onclick="exportTable('customers')">Export customers CSV</button></div><p id="exportStatus" class="hint" aria-live="polite"></p></div>
+<div class="pane hidden" id="pane-data"><div class="panel-head"><h2>Data & Backup</h2><p>Export a copy of records you are authorised to access. Export does not modify Supabase.</p></div><div class="notice warn">Exports may contain customer personal information. Store them securely. Security finding: the Supabase customers table currently has Row Level Security (RLS) disabled, so customer data may be exposed through the public API. We have not changed it because adding RLS without suitable policies could break customer access.</div><div class="account-card"><strong>Export invoices</strong><p>Download accessible invoice records as CSV.</p><button class="btn" type="button" onclick="exportTable('invoices')">Export invoices CSV</button></div><div class="account-card"><strong>Export customers</strong><p>Download accessible customer records as CSV.</p><button class="btn" type="button" onclick="exportTable('customers')">Export customers CSV</button></div><p id="exportStatus" class="hint" aria-live="polite"></p></div>
 <div class="pane hidden" id="pane-integrations"><div class="panel-head"><h2>Integrations & System Health</h2><p>Connection checks and future integrations.</p></div><div class="account-card"><strong>Supabase</strong><p>Configured in the existing application. This page does not change project settings, credentials, schema, or records.</p><button type="button" class="btn" id="testConnection">Test Supabase connection</button><p id="connectionStatus" class="hint" aria-live="polite"></p></div><div class="account-card"><strong>Payment, email and WhatsApp</strong><p>Connection preferences can be stored here, but live payment processing and outbound email/WhatsApp delivery require provider credentials and server-side setup. No credentials are collected on this page.</p></div><div class="account-card"><strong>Settings version</strong><p>Settings workspace v2 · Business profile and invoice preferences stored in Supabase.</p></div></div>
 <div class="actions"><button type="button" class="btn" id="resetBtn">Reset this section</button><button type="button" class="btn primary" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Save settings</button></div>
 <p id="saveStatus" class="hint" role="status" aria-live="polite"></p>
@@ -190,6 +190,27 @@ document.getElementById('testConnection').addEventListener('click',async()=>{
  catch(e){el.textContent='Could not verify: '+(e.message||'connection or permissions issue.');}
 });
 document.getElementById('brandColor').addEventListener('input',e=>document.documentElement.style.setProperty('--navy',e.target.value));
+async function refreshAccountStatus(){
+ const el=document.getElementById('accountIdentity'),status=document.getElementById('securityStatus');
+ try{const {data,error}=await currentClient().auth.getSession();if(error)throw error;const user=data.session?.user;
+  el.textContent=user?'Signed in as '+(user.email||'authenticated admin')+'. User ID: '+user.id:'No active admin session. Sign in to use synced settings.';
+ }catch(e){el.textContent='Unable to read session: '+(e.message||'connection issue');}
+}
+document.getElementById('refreshAccount').addEventListener('click',refreshAccountStatus);
+document.getElementById('signOutBtn').addEventListener('click',async()=>{
+ const status=document.getElementById('securityStatus');
+ try{const {error}=await currentClient().auth.signOut();if(error)throw error;document.getElementById('accountIdentity').textContent='Signed out successfully.';status.textContent='You are signed out. Redirecting to admin login…';setTimeout(()=>window.location.href='login.html',800);}
+ catch(e){status.textContent='Sign out failed: '+(e.message||'unknown error');}
+});
+document.getElementById('passwordResetBtn').addEventListener('click',async()=>{
+ const status=document.getElementById('securityStatus');
+ try{const {data,error}=await currentClient().auth.getSession();if(error)throw error;const email=data.session?.user?.email;if(!email)throw new Error('Sign in first to request a password recovery email.');
+ const redirectTo=window.location.origin+window.location.pathname.replace(/[^/]*$/,'')+'login.html';
+ const {error:resetError}=await currentClient().auth.resetPasswordForEmail(email,{redirectTo});if(resetError)throw resetError;
+ status.textContent='Password recovery email requested for '+email+'. Check your inbox if email delivery is configured.';
+ }catch(e){status.textContent='Could not request recovery: '+(e.message||'check Supabase Auth settings');}
+});
+refreshAccountStatus();
 loadFromSupabase();
 </script>
 </body></html>
