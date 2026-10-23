@@ -61,5 +61,12 @@ async function deleteInvoice(id) {
 function downloadInvoice(id) {
   // Generate the PDF using the existing original invoice PDF generator.
   // The create page loads the saved invoice and triggers downloadInvoicePDF().
-  window.open("create-invoice.html?id=" + encodeURIComponent(id) + "&download=1", "_blank", "noopener");
+  let frame = document.getElementById("invoiceDownloadFrame");
+  if (!frame) {
+    frame = document.createElement("iframe");
+    frame.id = "invoiceDownloadFrame";
+    frame.style.display = "none";
+    document.body.appendChild(frame);
+  }
+  frame.src = "create-invoice.html?id=" + encodeURIComponent(id) + "&download=1";
 }
