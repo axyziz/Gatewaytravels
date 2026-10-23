@@ -21,7 +21,7 @@
 </nav></aside>
 <main class="main">
 <header class="top"><div><h1>Settings</h1><p>Manage your business preferences and admin workspace.</p></div><div class="status" id="workspaceStatus"><i class="fa-solid fa-shield-halved"></i> Business profile sync enabled</div></header>
-<div class="notice"><strong>Important:</strong> Business Profile saves to Supabase when you are signed in. Other settings still save in this browser only and do not yet change invoice PDFs. This update does not modify existing invoices.</div>
+<div class="notice"><strong>Supabase-backed settings:</strong> Business profile, invoice defaults, payment preferences and QR, branding, notification preferences, regional preferences and integration metadata are saved to your Supabase project. Existing invoices are not rewritten. Email/WhatsApp delivery and password changes are not activated by preference toggles.</div>
 <div class="grid">
 <nav class="tabs" aria-label="Settings categories">
 <button class="tab active" data-tab="business"><i class="fa-solid fa-building"></i> Business Profile</button>
@@ -44,7 +44,7 @@
 <div class="field full"><label for="website">Website URL</label><input id="website" type="url" data-key="website" value="https://axyziz.github.io/Gatewaytravels/"></div>
 <div class="field full"><label for="address">Business address (optional)</label><textarea id="address" data-key="address" placeholder="Add business address if you want it displayed in future materials"></textarea></div>
 </div></div>
-<div class="pane hidden" id="pane-invoice"><div class="panel-head"><h2>Invoice Defaults</h2><p>Prepare preferred defaults for a future invoice-settings integration.</p></div><div class="notice warn">These are preferences only for now. The current invoice generator is not connected to these fields, so existing invoice output will not change.</div><div class="form-grid">
+<div class="pane hidden" id="pane-invoice"><div class="panel-head"><h2>Invoice Defaults</h2><p>Prepare preferred defaults for a future invoice-settings integration.</p></div><div class="notice">These defaults are used for newly created invoices and PDF output where supported. They do not retroactively alter existing invoice records.</div><div class="form-grid">
 <div class="field"><label for="prefix">Invoice prefix</label><input id="prefix" data-key="prefix" value="GT-"></div><div class="field"><label for="nextNumber">Next invoice number</label><input id="nextNumber" data-key="nextNumber" type="number" min="1" value="1"><div class="hint">Does not alter the live invoice counter.</div></div>
 <div class="field"><label for="defaultCurrency">Currency</label><select id="defaultCurrency" data-key="defaultCurrency"><option value="INR">INR — Indian Rupee (₹)</option></select></div>
 <div class="field"><label for="defaultStatus">Default payment status preference</label><select id="defaultStatus" data-key="defaultStatus"><option>Pending</option><option>Paid</option></select></div>
@@ -55,11 +55,11 @@ Seats are subject to availability.
 Gateway Travels acts only as a booking facilitator.</textarea></div>
 <div class="field full"><label for="footerMessage">Invoice footer message</label><input id="footerMessage" data-key="footerMessage" value="Thank you for choosing Gateway Travels & Holidays"></div>
 </div></div>
-<div class="pane hidden" id="pane-payments"><div class="panel-head"><h2>Payments & QR Code</h2><p>Set payment preferences and preview a UPI QR image for later integration.</p></div><div class="notice warn">Saving this section stores the UPI ID and QR image in this browser only. It does not add the QR to invoice PDFs or initiate payments.</div><div class="form-grid">
+<div class="pane hidden" id="pane-payments"><div class="panel-head"><h2>Payments & QR Code</h2><p>Set payment preferences and preview a UPI QR image for later integration.</p></div><div class="notice">UPI preferences are saved in Supabase. QR images are stored in a private Supabase Storage bucket and included in invoice PDFs when accessible. This does not initiate or verify payments.</div><div class="form-grid">
 <div class="field"><label for="upiId">UPI ID</label><input id="upiId" data-key="upiId" value="azizshayk@ybl" placeholder="name@bank"></div>
 <div class="field"><label for="paymentMethods">Accepted payment methods</label><input id="paymentMethods" data-key="paymentMethods" value="UPI, Cash, Card" placeholder="UPI, Cash, Card"></div>
 <div class="field full"><label for="paymentInstructions">Payment instructions</label><textarea id="paymentInstructions" data-key="paymentInstructions" placeholder="Enter the message customers should see"></textarea></div>
-<div class="field full"><label for="qrUpload">Upload UPI QR image</label><input id="qrUpload" type="file" accept="image/png,image/jpeg,image/webp"><p class="hint">Use a clear PNG, JPG or WebP image. Keep it small enough for browser storage.</p><img id="qrPreview" class="qr-preview hidden" alt="Uploaded payment QR preview"><button class="btn" type="button" id="removeQr" style="margin-top:10px">Remove saved preview</button></div>
+<div class="field full"><label for="qrUpload">Upload UPI QR image</label><input id="qrUpload" type="file" accept="image/png,image/jpeg,image/webp"><p class="hint">Use a clear PNG, JPG or WebP image under 350 KB. The image uploads to private Supabase Storage when you save this section.</p><img id="qrPreview" class="qr-preview hidden" alt="Uploaded payment QR preview"><button class="btn" type="button" id="removeQr" style="margin-top:10px">Remove saved preview</button></div>
 </div></div>
 <div class="pane hidden" id="pane-branding"><div class="panel-head"><h2>Branding & Appearance</h2><p>Choose visual preferences for this settings workspace.</p></div><div class="form-grid">
 <div class="field"><label for="brandColor">Brand accent colour</label><input id="brandColor" type="color" data-key="brandColor" value="#0a3d91"></div>
@@ -81,14 +81,14 @@ Gateway Travels acts only as a booking facilitator.</textarea></div>
 <div class="account-card"><strong>Session security</strong><p>Always sign out on shared devices. Do not share admin credentials or service keys.</p><a class="btn danger" href="login.html">Go to sign-in</a></div>
 </div>
 <div class="pane hidden" id="pane-data"><div class="panel-head"><h2>Data & Backup</h2><p>Export a copy of records you are authorised to access. Export does not modify Supabase.</p></div><div class="notice warn">Exports may contain customer personal information. Store downloaded files securely and share only with authorised staff.</div><div class="account-card"><strong>Export invoices</strong><p>Download accessible invoice records as CSV.</p><button class="btn" type="button" onclick="exportTable('invoices')">Export invoices CSV</button></div><div class="account-card"><strong>Export customers</strong><p>Download accessible customer records as CSV.</p><button class="btn" type="button" onclick="exportTable('customers')">Export customers CSV</button></div><p id="exportStatus" class="hint" aria-live="polite"></p></div>
-<div class="pane hidden" id="pane-integrations"><div class="panel-head"><h2>Integrations & System Health</h2><p>Connection checks and future integrations.</p></div><div class="account-card"><strong>Supabase</strong><p>Configured in the existing application. This page does not change project settings, credentials, schema, or records.</p><button type="button" class="btn" id="testConnection">Test Supabase connection</button><p id="connectionStatus" class="hint" aria-live="polite"></p></div><div class="account-card"><strong>Future integrations</strong><p>Payment gateway, email delivery and WhatsApp notifications can be added later after credentials and provider settings are confirmed.</p></div><div class="account-card"><strong>Settings version</strong><p>Settings workspace v1 · Preferences stored in this browser.</p></div></div>
+<div class="pane hidden" id="pane-integrations"><div class="panel-head"><h2>Integrations & System Health</h2><p>Connection checks and future integrations.</p></div><div class="account-card"><strong>Supabase</strong><p>Configured in the existing application. This page does not change project settings, credentials, schema, or records.</p><button type="button" class="btn" id="testConnection">Test Supabase connection</button><p id="connectionStatus" class="hint" aria-live="polite"></p></div><div class="account-card"><strong>Payment, email and WhatsApp</strong><p>Connection preferences can be stored here, but live payment processing and outbound email/WhatsApp delivery require provider credentials and server-side setup. No credentials are collected on this page.</p></div><div class="account-card"><strong>Settings version</strong><p>Settings workspace v2 · Business profile and invoice preferences stored in Supabase.</p></div></div>
 <div class="actions"><button type="button" class="btn" id="resetBtn">Reset this section</button><button type="button" class="btn primary" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Save settings</button></div>
 <p id="saveStatus" class="hint" role="status" aria-live="polite"></p>
 </form>
 </section></div>
 </main></div>
 <script>
-const STORAGE_KEY='gatewayTravelsAdminSettingsV1';
+const STORAGE_KEY='gatewayTravelsAdminSettingsV2';
 let settings={};
 try{settings=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')||{}}catch(e){settings={}}
 const tabs=[...document.querySelectorAll('.tab')];
@@ -99,72 +99,97 @@ document.querySelectorAll('[data-key]').forEach(el=>{const k=el.dataset.key;if(O
 function readForm(){const next={...settings};document.querySelectorAll('[data-key]').forEach(el=>{next[el.dataset.key]=el.type==='checkbox'?el.checked:el.value;});return next;}
 function showQR(data){const img=document.getElementById('qrPreview');if(data){img.src=data;img.classList.remove('hidden')}else{img.removeAttribute('src');img.classList.add('hidden')}}
 showQR(settings.qrData||'');
-document.getElementById('qrUpload').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(f.size>350000){alert('Please choose an image smaller than 350 KB so it can fit in browser storage.');e.target.value='';return;}const reader=new FileReader();reader.onload=()=>{settings.qrData=reader.result;showQR(settings.qrData)};reader.readAsDataURL(f)});
-document.getElementById('removeQr').addEventListener('click',()=>{delete settings.qrData;showQR('');document.getElementById('qrUpload').value='';});
-async function saveBusinessProfile(){
- const status=document.getElementById('saveStatus');
- status.textContent='Saving business profile to Supabase…';
- try{
-  if(!window.supabaseClient) throw new Error('Supabase client is unavailable.');
-  const {data:sessionData,error:sessionError}=await window.supabaseClient.auth.getSession();
-  if(sessionError) throw sessionError;
-  if(!sessionData.session) throw new Error('Please sign in through the admin login page first, then return to Settings.');
-  const payload={
-   id:'default',
-   business_name:document.getElementById('businessName').value.trim(),
-   tagline:document.getElementById('tagline').value.trim(),
-   phone:document.getElementById('phone').value.trim(),
-   email:document.getElementById('email').value.trim(),
-   website:document.getElementById('website').value.trim(),
-   address:document.getElementById('address').value.trim(),
-   updated_at:new Date().toISOString(),
-   updated_by:sessionData.session.user.id
-  };
-  if(!payload.business_name) throw new Error('Business name is required.');
-  const {error}=await window.supabaseClient.from('business_settings').upsert(payload,{onConflict:'id'});
-  if(error) throw error;
-  settings=readForm();
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}catch(_){}
-  status.textContent='Business Profile saved to Supabase successfully. Existing invoices and PDFs were not changed.';
- }catch(e){status.textContent='Business Profile was not saved: '+(e.message||'Please check your connection and permissions.');}
+function currentClient(){if(!window.supabaseClient)throw new Error('Supabase client is unavailable.');return window.supabaseClient;}
+async function requireSession(){const client=currentClient();const {data,error}=await client.auth.getSession();if(error)throw error;if(!data.session)throw new Error('Please sign in through the admin login page first, then return to Settings.');return data.session;}
+async function uploadQRIfSelected(session){
+ const input=document.getElementById('qrUpload'),file=input.files&&input.files[0];
+ if(!file)return settings.qrPath||null;
+ if(file.size>350000)throw new Error('Please choose a QR image smaller than 350 KB.');
+ const client=currentClient(),ext=(file.name.split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const path='default/payment-qr.'+(['png','jpg','jpeg','webp'].includes(ext)?ext:'png');
+ const {error}=await client.storage.from('gateway-payment-qr').upload(path,file,{upsert:true,contentType:file.type||'image/png'});
+ if(error)throw error;
+ settings.qrPath=path;delete settings.qrData;return path;
 }
-document.getElementById('saveBtn').addEventListener('click',async()=>{
- if(activeTab==='business'){await saveBusinessProfile();return;}
- settings=readForm();
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));document.getElementById('saveStatus').textContent='Saved in this browser on this device only. This section is not connected to Supabase yet.';}
- catch(e){document.getElementById('saveStatus').textContent='Could not save. The QR image may be too large; remove it and try again.';}
-});
-async function loadBusinessProfile(){
+async function persistInvoiceSettings(session){
+ const client=currentClient();
+ const payload=readForm();
+ const qrPath=await uploadQRIfSelected(session);
+ payload.qrPath=qrPath;
+ delete payload.qrData;
+ const dbSettings={...payload};
+ const {error}=await client.from('invoice_settings').upsert({id:'default',settings:dbSettings,qr_path:qrPath,updated_at:new Date().toISOString(),updated_by:session.user.id},{onConflict:'id'});
+ if(error)throw error;
+ settings=payload;
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}catch(_){}
+ return settings;
+}
+async function saveBusinessProfile(session){
+ const client=currentClient();
+ const payload={id:'default',business_name:document.getElementById('businessName').value.trim(),tagline:document.getElementById('tagline').value.trim(),phone:document.getElementById('phone').value.trim(),email:document.getElementById('email').value.trim(),website:document.getElementById('website').value.trim(),address:document.getElementById('address').value.trim(),updated_at:new Date().toISOString(),updated_by:session.user.id};
+ if(!payload.business_name)throw new Error('Business name is required.');
+ const {error}=await client.from('business_settings').upsert(payload,{onConflict:'id'});
+ if(error)throw error;
+}
+document.getElementById('qrUpload').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(f.size>350000){alert('Please choose an image smaller than 350 KB.');e.target.value='';return;}const reader=new FileReader();reader.onload=()=>showQR(reader.result);reader.readAsDataURL(f);});
+document.getElementById('removeQr').addEventListener('click',async()=>{
  const status=document.getElementById('saveStatus');
  try{
-  if(!window.supabaseClient) throw new Error('Supabase client is unavailable.');
-  const {data:sessionData,error:sessionError}=await window.supabaseClient.auth.getSession();
-  if(sessionError) throw sessionError;
-  if(!sessionData.session){
-   document.getElementById('workspaceStatus').innerHTML='<i class="fa-solid fa-lock"></i> Sign in to sync Business Profile';
-   return;
-  }
-  const {data,error}=await window.supabaseClient.from('business_settings').select('business_name,tagline,phone,email,website,address').eq('id','default').maybeSingle();
-  if(error) throw error;
-  if(data){
-   const map={businessName:'business_name',tagline:'tagline',phone:'phone',email:'email',website:'website',address:'address'};
-   for(const [field,column] of Object.entries(map)){
-    const el=document.getElementById(field);
-    if(el && data[column]!==null && data[column]!==undefined) el.value=data[column];
-   }
-   status.textContent='Business Profile loaded from Supabase.';
-  }
-  document.getElementById('workspaceStatus').innerHTML='<i class="fa-solid fa-cloud"></i> Business Profile synced with Supabase';
+  const session=await requireSession();
+  if(settings.qrPath){const {error}=await currentClient().storage.from('gateway-payment-qr').remove([settings.qrPath]);if(error)throw error;}
+  delete settings.qrPath;delete settings.qrData;showQR('');document.getElementById('qrUpload').value='';
+  const current=readForm();current.qrPath=null;delete current.qrData;
+  const {error}=await currentClient().from('invoice_settings').upsert({id:'default',settings:current,qr_path:null,updated_at:new Date().toISOString(),updated_by:session.user.id},{onConflict:'id'});
+  if(error)throw error;settings=current;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}catch(_){}
+  status.textContent='Saved QR removed from Supabase Storage and invoice settings.';
+ }catch(e){status.textContent='Could not remove QR: '+(e.message||'Check connection and permissions.');}
+});
+document.getElementById('saveBtn').addEventListener('click',async()=>{
+ const status=document.getElementById('saveStatus');status.textContent='Saving settings to Supabase…';
+ try{
+  const session=await requireSession();
+  if(activeTab==='business')await saveBusinessProfile(session);
+  await persistInvoiceSettings(session);
+  status.textContent=(activeTab==='business'?'Business Profile and ':'')+'settings saved to Supabase. Existing invoices were not rewritten.';
+  document.getElementById('workspaceStatus').innerHTML='<i class="fa-solid fa-cloud"></i> Settings synced with Supabase';
+ }catch(e){status.textContent='Save failed: '+(e.message||'Check connection and permissions.');}
+});
+async function loadFromSupabase(){
+ const status=document.getElementById('saveStatus');
+ try{
+  const session=await requireSession(),client=currentClient();
+  const {data:business,error:be}=await client.from('business_settings').select('business_name,tagline,phone,email,website,address').eq('id','default').maybeSingle();if(be)throw be;
+  if(business){const map={businessName:'business_name',tagline:'tagline',phone:'phone',email:'email',website:'website',address:'address'};for(const [field,col] of Object.entries(map)){const el=document.getElementById(field);if(el&&business[col]!=null)el.value=business[col];}}
+  const {data:row,error}=await client.from('invoice_settings').select('settings,qr_path').eq('id','default').maybeSingle();if(error)throw error;
+  if(row&&row.settings){settings={...settings,...row.settings};settings.qrPath=row.qr_path||row.settings.qrPath||null;document.querySelectorAll('[data-key]').forEach(el=>{const k=el.dataset.key;if(Object.prototype.hasOwnProperty.call(settings,k)){if(el.type==='checkbox')el.checked=!!settings[k];else el.value=settings[k];}});}
+  if(settings.qrPath){const {data,error:signError}=await client.storage.from('gateway-payment-qr').createSignedUrl(settings.qrPath,3600);if(!signError&&data?.signedUrl)showQR(data.signedUrl);else showQR('');}else showQR(settings.qrData||'');
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}catch(_){}
+  document.getElementById('workspaceStatus').innerHTML='<i class="fa-solid fa-cloud"></i> Settings synced with Supabase';
+  status.textContent='Business profile and saved preferences loaded from Supabase.';
  }catch(e){
-  status.textContent='Could not load Business Profile from Supabase: '+(e.message||'Check connection and permissions.');
-  document.getElementById('workspaceStatus').innerHTML='<i class="fa-solid fa-triangle-exclamation"></i> Business Profile sync needs attention';
+  document.getElementById('workspaceStatus').innerHTML='<i class="fa-solid fa-lock"></i> Sign in to sync settings';
+  status.textContent='Could not load saved settings: '+(e.message||'Check connection and permissions.');
  }
 }
-loadBusinessProfile();
-document.getElementById('resetBtn').addEventListener('click',()=>{if(!confirm('Reset the fields in this section to their original defaults? This does not change invoices or Supabase.'))return;const defaults={business:{businessName:'Gateway Travels & Holidays',tagline:'Your Journey, Our Passion',phone:'+91 73829 64554',email:'gatewaytravelsandholidays@gmail.com',website:'https://axyziz.github.io/Gatewaytravels/',address:''},invoice:{prefix:'GT-',nextNumber:'1',defaultCurrency:'INR',defaultStatus:'Pending',defaultTerms:'Bus timings are subject to operator schedules.\nPassengers should report 30 minutes before departure.\nCancellation charges apply as per operator policy.\nSeats are subject to availability.\nGateway Travels acts only as a booking facilitator.',footerMessage:'Thank you for choosing Gateway Travels & Holidays'},payments:{upiId:'azizshayk@ybl',paymentMethods:'UPI, Cash, Card',paymentInstructions:''},branding:{brandColor:'#0a3d91',appearance:'light',logoUrl:''},notifications:{pendingAlerts:false,newInvoiceAlerts:false,customerAlerts:false,emailReminders:false},preferences:{dateFormat:'DD/MM/YYYY',timezone:'Asia/Kolkata',defaultDiscount:'0',language:'en'}};const pane=document.getElementById('pane-'+activeTab);pane.querySelectorAll('[data-key]').forEach(el=>{const k=el.dataset.key;const v=defaults[activeTab]&&defaults[activeTab][k];if(el.type==='checkbox')el.checked=!!v;else if(v!==undefined)el.value=v;else el.value='';delete settings[k];});if(activeTab==='payments'){delete settings.qrData;showQR('');document.getElementById('qrUpload').value='';}settings=readForm();try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));document.getElementById('saveStatus').textContent='This section has been reset in this browser.';}catch(e){document.getElementById('saveStatus').textContent='Unable to save reset preferences.';}});
+document.getElementById('resetBtn').addEventListener('click',async()=>{
+ if(!confirm('Reset this section to its original defaults and save the change to Supabase?'))return;
+ const defaults={business:{businessName:'Gateway Travels & Holidays',tagline:'Your Journey, Our Passion',phone:'+91 73829 64554',email:'gatewaytravelsandholidays@gmail.com',website:'https://axyziz.github.io/Gatewaytravels/',address:''},invoice:{prefix:'GT-',nextNumber:'1',defaultCurrency:'INR',defaultStatus:'Pending',defaultTerms:'Bus timings are subject to operator schedules.\nPassengers should report 30 minutes before departure.\nCancellation charges apply as per operator policy.\nSeats are subject to availability.\nGateway Travels acts only as a booking facilitator.',footerMessage:'Thank you for choosing Gateway Travels & Holidays'},payments:{upiId:'azizshayk@ybl',paymentMethods:'UPI, Cash, Card',paymentInstructions:''},branding:{brandColor:'#0a3d91',appearance:'light',logoUrl:''},notifications:{pendingAlerts:false,newInvoiceAlerts:false,customerAlerts:false,emailReminders:false},preferences:{dateFormat:'DD/MM/YYYY',timezone:'Asia/Kolkata',defaultDiscount:'0',language:'en'}};
+ const pane=document.getElementById('pane-'+activeTab);pane.querySelectorAll('[data-key]').forEach(el=>{const k=el.dataset.key,v=defaults[activeTab]&&defaults[activeTab][k];if(el.type==='checkbox')el.checked=!!v;else el.value=v!==undefined?v:'';delete settings[k];});
+ try{const session=await requireSession();if(activeTab==='business')await saveBusinessProfile(session);settings=readForm();await persistInvoiceSettings(session);document.getElementById('saveStatus').textContent='Section reset and saved to Supabase.';}catch(e){document.getElementById('saveStatus').textContent='Reset could not be saved: '+(e.message||'Check connection and permissions.');}
+});
 function csvCell(v){const s=v==null?'':typeof v==='object'?JSON.stringify(v):String(v);return '"'+s.replace(/"/g,'""')+'"';}
-async function exportTable(table){const status=document.getElementById('exportStatus');status.textContent='Preparing export…';try{if(!window.supabaseClient)throw new Error('Supabase client is not available.');const {data,error}=await window.supabaseClient.from(table).select('*').limit(5000);if(error)throw error;if(!data||!data.length){status.textContent='No accessible records were returned for '+table+'.';return;}const cols=[...new Set(data.flatMap(row=>Object.keys(row)))];const csv=[cols.map(csvCell).join(','),...data.map(row=>cols.map(c=>csvCell(row[c])).join(','))].join('\r\n');const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download='gateway-travels-'+table+'-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);status.textContent='Exported '+data.length+' accessible '+table+' records.';}catch(e){status.textContent='Export failed: '+(e.message||'Unable to access records. Check connection and permissions.');}}
-document.getElementById('testConnection').addEventListener('click',async()=>{const el=document.getElementById('connectionStatus');el.textContent='Checking…';try{if(!window.supabaseClient)throw new Error('Supabase client is not available.');const {error}=await window.supabaseClient.from('invoices').select('id').limit(1);if(error)throw error;el.textContent='Connection query succeeded; access to the invoices table is available.';}catch(e){el.textContent='Could not verify: '+(e.message||'connection or permissions issue.');}});
+async function exportTable(table){
+ const status=document.getElementById('exportStatus');status.textContent='Preparing export…';
+ try{await requireSession();const {data,error}=await currentClient().from(table).select('*').limit(5000);if(error)throw error;if(!data||!data.length){status.textContent='No accessible records were returned for '+table+'.';return;}
+ const cols=[...new Set(data.flatMap(row=>Object.keys(row)))],csv=[cols.map(csvCell).join(','),...data.map(row=>cols.map(c=>csvCell(row[c])).join(','))].join('\r\n'),url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'})),a=document.createElement('a');a.href=url;a.download='gateway-travels-'+table+'-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);status.textContent='Exported '+data.length+' accessible '+table+' records.';
+ }catch(e){status.textContent='Export failed: '+(e.message||'Unable to access records. Check connection and permissions.');}
+}
+document.getElementById('testConnection').addEventListener('click',async()=>{
+ const el=document.getElementById('connectionStatus');el.textContent='Checking…';
+ try{await requireSession();const {error}=await currentClient().from('invoice_settings').select('id').limit(1);if(error)throw error;el.textContent='Supabase connection and invoice-settings access succeeded. Email, WhatsApp and payment processing still require provider setup.';}
+ catch(e){el.textContent='Could not verify: '+(e.message||'connection or permissions issue.');}
+});
 document.getElementById('brandColor').addEventListener('input',e=>document.documentElement.style.setProperty('--navy',e.target.value));
+loadFromSupabase();
 </script>
 </body></html>
