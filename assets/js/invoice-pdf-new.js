@@ -33,9 +33,35 @@ async function downloadInvoicePDF() {
  let payY=paymentY+17;doc.setFont("helvetica","bold");doc.text("Bank Name:",20,payY);doc.setFont("helvetica","normal");doc.text("State Bank of India",48,payY);payY+=5;doc.setFont("helvetica","bold");doc.text("Account Name:",20,payY);doc.setFont("helvetica","normal");doc.text("Shaik Azeez",48,payY);payY+=5;doc.setFont("helvetica","bold");doc.text("IFSC Code:",20,payY);doc.setFont("helvetica","normal");doc.text("SBIN0020609",48,payY);payY+=5;if(cfg.upiId){doc.setFont("helvetica","bold");doc.text("UPI ID:",20,payY);doc.setFont("helvetica","normal");doc.text(cfg.upiId,48,payY);payY+=5;}
  if(qrDataUrl){try{const format=qrDataUrl.startsWith("data:image/png")?"PNG":"JPEG";doc.addImage(qrDataUrl,format,157,paymentY+13,29,29);}catch(e){console.warn("QR could not be embedded in PDF",e);}}
  else if(cfg.upiId){doc.setFontSize(7);doc.text("Use UPI ID to pay",157,paymentY+27);}
- const termsY=paymentY+53;doc.setDrawColor(200);doc.roundedRect(15,termsY,180,55,3,3);doc.setFillColor(...rgb);doc.rect(15,termsY,180,10,"F");doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("TERMS & CONDITIONS",20,termsY+7);doc.setTextColor(0);doc.setFont("helvetica","normal");doc.setFontSize(9);
- const wrappedTerms=doc.splitTextToSize(terms||"No terms and conditions provided.",170);let currentY=termsY+18;const requiredHeight=wrappedTerms.length*5;
- if(currentY+requiredHeight>270){doc.addPage();currentY=20;doc.setDrawColor(200);doc.roundedRect(15,10,180,Math.min(10+requiredHeight,250),3,3);doc.setFillColor(...rgb);doc.rect(15,10,180,10,"F");doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("TERMS & CONDITIONS",20,17);doc.setTextColor(0);doc.setFont("helvetica","normal");doc.setFontSize(9);currentY=28;}
- doc.text(wrappedTerms,20,currentY);const footerY=Math.min(currentY+requiredHeight+15,280);doc.setDrawColor(220);doc.line(15,footerY,195,footerY);doc.setFont("helvetica","bold");doc.setFontSize(10);doc.text(String(cfg.footerMessage||("Thank you for choosing "+brand)).slice(0,100),15,footerY+7);doc.setFont("helvetica","normal");doc.setFontSize(8);doc.text("This is a computer-generated invoice. No signature is required.",15,footerY+14);
+ // Keep terms and conditions on page one. Use the space remaining after payment details
+ // and reduce the text size/spacing as needed instead of creating a second page.
+ const termsY=paymentY+53;
+ const pageBottom=278;
+ const termsTop=termsY+15;
+ const maxTermsHeight=pageBottom-termsTop-18;
+ const rawTerms=terms||"No terms and conditions provided.";
+ let termsFont=9, lineHeight=4.2, wrappedTerms=[];
+ while(termsFont>=6){
+  doc.setFont("helvetica","normal");doc.setFontSize(termsFont);
+  wrappedTerms=doc.splitTextToSize(rawTerms,170);
+  lineHeight=termsFont<=7?3.1:termsFont<=8?3.6:4.2;
+  if(wrappedTerms.length*lineHeight<=maxTermsHeight)break;
+  termsFont-=0.5;
+ }
+ doc.setDrawColor(200);
+ const boxHeight=Math.max(20,Math.min(maxTermsHeight+15,wrappedTerms.length*lineHeight+15));
+ doc.roundedRect(15,termsY,180,boxHeight,3,3);
+ doc.setFillColor(...rgb);doc.rect(15,termsY,180,9,"F");
+ doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(10);
+ doc.text("TERMS & CONDITIONS",20,termsY+6.2);
+ doc.setTextColor(0);doc.setFont("helvetica","normal");doc.setFontSize(termsFont);
+ const currentY=termsY+13;
+ doc.text(wrappedTerms,20,currentY,{lineHeightFactor:1.0});
+ const footerY=Math.min(termsY+boxHeight+5,279);
+ doc.setDrawColor(220);doc.line(15,footerY,195,footerY);
+ doc.setFont("helvetica","bold");doc.setFontSize(8);
+ doc.text(String(cfg.footerMessage||("Thank you for choosing "+brand)).slice(0,100),15,footerY+5);
+ doc.setFont("helvetica","normal");doc.setFontSize(7);
+ doc.text("This is a computer-generated invoice. No signature is required.",15,footerY+10);
  doc.save((invoiceNo||"invoice")+".pdf");
 }
