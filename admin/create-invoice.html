@@ -9,83 +9,22 @@
 <script src="../js/supabase.js"></script>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Segoe UI',Arial,sans-serif;
-    background:#eef3f8;
-    color:#1f2937;
-}
-
-.container{
-    width:95%;
-    max-width:900px;
-    margin:40px auto;
-    background:#fff;
-    border-radius:16px;
-    padding:35px;
-    box-shadow:0 15px 40px rgba(0,0,0,.08);
-}
-
-h2{
-    text-align:center;
-    color:#0B3D91;
-    font-size:32px;
-    margin-bottom:8px;
-}
-
-input,
-select,
-textarea{
-    width:100%;
-    padding:12px 14px;
-    margin:10px 0;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    font-size:15px;
-    transition:.3s;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-    outline:none;
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.15);
-}
-
-textarea{
-    resize:vertical;
-    min-height:90px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    background:#2563eb;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:600;
-    transition:.3s;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-#status{
-    margin-top:20px;
-    text-align:center;
-    font-weight:bold;
-    color:#16a34a;
-}
+:root{--navy:#12345a;--blue:#245b91;--ink:#172b42;--muted:#65758a;--line:#dce5ee;--bg:#f2f6fa;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.container{width:min(1120px,94%);margin:28px auto 48px;background:transparent;border-radius:0;padding:0;box-shadow:none}
+.admin-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px;padding:14px 18px;background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 18px #193c5a0a}
+.brand{font-weight:800;color:var(--navy);letter-spacing:.1px}.nav-links{display:flex;gap:8px;flex-wrap:wrap}.nav-links a,.mini-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);background:#fff;color:#42566e;padding:8px 12px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer}.nav-links a.active,.mini-btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.page-heading{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin:0 0 20px}.page-heading h1{margin:0;font-size:clamp(25px,3vw,34px);color:var(--navy);letter-spacing:-.8px}.page-heading p{margin:7px 0 0;color:var(--muted);font-size:14px}
+.section{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px;margin:0 0 16px;box-shadow:0 5px 18px #193c5a08}
+.section h3{margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid #edf1f5;color:var(--navy);font-size:16px}
+label{display:block;margin:12px 0 6px;font-size:13px;font-weight:700;color:#42566e}
+input,select,textarea{width:100%;padding:12px 13px;margin:0;border:1px solid #d4deea;border-radius:9px;background:#fbfdff;color:var(--ink);font:inherit;font-size:14px;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#4a83b7;box-shadow:0 0 0 3px #245b911a;background:#fff}
+input[readonly]{background:#f0f4f8;color:#5c6d80}textarea{resize:vertical;min-height:100px}
+.button-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.button-group button{width:auto;flex:1;min-width:145px;padding:12px 16px;border:1px solid transparent;border-radius:10px;background:var(--navy);color:#fff;font-size:14px;font-weight:750;cursor:pointer}.button-group button:hover{filter:brightness(1.08)}.button-group .secondary{background:#fff;border-color:var(--line);color:var(--navy)}.button-group .success{background:#217a59}
+#status{margin:16px 0;text-align:center;font-weight:700;color:#217a59}
+@media(min-width:760px){.section{padding:24px 26px}.section:has(#invoice_number),.section:has(#service),.section:has(#amount){display:grid;grid-template-columns:1fr 1fr;column-gap:18px;align-items:start}.section h3{grid-column:1/-1}.section label{margin-top:4px}.section input,.section select,.section textarea{margin-bottom:12px}}
+@media(max-width:600px){.container{width:94%;margin-top:14px}.section{padding:17px}.admin-nav{align-items:flex-start}.nav-links a{padding:8px 9px}.button-group{flex-direction:column}.button-group button{width:100%}}
 </style>
 
 </head>
@@ -93,12 +32,12 @@ button:hover{
 <body>
 
 <div class="container">
+<nav class="admin-nav"><div class="brand">Gateway Travels <span style="font-weight:500;color:#65758a">&nbsp; / Admin</span></div><div class="nav-links"><a href="../index.html">Dashboard</a><a class="active" href="create-invoice.html">Create Invoice</a><a href="invoices.html">View Invoices</a><a href="customers.html">Customers</a></div></nav>
+<div class="page-heading"><div><h1>Create invoice</h1><p>Prepare and manage customer bookings in one place.</p></div><a class="mini-btn" href="invoices.html">← Back to invoices</a></div>
 
-<h2>Gateway Travels & Holidays</h2>
 
-<p class="subtitle">
-Create & Manage Customer Invoices
-</p>
+
+
 
 <div class="section">
 
