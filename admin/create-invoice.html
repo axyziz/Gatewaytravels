@@ -53,6 +53,57 @@ textarea{min-height:120px;resize:vertical}
 <div class="buttons"><button onclick="saveInvoice()">Save Invoice</button><button type="button" class="secondary" onclick="window.print()">Print</button><button type="button" class="success" onclick="downloadInvoicePDF()">Download PDF</button></div>
 <p id="status" role="status"></p>
 </div>
+
+<script>
+function calculateTotal() {
+  const amount = Number(document.getElementById("amount").value) || 0;
+  const discount = Number(document.getElementById("discount").value) || 0;
+  document.getElementById("total").value = Math.max(0, amount - discount).toFixed(2);
+}
+async function saveInvoice() {
+  const customerId = document.getElementById("customer_id").value;
+  if (!customerId) { alert("Please select a customer."); return; }
+  const invoice = {
+    customer_id: customerId,
+    customer_name: document.getElementById("customer_name").value,
+    customer_mobile: document.getElementById("customer_mobile").value,
+    customer_email: document.getElementById("customer_email").value,
+    service: document.getElementById("service").value,
+    description: document.getElementById("description").value,
+    amount: Number(document.getElementById("amount").value) || 0,
+    discount: Number(document.getElementById("discount").value) || 0,
+    total: Number(document.getElementById("total").value) || 0,
+    payment_status: document.getElementById("payment_status").value,
+    payment_method: document.getElementById("payment_method").value,
+    terms: document.getElementById("terms").value
+  };
+  const params = new URLSearchParams(window.location.search);
+  const invoiceId = params.get("id");
+  const status = document.getElementById("status");
+  status.textContent = "Saving invoice…";
+  let result;
+  if (invoiceId) {
+    result = await supabaseClient.from("invoices").update(invoice).eq("id", invoiceId);
+  } else {
+    invoice.invoice_number = document.getElementById("invoice_number").value;
+    result = await supabaseClient.from("invoices").insert([invoice]);
+  }
+  if (result.error) {
+    console.error(result.error);
+    status.textContent = "Could not save invoice: " + result.error.message;
+    return;
+  }
+  status.textContent = "Invoice saved successfully.";
+  if (!invoiceId) {
+    document.getElementById("description").value = "";
+    document.getElementById("amount").value = "";
+    document.getElementById("discount").value = "";
+    document.getElementById("total").value = "";
+    window.setTimeout(() => { window.location.href = "invoices.html"; }, 900);
+  }
+}
+</script>
+
 <script src="../assets/js/invoice.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
