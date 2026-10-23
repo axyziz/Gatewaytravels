@@ -1,191 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Customer Management | Gateway Travels</title>
-
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="../assets/css/admin.css">
-
-    <!-- Customer Page CSS -->
-    <link rel="stylesheet" href="../assets/css/customers.css">
-
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/supabase.js"></script>
-    <script src="../js/auth.js"></script>
-
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customers | Gateway Travels</title>
+<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/customers.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script><script src="../js/auth.js"></script>
+<style>
+:root{--navy:#12345a;--ink:#172b42;--muted:#65758a;--line:#dce5ee;--bg:#f2f6fa}
+body{background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif}.container{width:min(1200px,94%);margin:26px auto 50px}.admin-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding:14px 18px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 18px #193c5a08}.brand{font-weight:800;color:var(--navy)}.nav-links{display:flex;gap:8px;flex-wrap:wrap}.nav-links a{padding:8px 12px;border:1px solid var(--line);border-radius:9px;text-decoration:none;color:#42566e;font-size:13px;font-weight:700}.nav-links a.active{background:var(--navy);color:#fff;border-color:var(--navy)}.heading{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:20px}.heading h1{margin:0;color:var(--navy);font-size:clamp(25px,3vw,34px);letter-spacing:-.8px}.heading p{margin:7px 0 0;color:var(--muted);font-size:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 5px 18px #193c5a08}.card h2{font-size:17px;color:var(--navy);margin:0 0 18px;padding-bottom:13px;border-bottom:1px solid #edf1f5}.row{display:flex;gap:16px;flex-wrap:wrap}.col{flex:1;min-width:190px}label{display:block;margin:4px 0 7px;font-size:12px;font-weight:750;color:#42566e}input,select,textarea{width:100%;padding:11px 12px;margin:0 0 15px;border:1px solid #d4deea;border-radius:9px;background:#fbfdff;font:inherit;font-size:14px;color:var(--ink)}input:focus,select:focus,textarea:focus{outline:none;border-color:#4a83b7;box-shadow:0 0 0 3px #245b911a;background:#fff}textarea{resize:vertical}.btn{padding:10px 15px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--navy);font-size:13px;font-weight:750;cursor:pointer}.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}.form-actions{display:flex;gap:9px;flex-wrap:wrap}.list-toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}.search-box{flex:1;min-width:220px;margin:0}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:650px}table th{background:#f5f8fb;color:#53677e;padding:13px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--line)}table td{padding:13px 12px;border-bottom:1px solid #edf1f5;font-size:13px}table tbody tr:hover{background:#f9fbfd}.action-btn{padding:7px 10px;margin-right:5px;border-radius:7px;font-size:12px}.edit-btn{background:#eaf2fc;color:#245b91}.delete-btn{background:#fff0f0;color:#a42d36}.empty{padding:28px;text-align:center;color:var(--muted)}@media(max-width:600px){.container{margin-top:14px}.card{padding:16px}.admin-nav{align-items:flex-start}.nav-links a{padding:8px 9px}.col{min-width:100%}}
+</style>
 </head>
-
 <body>
-
 <div class="container">
-
-    <h1 class="page-title">Customer Management</h1>
-
-    <div class="card">
-
-        <h2>Add / Edit Customer</h2>
-
-        <br>
-
-        <input type="hidden" id="customerId">
-
-        <div class="row">
-
-            <div class="col">
-                <label>Title</label>
-                <select id="title">
-                    <option value="">Select</option>
-                    <option>Mr</option>
-                    <option>Mrs</option>
-                    <option>Ms</option>
-                    <option>Miss</option>
-                    <option>Master</option>
-                </select>
-            </div>
-
-            <div class="col">
-                <label>First Name</label>
-                <input type="text" id="first_name">
-            </div>
-
-            <div class="col">
-                <label>Last Name</label>
-                <input type="text" id="last_name">
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col">
-                <label>Mobile</label>
-                <input type="text" id="mobile">
-            </div>
-
-            <div class="col">
-                <label>Email</label>
-                <input type="email" id="email">
-            </div>
-
-            <div class="col">
-                <label>Nationality</label>
-                <input type="text" id="nationality">
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col">
-                <label>Passport No</label>
-                <input type="text" id="passport_no">
-            </div>
-
-            <div class="col">
-                <label>Passport Expiry</label>
-                <input type="date" id="passport_expiry">
-            </div>
-
-            <div class="col">
-                <label>Date of Birth</label>
-                <input type="date" id="dob">
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col">
-                <label>Company</label>
-                <input type="text" id="company">
-            </div>
-
-            <div class="col">
-                <label>GST Number</label>
-                <input type="text" id="gst_number">
-            </div>
-
-        </div>
-
-        <label>Address</label>
-
-        <textarea id="address" rows="4"></textarea>
-
-        <br>
-
-        <button id="saveCustomerBtn">
-            Save Customer
-        </button>
-
-       </div>
-
-    <!-- Customer List Card -->
-
-    <div class="card">
-
-        <h2>Customer List</h2>
-
-        <br>
-
-        <input
-            type="text"
-            id="searchCustomer"
-            class="search-box"
-            placeholder="Search by Name, Mobile or Email">
-
-        <br><br>
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                    <th>Nationality</th>
-                    <th>Action</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="customerTable">
-
-                <tr>
-                    <td colspan="5" style="text-align:center;">
-                        No customers found
-                    </td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
+<nav class="admin-nav"><div class="brand">Gateway Travels <span style="font-weight:500;color:#65758a">/ Admin</span></div><div class="nav-links"><a href="../index.html">Dashboard</a><a href="create-invoice.html">Create Invoice</a><a href="invoices.html">View Invoices</a><a class="active" href="customers.html">Customers</a></div></nav>
+<header class="heading"><div><h1>Customers</h1><p>Keep customer details organized and ready for bookings.</p></div><button class="btn primary" type="button" onclick="document.getElementById('first_name').focus()">＋ Add customer</button></header>
+<section class="card">
+<h2 id="formHeading">Customer details</h2>
+<input type="hidden" id="customerId">
+<div class="row">
+<div class="col"><label for="title">Title</label><select id="title"><option value="">Select</option><option>Mr</option><option>Mrs</option><option>Ms</option><option>Miss</option><option>Master</option></select></div>
+<div class="col"><label for="first_name">First name</label><input type="text" id="first_name" autocomplete="given-name"></div>
+<div class="col"><label for="last_name">Last name</label><input type="text" id="last_name" autocomplete="family-name"></div>
 </div>
-
-<!-- Customer JS -->
-<script src="../assets/js/customers.js"></script>
-
+<div class="row">
+<div class="col"><label for="mobile">Mobile</label><input type="text" id="mobile" autocomplete="tel"></div>
+<div class="col"><label for="email">Email</label><input type="email" id="email" autocomplete="email"></div>
+<div class="col"><label for="nationality">Nationality</label><input type="text" id="nationality"></div>
+</div>
+<div class="row">
+<div class="col"><label for="passport_no">Passport number</label><input type="text" id="passport_no"></div>
+<div class="col"><label for="passport_expiry">Passport expiry</label><input type="date" id="passport_expiry"></div>
+<div class="col"><label for="dob">Date of birth</label><input type="date" id="dob"></div>
+</div>
+<div class="row">
+<div class="col"><label for="company">Company</label><input type="text" id="company"></div>
+<div class="col"><label for="gst_number">GST number</label><input type="text" id="gst_number"></div>
+</div>
+<label for="address">Address</label><textarea id="address" rows="3"></textarea>
+<div class="form-actions"><button class="btn primary" id="saveCustomerBtn" type="button">Save customer</button><button class="btn" id="clearCustomerBtn" type="button">Clear form</button></div>
+</section>
+<section class="card">
+<h2>Customer directory</h2>
+<div class="list-toolbar"><input type="search" id="searchCustomer" class="search-box" placeholder="Search name, mobile, email or nationality…"><button class="btn" type="button" onclick="loadCustomers()">↻ Refresh</button></div>
+<div class="table-wrap"><table><thead><tr><th>Customer</th><th>Mobile</th><th>Email</th><th>Nationality</th><th>Actions</th></tr></thead><tbody id="customerTable"><tr><td colspan="5" class="empty">Loading customers…</td></tr></tbody></table></div>
+</section>
+</div>
+<script src="../assets/js/customers.js?v=admin-redesign-20261024"></script>
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-
-    const loggedIn = await checkLogin();
-
-    if (!loggedIn) return;
-
-    await initCustomers();
-
+ const loggedIn = await checkLogin();
+ if (!loggedIn) return;
+ await initCustomers();
+ document.getElementById("clearCustomerBtn").addEventListener("click", clearForm);
+ document.getElementById("searchCustomer").addEventListener("input", filterCustomers);
 });
 </script>
-
-</body>
-
-</html>
+</body></html>
