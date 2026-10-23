@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     } else {
         await generateInvoiceNumber();
+        loadDefaultTerms();
     }
 
 });
