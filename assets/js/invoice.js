@@ -1,50 +1,63 @@
 console.log("invoice.js loaded");
 
+window.gatewayInvoiceSettings = {};
+window.gatewayBusinessProfile = {};
 document.addEventListener("DOMContentLoaded", async () => {
-
+    await loadSavedInvoicePreferences();
     await loadCustomers();
-
     const params = new URLSearchParams(window.location.search);
     const invoiceId = params.get("id");
-
     if (invoiceId) {
         await loadInvoice(invoiceId);
     } else {
         await generateInvoiceNumber();
+        applyInvoiceDefaults();
     }
-
 });
 
 // =========================
 // Generate Invoice Number
 // =========================
 
+async function loadSavedInvoicePreferences() {
+    try {
+        const { data: auth } = await supabaseClient.auth.getSession();
+        if (!auth?.session) return;
+        const { data: row, error } = await supabaseClient.from("invoice_settings").select("settings").eq("id", "default").maybeSingle();
+        if (!error && row?.settings) window.gatewayInvoiceSettings = row.settings;
+        const { data: business } = await supabaseClient.from("business_settings").select("*").eq("id", "default").maybeSingle();
+        if (business) window.gatewayBusinessProfile = business;
+        const color = window.gatewayInvoiceSettings.brandColor;
+        if (color && /^#[0-9a-f]{6}$/i.test(color)) document.documentElement.style.setProperty("--navy", color);
+    } catch (e) { console.warn("Invoice preferences unavailable; defaults will be used.", e); }
+}
+function applyInvoiceDefaults() {
+    const cfg = window.gatewayInvoiceSettings || {};
+    const discount = document.getElementById("discount");
+    const status = document.getElementById("payment_status");
+    const terms = document.getElementById("terms");
+    if (discount && cfg.defaultDiscount !== undefined && cfg.defaultDiscount !== "") {
+        discount.value = Number(cfg.defaultDiscount) || 0;
+        if (typeof calculateTotal === "function") calculateTotal();
+    }
+    if (status && cfg.defaultStatus) status.value = cfg.defaultStatus;
+    if (terms && !terms.value && cfg.defaultTerms) terms.value = cfg.defaultTerms;
+}
 async function generateInvoiceNumber() {
-
-    const { data, error } = await supabaseClient
-        .from("invoices")
-        .select("invoice_number")
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    let next = 1;
-
-    if (data && data.length > 0) {
-
-        const last = data[0].invoice_number;
-        const num = parseInt(last.replace("GT-", ""));
-        next = num + 1;
-
-    }
-
-    document.getElementById("invoice_number").value =
-        "GT-" + String(next).padStart(4, "0");
-
+    const { data, error } = await supabaseClient.from("invoices").select("invoice_number").order("created_at", { ascending: false }).limit(100);
+    if (error) { console.error(error); return; }
+    const cfg = window.gatewayInvoiceSettings || {};
+    const prefix = String(cfg.prefix || "GT-");
+    let maxNumber = Math.max(0, (Number(cfg.nextNumber) || 1) - 1);
+    (data || []).forEach(row => {
+        const invoiceNo = String(row.invoice_number || "");
+        if (invoiceNo.startsWith(prefix)) {
+            const number = parseInt(invoiceNo.slice(prefix.length).replace(/^[-_ ]/, ""), 10);
+            if (Number.isFinite(number)) maxNumber = Math.max(maxNumber, number);
+        }
+    });
+    const next = maxNumber + 1;
+    document.getElementById("invoice_number").value = prefix + String(next).padStart(4, "0");
 }
 
 // =========================
