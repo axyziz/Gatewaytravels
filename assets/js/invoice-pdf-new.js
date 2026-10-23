@@ -29,20 +29,20 @@ async function downloadInvoicePDF() {
  doc.setTextColor(0);doc.setDrawColor(210);doc.roundedRect(15,62,180,45,3,3,"FD");doc.setTextColor(...rgb);doc.setFont("helvetica","bold");doc.setFontSize(13);doc.text("BILL TO",20,72);doc.setDrawColor(220);doc.line(20,76,190,76);doc.setTextColor(0);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.text(customer||"-",20,86);doc.setFont("helvetica","normal");doc.setFontSize(10);doc.text("Mobile: "+(mobile||"-"),20,95);doc.text("Email: "+(email||"-"),20,103);
  doc.autoTable({startY:110,head:[["Service","Description","Amount"]],body:[[service||"-",description||"-","Rs."+amount.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})]],theme:"grid",headStyles:{fillColor:rgb,textColor:[255,255,255],fontStyle:"bold",halign:"center"},styles:{font:"helvetica",fontSize:10,cellPadding:4,lineColor:[220,220,220],lineWidth:0.2,overflow:"linebreak"},columnStyles:{0:{cellWidth:35},1:{cellWidth:105},2:{cellWidth:35,halign:"right"}}});
  const totalsY=doc.lastAutoTable.finalY+10;doc.setDrawColor(200);doc.roundedRect(110,totalsY,85,28,2,2);doc.setFont("helvetica","normal");doc.setFontSize(10);doc.text("Subtotal",115,totalsY+8);doc.text("Discount",115,totalsY+16);doc.text("Rs."+amount.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}),190,totalsY+8,{align:"right"});doc.text("Rs."+discount.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}),190,totalsY+16,{align:"right"});doc.setDrawColor(220);doc.line(115,totalsY+20,190,totalsY+20);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.text("Grand Total",115,totalsY+27);doc.text("Rs."+total.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}),190,totalsY+27,{align:"right"});
- const paymentY=totalsY+40;doc.setDrawColor(200);doc.roundedRect(15,paymentY,180,46,3,3);doc.setFillColor(...rgb);doc.rect(15,paymentY,180,10,"F");doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("PAYMENT INFORMATION",20,paymentY+7);doc.setTextColor(0);doc.setFont("helvetica","normal");doc.setFontSize(9);
+ const paymentY=totalsY+35; const paymentBoxHeight=qrDataUrl?52:(cfg.upiId?43:38); doc.setDrawColor(200);doc.roundedRect(15,paymentY,180,paymentBoxHeight,3,3);doc.setFillColor(...rgb);doc.rect(15,paymentY,180,10,"F");doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("PAYMENT INFORMATION",20,paymentY+7);doc.setTextColor(0);doc.setFont("helvetica","normal");doc.setFontSize(9);
  let payY=paymentY+17;doc.setFont("helvetica","bold");doc.text("Bank Name:",20,payY);doc.setFont("helvetica","normal");doc.text("State Bank of India",48,payY);payY+=5;doc.setFont("helvetica","bold");doc.text("Account Name:",20,payY);doc.setFont("helvetica","normal");doc.text("Shaik Azeez",48,payY);payY+=5;doc.setFont("helvetica","bold");doc.text("IFSC Code:",20,payY);doc.setFont("helvetica","normal");doc.text("SBIN0020609",48,payY);payY+=5;if(cfg.upiId){doc.setFont("helvetica","bold");doc.text("UPI ID:",20,payY);doc.setFont("helvetica","normal");doc.text(cfg.upiId,48,payY);payY+=5;}
  if(phone){doc.setFont("helvetica","bold");doc.text("Mobile:",20,payY);doc.setFont("helvetica","normal");doc.text(phone,48,payY);payY+=5;}
- if(qrDataUrl){try{const format=qrDataUrl.startsWith("data:image/png")?"PNG":"JPEG";doc.addImage(qrDataUrl,format,157,paymentY+13,29,29);}catch(e){console.warn("QR could not be embedded in PDF",e);}}
+ if(qrDataUrl){try{const format=qrDataUrl.startsWith("data:image/png")?"PNG":"JPEG";doc.addImage(qrDataUrl,format,157,paymentY+12,26,26);}catch(e){console.warn("QR could not be embedded in PDF",e);}}
  else if(cfg.upiId){doc.setFontSize(7);doc.text("Use UPI ID to pay",157,paymentY+27);}
  // Render terms once in a compact first-page section.
  // Keep the entire terms block and footer within the A4 page bounds.
- const termsY = Math.min(paymentY + 53, 220);
+ const termsY = paymentY + paymentBoxHeight + 6;
  const rawTerms = terms || "No terms and conditions provided.";
  const termsX = 20, termsWidth = 170;
  const pageBottom = 278;
  const headingHeight = 11;
  const footerReserve = 13;
- const availableTextHeight = Math.max(12, pageBottom - (termsY + headingHeight) - footerReserve);
+ const availableTextHeight = Math.max(8, pageBottom - (termsY + headingHeight) - footerReserve);
  let termsFont = 8, wrappedTerms = [], lineHeight = 3.5;
  while (termsFont >= 5) {
   doc.setFont("helvetica", "normal");
@@ -68,7 +68,7 @@ async function downloadInvoicePDF() {
  doc.setTextColor(0);
  doc.setFont("helvetica", "normal");
  doc.setFontSize(termsFont);
- doc.text(wrappedTerms, termsX, termsY + headingHeight, { lineHeightFactor: 1.0, maxWidth: termsWidth });
+ doc.text(wrappedTerms.slice(0, Math.max(1, Math.floor(availableTextHeight / lineHeight))), termsX, termsY + headingHeight, { lineHeightFactor: 1.0, maxWidth: termsWidth });
  const footerY = Math.min(termsY + boxHeight + 3, 279);
  doc.setDrawColor(220);
  doc.line(15, footerY, 195, footerY);
