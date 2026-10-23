@@ -9,14 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (invoiceId) {
         await loadInvoice(invoiceId);
-        if (params.get("download") === "1") {
-            // Use the original PDF layout and the short, original service terms.
-            loadDefaultTerms();
-            setTimeout(() => downloadInvoicePDF(), 350);
-        }
     } else {
         await generateInvoiceNumber();
-        loadDefaultTerms();
     }
 
 });
