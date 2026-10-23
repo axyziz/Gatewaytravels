@@ -258,8 +258,8 @@ doc.text(
 
 const paymentY = totalsY + 40;
   // ===========================
- // PAYMENT INFORMATION
- // ===========================
+// PAYMENT INFORMATION
+// ===========================
 
 // Outer Box
 doc.setDrawColor(200);
@@ -272,6 +272,7 @@ doc.rect(15, paymentY, 180, 10, "F");
 doc.setTextColor(255,255,255);
 doc.setFont("helvetica","bold");
 doc.setFontSize(11);
+
 doc.text("PAYMENT INFORMATION",20,paymentY+7);
 
 // Body
@@ -290,14 +291,11 @@ doc.text(": SBIN0020609",65,paymentY+40);
 
 doc.text("UPI ID",20,paymentY+50);
 doc.text(": azizshayk@ybl",65,paymentY+50);
+  // ===========================
+// FOOTER
+// ===========================
 
 const termsY = paymentY + 65;
-
-// ===========================
-// TERMS & CONDITIONS
-// ===========================
-
-const termsY = paymentY + 52;
     // ===========================
 // TERMS & CONDITIONS
 // ===========================
