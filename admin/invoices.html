@@ -1,146 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Invoices | Gateway Travels CRM</title>
-
+<title>View Invoices | Gateway Travels</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
-
 <style>
-
-body{
-    font-family:Arial,sans-serif;
-    background:#f4f6f9;
-    margin:0;
-    padding:30px;
-}
-
-.container{
-    max-width:1200px;
-    margin:auto;
-}
-
-h2{
-    margin-bottom:20px;
-    color:#0B3D91;
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-#searchInvoice{
-    width:300px;
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:6px;
-}
-
-button{
-    padding:10px 18px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    background:#2563eb;
-    color:#fff;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:#fff;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-th{
-    background:#2563eb;
-    color:white;
-    padding:12px;
-}
-
-td{
-    padding:12px;
-    border-bottom:1px solid #ddd;
-}
-
-tr:hover{
-    background:#f7f7f7;
-}
-
+:root{--navy:#12345a;--blue:#245b91;--ink:#172b42;--muted:#65758a;--line:#dce5ee;--bg:#f2f6fa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--ink)}
+.container{width:min(1200px,94%);margin:26px auto 50px}.admin-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding:14px 18px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 18px #193c5a08}.brand{font-weight:800;color:var(--navy)}.nav-links{display:flex;gap:8px;flex-wrap:wrap}.nav-links a{padding:8px 12px;border:1px solid var(--line);border-radius:9px;text-decoration:none;color:#42566e;font-size:13px;font-weight:700}.nav-links a.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.heading{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}.heading h1{margin:0;font-size:clamp(25px,3vw,34px);letter-spacing:-.8px;color:var(--navy)}.heading p{margin:7px 0 0;color:var(--muted);font-size:14px}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.search{flex:1;min-width:220px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff}.btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;padding:10px 13px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--navy);font-weight:750;font-size:13px;cursor:pointer;text-decoration:none}.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.btn.download{background:#eaf6ef;color:#176a42;border-color:#cbe8d6}.btn.danger{color:#a42d36}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 5px 18px #193c5a08;overflow:hidden}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:760px}th{padding:13px 12px;text-align:left;background:#f5f8fb;color:#53677e;font-size:11px;text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--line)}td{padding:14px 12px;border-bottom:1px solid #edf1f5;font-size:13px}tbody tr:hover{background:#f9fbfd}tbody tr:last-child td{border-bottom:0}.invoice-id{font-weight:800;color:var(--navy)}.customer-name{font-weight:700}.status{display:inline-block;padding:5px 9px;border-radius:99px;background:#fff4db;color:#8a5b00;font-size:11px;font-weight:800}.status.paid{background:#e7f6ed;color:#176a42}.actions{display:flex;gap:6px;flex-wrap:wrap}.empty{padding:32px;text-align:center;color:var(--muted)}.pager{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:16px}.pager span{font-size:12px;color:var(--muted);margin-right:auto}
+@media(max-width:600px){.container{margin-top:14px}.panel{padding:10px}.admin-nav{align-items:flex-start}.nav-links a{padding:8px 9px}.heading{align-items:flex-start}}
 </style>
-
 </head>
-
 <body>
-
 <div class="container">
-
-<h2>Gateway Travels Invoices</h2>
-
-<div class="topbar">
-
-<input
-    type="text"
-    id="searchInvoice"
-    placeholder="Search Invoice">
-
-<button onclick="window.location='create-invoice.html'">
-
-+ New Invoice
-
-</button>
-
+<nav class="admin-nav"><div class="brand">Gateway Travels <span style="font-weight:500;color:#65758a">/ Admin</span></div><div class="nav-links"><a href="../index.html">Dashboard</a><a href="create-invoice.html">Create Invoice</a><a class="active" href="invoices.html">View Invoices</a><a href="customers.html">Customers</a></div></nav>
+<header class="heading"><div><h1>Invoices</h1><p>Search, manage, and download customer invoices.</p></div><a class="btn primary" href="create-invoice.html">＋ New invoice</a></header>
+<div class="toolbar"><input class="search" type="search" id="searchInvoice" placeholder="Search invoice number, customer, service or status…"><button class="btn" type="button" onclick="loadInvoices()">↻ Refresh</button></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Invoice</th><th>Customer</th><th>Service</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody id="invoiceTable"><tr><td colspan="6" class="empty">Loading invoices…</td></tr></tbody></table></div>
+<div class="pager"><span id="invoiceCount">Loading invoices</span><button class="btn" id="prevPage" type="button">← Back</button><button class="btn" id="nextPage" type="button">Next →</button></div></section>
 </div>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Invoice</th>
-<th>Customer</th>
-<th>Service</th>
-<th>Total</th>
-<th>Status</th>
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="invoiceTable">
-
-<tr>
-
-<td colspan="6" align="center">
-
-Loading...
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
+<div id="pdfData" style="display:none" aria-hidden="true">
+<input id="invoice_number"><input id="customer_name"><input id="customer_mobile"><input id="customer_email"><input id="service"><input id="description"><input id="amount"><input id="discount"><input id="total"><input id="payment_status"><input id="payment_method"><textarea id="terms"></textarea>
 </div>
-
-<script src="../assets/js/invoices.js"></script>
-
-</body>
-
-</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="../assets/js/invoice-pdf-new.js?v=payment-information-only-20261024"></script>
+<script src="../assets/js/invoices.js?v=admin-redesign-20261024"></script>
+</body></html>
