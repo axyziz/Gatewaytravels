@@ -34,42 +34,24 @@ async function downloadInvoicePDF() {
  // Mobile number intentionally omitted from payment information.
  if(qrDataUrl){try{const format=qrDataUrl.startsWith("data:image/png")?"PNG":"JPEG";doc.addImage(qrDataUrl,format,157,paymentY+12,26,26);}catch(e){console.warn("QR could not be embedded in PDF",e);}}
  else if(cfg.upiId){doc.setFontSize(7);doc.text("Use UPI ID to pay",157,paymentY+27);}
- // Render terms once in a compact first-page section.
- // Keep the entire terms block and footer within the A4 page bounds.
- const termsY = paymentY + paymentBoxHeight + 12;
- const rawTerms = terms || "No terms and conditions provided.";
- const termsX = 20, termsWidth = 170;
- const pageBottom = 278;
- const headingHeight = 11;
- const footerReserve = 13;
- const availableTextHeight = Math.max(8, pageBottom - (termsY + headingHeight) - footerReserve);
- let termsFont = 8, wrappedTerms = [], lineHeight = 3.5;
- while (termsFont >= 5) {
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(termsFont);
-  wrappedTerms = doc.splitTextToSize(rawTerms, termsWidth);
-  lineHeight = termsFont <= 5.5 ? 2.4 : termsFont <= 6.5 ? 2.8 : termsFont <= 7.5 ? 3.1 : 3.5;
-  if (wrappedTerms.length * lineHeight <= availableTextHeight) break;
-  termsFont -= 0.5;
+ // Render the complete terms and conditions, allowing additional pages when needed.
+ const rawTerms = (terms || "No terms and conditions provided.").trim();
+ const termRows = rawTerms.split(/\r?\n/).map(line => [line.trim() || " "]);
+ doc.autoTable({
+  startY: paymentY + paymentBoxHeight + 10,
+  head: [["TERMS & CONDITIONS"]],
+  body: termRows,
+  theme: "grid",
+  headStyles: { fillColor: rgb, textColor: [255,255,255], fontStyle: "bold", halign: "left" },
+  styles: { font: "helvetica", fontSize: 8, cellPadding: 2.2, lineColor: [220,220,220], lineWidth: 0.15, overflow: "linebreak" },
+  margin: { left: 15, right: 15, top: 15, bottom: 20 },
+  rowPageBreak: "avoid"
+ });
+ let footerY = doc.lastAutoTable.finalY + 8;
+ if (footerY > 275) {
+  doc.addPage();
+  footerY = 20;
  }
- // If the terms still exceed the space, use a smaller readable layout and
- // do not create another terms section or spill the text onto a second page.
- doc.setPage(1);
- const textHeight = Math.min(availableTextHeight, wrappedTerms.length * lineHeight);
- const boxHeight = headingHeight + textHeight + 4;
- doc.setDrawColor(200);
- doc.roundedRect(15, termsY, 180, boxHeight, 3, 3);
- doc.setFillColor(...rgb);
- doc.rect(15, termsY, 180, 9, "F");
- doc.setTextColor(255, 255, 255);
- doc.setFont("helvetica", "bold");
- doc.setFontSize(10);
- doc.text("TERMS & CONDITIONS", 20, termsY + 6.2);
- doc.setTextColor(0);
- doc.setFont("helvetica", "normal");
- doc.setFontSize(termsFont);
- doc.text(wrappedTerms.slice(0, Math.max(1, Math.floor(availableTextHeight / lineHeight))), termsX, termsY + headingHeight, { lineHeightFactor: 1.0, maxWidth: termsWidth });
- const footerY = Math.min(termsY + boxHeight + 3, 279);
  doc.setDrawColor(220);
  doc.line(15, footerY, 195, footerY);
  doc.setFont("helvetica", "bold");
