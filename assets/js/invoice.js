@@ -208,11 +208,20 @@ function loadDefaultTerms() {
         case "Bus":
 
             terms.value =
-`• Bus timings are subject to operator schedules.
-• Passengers should report 30 minutes before departure.
-• Cancellation charges apply as per operator policy.
-• Seats are subject to availability.
-• Gateway Travels acts only as a booking facilitator.`;
+`• Bus tickets are subject to availability and confirmation by the bus operator.
+• Passengers must arrive at the boarding point at least 30 minutes before departure.
+• Passengers must carry a valid government-issued photo ID during travel.
+• Verify the boarding point, departure time and passenger details before travel.
+• Cancellation charges and refund eligibility are subject to the bus operator's policy.
+• Eligible refunds will be processed according to the applicable policy and payment processing timelines.
+• Rescheduling is subject to availability and operator terms; additional charges may apply.
+• Refunds may not be available for missed buses or late arrival, except where the applicable policy provides otherwise.
+• The bus operator is responsible for bus services, delays, breakdowns, route changes and onboard facilities.
+• Gateway Travels & Holidays acts as a booking agent and is not responsible for circumstances beyond its control.
+• Passengers are responsible for checking baggage restrictions and keeping their belongings safe.
+• Changes or corrections to passenger details must be requested before departure and are subject to approval.
+• By confirming the booking, the customer agrees to the applicable bus operator's terms and conditions.
+• Cancellation, refund and rescheduling policies may vary by operator and ticket type.`;
 
             break;
 
