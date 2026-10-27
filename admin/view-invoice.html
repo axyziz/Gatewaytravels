@@ -481,6 +481,11 @@ Grand Total
 
 </div>
 
+<div id="invoice_terms_section" style="margin-top:32px;white-space:pre-line;line-height:1.6;overflow-wrap:anywhere;">
+<h3 style="color:#0B3D91;margin-bottom:10px;">Terms &amp; Conditions</h3>
+<p id="invoice_terms" style="font-size:12px;color:#444;"></p>
+</div>
+
 <div class="footer">
 
 <h3>Thank You For Choosing Gateway Travels & Holidays</h3>
@@ -564,6 +569,11 @@ async function loadInvoice(){
     document.getElementById("payment_method").textContent =
         data.payment_method || "";
 
+    const termsSection = document.getElementById("invoice_terms_section");
+    const termsText = document.getElementById("invoice_terms");
+    termsText.textContent = data.terms || "";
+    termsSection.style.display = data.terms ? "block" : "none";
+
     const badge=document.getElementById("payment_status");
 
     if((data.payment_status || "").toLowerCase()=="paid"){
@@ -637,7 +647,25 @@ async function downloadPDF(){
 
     doc.text("Status : "+document.getElementById("payment_status").textContent,20,170);
 
-    doc.text("Thank you for choosing Gateway Travels & Holidays",20,255);
+    const termsText = document.getElementById("invoice_terms").textContent || "";
+    if (termsText) {
+        const lines = doc.splitTextToSize(termsText, 170);
+        let y = 185;
+        doc.setFont("helvetica","bold");
+        doc.text("Terms & Conditions",20,y);
+        doc.setFont("helvetica","normal");
+        y += 7;
+        for (const line of lines) {
+            if (y > 275) {
+                doc.addPage();
+                y = 20;
+            }
+            doc.text(line,20,y);
+            y += 5;
+        }
+    }
+
+    doc.text("Thank you for choosing Gateway Travels & Holidays",20,285);
 
     doc.save(document.getElementById("invoice_number").textContent+".pdf");
 
